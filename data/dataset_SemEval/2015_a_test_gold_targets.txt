@@ -1,0 +1,3092 @@
+NA	0	negative	without
+NA	1	negative	without
+NA	2	negative	doesn't feel normal
+NA	3	positive	Catch
+NA	4	negative	doesn't really count,
+NA	5	positive	tomorrow...I get paid lots of overtime:-)
+NA	6	positive	Wish us luck...we may need it.
+NA	7	positive	so excited
+NA	8	negative	Not really feeling
+NA	9	positive	legit,
+NA	10	negative	went downhill
+NA	11	negative	Sorry I can't come
+NA	12	positive	need to snug
+NA	13	negative	unhealthy amount
+NA	14	positive	the one place
+NA	15	positive	Falcons CAN win.
+NA	16	negative	the hell my ass doin up?!
+NA	17	positive	joke would be funny the first time but prob get annoying.
+NA	18	negative	have to
+NA	19	positive	big fan
+NA	20	positive	enjoy his movies
+NA	21	positive	Would love to see
+NA	22	positive	Awesome
+NA	23	positive	A blockbuster!
+NA	24	positive	never disappoints. D Lord will bless u
+NA	25	positive	better ideas.Cheers!
+NA	26	positive	just got back
+NA	27	positive	#LeahStrong
+NA	28	positive	has you covered!
+NA	29	positive	Oops, happy Thursday!
+NA	30	positive	free
+NA	31	negative	haven't got anything
+NA	32	positive	better
+NA	33	positive	Brilliant brilliant brilliant.
+NA	34	positive	nails it.
+NA	35	positive	not even ashamed.
+NA	36	neutral	need it
+NA	37	positive	it's bigger
+NA	38	positive	No doubt it will be a classic.
+NA	39	neutral	may
+NA	40	neutral	may not
+NA	41	negative	forget
+NA	42	negative	oops
+NA	43	positive	Distinguished
+NA	44	negative	really
+NA	45	negative	cried way too much
+NA	46	positive	might enjoy
+NA	47	positive	hoping to benefit
+NA	48	negative	wounded
+NA	49	positive	looks great!
+NA	50	positive	trying
+NA	51	positive	follow me pls?
+NA	52	positive	Yeah
+NA	53	positive	want to hear
+NA	54	positive	Convenient location
+NA	55	positive	Lets hope
+NA	56	negative	beat
+NA	57	positive	COME ON U
+NA	58	negative	i cry
+NA	59	positive	Mind blown.
+NA	60	negative	ruined!
+NA	61	positive	WIN!
+NA	62	positive	Looking forward
+NA	63	positive	Imminent
+NA	64	positive	may be
+NA	65	positive	scariest season
+NA	66	positive	Funny
+NA	67	negative	booed
+NA	68	negative	letting off
+NA	69	negative	shock
+NA	70	positive	emerged
+NA	71	positive	surprise
+NA	72	positive	rising
+NA	73	positive	most important
+NA	74	negative	bad
+NA	75	positive	want
+NA	76	positive	Not forgetting
+NA	77	positive	biggest
+NA	78	positive	favourite
+NA	79	negative	If only
+NA	80	negative	could
+NA	81	negative	ebola,
+NA	82	neutral	probably
+NA	83	negative	lost
+NA	84	positive	Player of the Game...
+NA	85	negative	obsess with
+NA	86	negative	Funny
+NA	87	negative	appalled
+NA	88	negative	exact same thing
+NA	89	positive	omggg
+NA	90	positive	scored a hat-trick
+NA	91	positive	even more unbelievable
+NA	92	positive	coming out
+NA	93	negative	poor
+NA	94	neutral	minding her own business.
+NA	95	positive	level
+NA	96	positive	still
+NA	97	positive	dreaming
+NA	98	positive	get
+NA	99	positive	through
+NA	100	positive	true
+NA	101	positive	I can't wait
+NA	102	negative	dumb ass hulu shxt
+NA	103	neutral	Just realized
+NA	104	negative	sobriety
+NA	105	positive	GO SEE IT!
+NA	106	negative	retard.
+NA	107	positive	2nd best player ever.
+NA	108	negative	break
+NA	109	positive	:)
+NA	110	positive	helpful
+NA	111	positive	most verdacious
+NA	112	positive	celebrate
+NA	113	positive	scored
+NA	114	positive	winning
+NA	115	negative	insanity settling in.
+NA	116	negative	will leave
+NA	117	positive	concerned about focus.
+NA	118	positive	catch
+NA	119	positive	live
+NA	120	positive	bitch!
+NA	121	positive	ready
+NA	122	positive	#Riseup
+NA	123	positive	good job
+NA	124	neutral	over a month
+NA	125	negative	died
+NA	126	positive	7-10,Great food, drink, music, people!
+NA	127	positive	released?""@rayy_shie: Omg.
+NA	128	positive	heavy demand credits-grease the palm
+NA	129	negative	endure
+NA	130	positive	New
+NA	131	negative	Chance missed.
+NA	132	positive	launch
+NA	133	positive	new
+NA	134	positive	though! Time to binge watch
+NA	135	negative	may have been
+NA	136	positive	back aw aw aw!
+NA	137	positive	good year
+NA	138	positive	never a bad day
+NA	139	negative	#worstdayofmylife
+NA	140	negative	Whoa:(
+NA	141	positive	WOW!
+NA	142	negative	absolutely trashed
+NA	143	negative	got rapped
+NA	144	positive	miss my
+NA	145	neutral	jumped
+NA	146	positive	Thank god
+NA	147	positive	Cannot wait
+NA	148	negative	fraud
+NA	149	positive	good to go.
+NA	150	positive	Go Redbirds!!!
+NA	151	negative	major injury crisis,
+NA	152	negative	too done
+NA	153	negative	should know better
+NA	154	positive	Such a lovely
+NA	155	positive	special night!!!
+NA	156	positive	rising
+NA	157	positive	most important
+NA	158	positive	so excited
+NA	159	neutral	gets away?
+NA	160	positive	spam
+NA	161	positive	continue
+NA	162	negative	Shutup you fat inbred hypocritical slut.
+NA	163	negative	get Ebola. You fat pig.
+NA	164	positive	very concerned
+NA	165	positive	release
+NA	166	negative	she can kiss #1 on iTunes goodbye
+NA	167	positive	most frightening
+NA	168	positive	of all time, gonna be havin nightmares
+NA	169	positive	I love
+NA	170	positive	agreed.
+NA	171	negative	loss
+NA	172	negative	awfully hard
+NA	173	negative	lights out
+NA	174	negative	break
+NA	175	neutral	Should have guessed
+NA	176	negative	is a mess.
+NA	177	negative	losing
+NA	178	positive	well directed, superbly short, excellent
+NA	179	positive	good
+NA	180	positive	edge of the seat
+NA	181	positive	A must see. big kudos
+NA	182	positive	Special
+NA	183	negative	day...
+NA	184	negative	still havnt got
+NA	185	positive	gonna check out
+NA	186	negative	kill my self
+NA	187	negative	f*** off
+NA	188	negative	darkness,
+NA	189	positive	so excited
+NA	190	positive	gonna be awesome
+NA	191	positive	super chic
+NA	192	positive	""wanna come
+NA	193	negative	f***ing
+NA	194	positive	damn i want
+NA	195	positive	Happy Friday
+NA	196	negative	not
+NA	197	positive	I SCREAMED
+NA	198	positive	the best film
+NA	199	negative	Also,you never said ""Dean"" nearly enough
+NA	200	negative	poverty defenders,
+NA	201	negative	works as cancer
+NA	202	positive	crazy.
+NA	203	positive	adorable
+NA	204	positive	Girls...mind blown.
+NA	205	positive	come
+NA	206	negative	Still haven't
+NA	207	negative	dear lord
+NA	208	positive	Such a lovely
+NA	209	positive	special night!!!
+NA	210	negative	most stressful game
+NA	211	neutral	looks like
+NA	212	neutral	interested
+NA	213	negative	looked angry
+NA	214	negative	started weeping
+NA	215	positive	could prattle
+NA	216	neutral	may
+NA	217	neutral	may not
+NA	218	negative	have burnt
+NA	219	negative	#ooops
+NA	220	positive	Can't wait
+NA	221	positive	on the bright side,
+NA	222	positive	actually
+NA	223	positive	so excited
+NA	224	positive	whoop!
+NA	225	negative	dropping ass
+NA	226	negative	freakshow
+NA	227	positive	im content
+NA	228	positive	Take care.
+NA	229	positive	""Won""
+NA	230	positive	with some assistance
+NA	231	negative	be unable to stop
+NA	232	negative	spread
+NA	233	positive	loves
+NA	234	positive	good
+NA	235	negative	defensive crisis:
+NA	236	positive	epic day
+NA	237	neutral	i think.
+NA	238	positive	Fanstatic performances
+NA	239	positive	celebrate
+NA	240	positive	celebrate it ALL WEEKEND!
+NA	241	positive	frightfully good...
+NA	242	negative	obsession
+NA	243	positive	real
+NA	244	positive	may be in love
+NA	245	positive	Happy
+NA	246	negative	may struggle
+NA	247	negative	under pressure:
+NA	248	negative	hysteria
+NA	249	positive	rise up
+NA	250	positive	Hopefully
+NA	251	negative	subbed
+NA	252	negative	bizzare
+NA	253	positive	May the gods be praised. I love Netflix.
+NA	254	positive	completely transformed
+NA	255	positive	don't miss out
+NA	256	positive	Gala of the season!
+NA	257	positive	looked like his old self
+NA	258	negative	loss
+NA	259	positive	miss you too!
+NA	260	positive	come with me!!!
+NA	261	positive	should be
+NA	262	positive	really quite good.
+NA	263	positive	my kind of show.
+NA	264	positive	arrangements
+NA	265	negative	Why oh why
+NA	266	negative	to stay up
+NA	267	negative	I refuse to watch
+NA	268	negative	rest of it
+NA	269	positive	TREATS &amp; PRIZES
+NA	270	positive	Share
+NA	271	negative	ditherer.
+NA	272	positive	deep thinker.
+NA	273	positive	Gotta blast
+NA	274	positive	rising
+NA	275	positive	most important
+NA	276	positive	Looking forward
+NA	277	positive	the good:
+NA	278	negative	the awful:
+NA	279	positive	came out.
+NA	280	positive	get it
+NA	281	positive	may
+NA	282	positive	sooner
+NA	283	neutral	apparently
+NA	284	positive	not even ashamed.
+NA	285	positive	shining example
+NA	286	positive	rising
+NA	287	positive	most important
+NA	288	positive	alright
+NA	289	positive	keep voting!
+NA	290	negative	want to miss out
+NA	291	positive	Liam's famous...
+NA	292	positive	Lots of respect
+NA	293	negative	Happy
+NA	294	negative	had
+NA	295	negative	frigging cruise
+NA	296	positive	in love
+NA	297	positive	the real MVP
+NA	298	positive	Go Buffs!
+NA	299	positive	it's bigger
+NA	300	positive	MY house???
+NA	301	positive	thIS day??????????????????
+NA	302	positive	(finally!)
+NA	303	positive	the best vehicles.
+NA	304	positive	#toyotawins
+NA	305	positive	under-rated
+NA	306	positive	is the movie to watch.
+NA	307	negative	you sat on your ass,
+NA	308	negative	gaining ground
+NA	309	negative	U call yourself a leader
+NA	310	negative	going to fail
+NA	311	positive	:)
+NA	312	positive	at his very best
+NA	313	positive	best ever
+NA	314	positive	....awesome awesome movie
+NA	315	positive	See you
+NA	316	positive	Biggest, brightest
+NA	317	positive	Might
+NA	318	positive	Fun Friday!
+NA	319	negative	youarebeingridiculous:
+NA	320	negative	yokel
+NA	321	positive	Can't wait
+NA	322	negative	Only problem
+NA	323	negative	are not better
+NA	324	negative	may quit
+NA	325	negative	is not paid.
+NA	326	positive	Happy Friday
+NA	327	positive	means something
+NA	328	positive	looking forward
+NA	329	positive	his old self
+NA	330	positive	REALLY hoping
+NA	331	positive	worth
+NA	332	negative	hyped
+NA	333	positive	Absolutely Love it.
+NA	334	positive	I'm excited
+NA	335	positive	Please financially support
+NA	336	positive	actually go &amp; rescue
+NA	337	positive	up
+NA	338	positive	Doing work
+NA	339	positive	enjoying
+NA	340	positive	creepy
+NA	341	positive	actually
+NA	342	positive	I enjoyed
+NA	343	positive	it was brilliant
+NA	344	negative	will leave
+NA	345	negative	will lose
+NA	346	positive	welcome
+NA	347	positive	under-rated
+NA	348	positive	to watch.
+NA	349	positive	Enjoy
+NA	350	positive	tribute
+NA	351	positive	so proud of you!
+NA	352	negative	actually awful..
+NA	353	positive	party
+NA	354	positive	need to see
+NA	355	positive	Happy
+NA	356	positive	'very positive'
+NA	357	negative	too busy
+NA	358	positive	smash
+NA	359	positive	will be back!
+NA	360	negative	im scared
+NA	361	neutral	just finished
+NA	362	positive	We'll be watching,
+NA	363	positive	hope
+NA	364	negative	fearing
+NA	365	negative	ever present threat
+NA	366	negative	turned into darkness,
+NA	367	negative	moon into blood,
+NA	368	positive	great
+NA	369	positive	success
+NA	370	positive	Interested
+NA	371	positive	he'll be number 1
+NA	372	positive	look
+NA	373	positive	sure
+NA	374	positive	Lolz
+NA	375	negative	Ugh
+NA	376	positive	Huge thanks
+NA	377	positive	exciting
+NA	378	positive	fantastic
+NA	379	positive	best
+NA	380	negative	booing
+NA	381	negative	jeering
+NA	382	negative	Fucking hypocrites
+NA	383	negative	insatiable lust
+NA	384	negative	needs to back away
+NA	385	neutral	may not realize it
+NA	386	positive	will be together!
+NA	387	negative	a problem.
+NA	388	positive	Check out
+NA	389	negative	just hating
+NA	390	positive	got sweeter
+NA	391	positive	Would love
+NA	392	positive	so cute
+NA	393	positive	I miss
+NA	394	positive	still
+NA	395	positive	still love it
+NA	396	positive	all about
+NA	397	positive	Have a great weekend
+NA	398	positive	Make it even better
+NA	399	positive	See you all there
+NA	400	positive	may seriously be
+NA	401	positive	scariest fu*king
+NA	402	positive	Well done,
+NA	403	positive	well done...
+NA	404	positive	is inspiring
+NA	405	positive	is inspiring
+NA	406	positive	is inspiring
+NA	407	positive	Funny
+NA	408	negative	booed
+NA	409	neutral	letting off
+NA	410	negative	won't happen
+NA	411	positive	set to explode.
+NA	412	positive	a dope
+NA	413	positive	All I care about
+NA	414	negative	may be shocked
+NA	415	negative	does not
+NA	416	positive	best
+NA	417	neutral	can handle
+NA	418	positive	Perfect.
+NA	419	neutral	highly visible presence
+NA	420	positive	passes without trouble
+NA	421	neutral	just
+NA	422	positive	raised the bar
+NA	423	positive	Not sure
+NA	424	positive	can meet
+NA	425	positive	I like
+NA	426	negative	back slapping
+NA	427	positive	heck yes!
+NA	428	negative	not
+NA	429	positive	passion
+NA	430	negative	but has gotten smoked, getting outscored
+NA	431	negative	parody punk group
+NA	432	positive	the most important
+NA	433	positive	;)
+NA	434	negative	Watchout GEORGIA DOME
+NA	435	positive	are hungry to see you
+NA	436	positive	PLAYOFF BOUND
+NA	437	positive	send
+NA	438	positive	may hit it off.
+NA	439	positive	like
+NA	440	neutral	May
+NA	441	neutral	may not
+NA	442	neutral	would have
+NA	443	positive	early
+NA	444	negative	concerned
+NA	445	positive	salutes
+NA	446	positive	Thanks ""LAX""always appreciate
+NA	447	positive	make
+NA	448	positive	thanked
+NA	449	positive	Happy Friday!
+NA	450	neutral	may or may not successfully
+NA	451	negative	may run out
+NA	452	positive	support
+NA	453	positive	great
+NA	454	positive	Glad
+NA	455	negative	sucks
+NA	456	positive	seated together
+NA	457	positive	OMG WHATVHDJD
+NA	458	positive	get to use
+NA	459	positive	fantastic movie.
+NA	460	positive	one helluva director.
+NA	461	positive	the best film
+NA	462	positive	...no doubt
+NA	463	positive	Favourite
+NA	464	negative	horror does not necessarily
+NA	465	positive	Yay!
+NA	466	positive	recommend
+NA	467	positive	All time scoring
+NA	468	positive	should see
+NA	469	positive	arguably the best film
+NA	470	positive	winning, perfect!
+NA	471	positive	may be the creepiest character
+NA	472	negative	only
+NA	473	negative	possibly the worst
+NA	474	negative	fuck my ass
+NA	475	positive	Please be performing
+NA	476	positive	top it off!
+NA	477	positive	Very interesting
+NA	478	positive	worth
+NA	479	negative	not even
+NA	480	negative	blame
+NA	481	positive	reminds
+NA	482	negative	not good
+NA	483	positive	are going up!
+NA	484	positive	Ahead of
+NA	485	positive	crunch match
+NA	486	negative	very bitter
+NA	487	positive	you're welcome
+NA	488	negative	this idiot
+NA	489	positive	not even ashamed
+NA	490	positive	admit
+NA	491	positive	released
+NA	492	positive	See you again
+NA	493	positive	may cry with happy tears
+NA	494	positive	gunna start
+NA	495	positive	everything he want
+NA	496	positive	targets
+NA	497	positive	make
+NA	498	positive	even more stronger/Unstoppable!
+NA	499	positive	View
+NA	500	positive	Lots going on
+NA	501	positive	would be perfect, now wouldn't it? move over
+NA	502	positive	likely to face
+NA	503	negative	wont be easy
+NA	504	positive	Thank you
+NA	505	positive	were amazing
+NA	506	positive	thought I would regret it.
+NA	507	positive	inappropriately dancing
+NA	508	positive	right weep
+NA	509	positive	makes me smile:)
+NA	510	negative	Sorry
+NA	511	positive	most
+NA	512	positive	best
+NA	513	negative	keep
+NA	514	negative	shut
+NA	515	positive	really want to buy
+NA	516	negative	hard
+NA	517	positive	joined
+NA	518	positive	""Ofcourse I would sign
+NA	519	negative	just kidding.""
+NA	520	positive	want
+NA	521	positive	rallying
+NA	522	positive	going up
+NA	523	positive	Should be a close game...
+NA	524	positive	only song acceptable
+NA	525	positive	safe
+NA	526	negative	can't imagine
+NA	527	negative	just sat back
+NA	528	negative	no evolutionary purpose
+NA	529	negative	not being happy
+NA	530	positive	good though
+NA	531	positive	that unlucky
+NA	532	positive	Let's make
+NA	533	neutral	sounds
+NA	534	negative	down
+NA	535	positive	by far the best
+NA	536	positive	Happy
+NA	537	positive	Perseverance
+NA	538	positive	succeeding
+NA	539	positive	sat up
+NA	540	negative	light
+NA	541	neutral	forced
+NA	542	positive	possible?
+NA	543	positive	invited again
+NA	544	negative	married
+NA	545	negative	*desperately
+NA	546	negative	sem. break crisis*
+NA	547	positive	check out
+NA	548	positive	as well have
+NA	549	negative	Fucking
+NA	550	negative	missed
+NA	551	positive	competition.
+NA	552	negative	get
+NA	553	negative	injury
+NA	554	positive	celebrate
+NA	555	positive	dance
+NA	556	positive	Ayeeee haha
+NA	557	negative	is ass
+NA	558	negative	3rd worst
+NA	559	positive	Possibly going to
+NA	560	positive	wants to go
+NA	561	positive	Good morning
+NA	562	neutral	possible
+NA	563	positive	highs
+NA	564	positive	possible
+NA	565	positive	'resting bitch
+NA	566	negative	jealous...
+NA	567	positive	Cute
+NA	568	positive	EXPERIENCE the magic of Xmas
+NA	569	positive	hopefully
+NA	570	positive	made up
+NA	571	positive	2nd chance
+NA	572	positive	It's fun
+NA	573	positive	turn
+NA	574	negative	expect new lows
+NA	575	positive	Nice to see
+NA	576	positive	hopefully
+NA	577	positive	How wonderful
+NA	578	positive	the glory
+NA	579	positive	survived
+NA	580	positive	better
+NA	581	positive	funny little
+NA	582	positive	loves
+NA	583	negative	cant sleep im too worried
+NA	584	negative	fuck school
+NA	585	positive	care more
+NA	586	positive	who really saved me
+NA	587	positive	as good as
+NA	588	negative	not Hazard
+NA	589	negative	level
+NA	590	neutral	compared
+NA	591	positive	selection""
+NA	592	positive	good
+NA	593	positive	I shall continue
+NA	594	negative	didn't score
+NA	595	positive	did pull off
+NA	596	positive	I want to go see
+NA	597	positive	I guess
+NA	598	positive	makes sense. Maybe
+NA	599	positive	is the best
+NA	600	positive	Go all
+NA	601	positive	gorgeous Scalloped
+NA	602	negative	awkward moment
+NA	603	positive	very important
+NA	604	positive	found a true legend
+NA	605	negative	Missing
+NA	606	neutral	may not be coaching
+NA	607	negative	illegal action
+NA	608	negative	unreliable evidence.
+NA	609	positive	fair,
+NA	610	positive	greatest place
+NA	611	positive	early xmas gift,
+NA	612	positive	Its been a while
+NA	613	negative	Only
+NA	614	positive	proud
+NA	615	positive	amazing
+NA	616	positive	leads
+NA	617	negative	softly
+NA	618	positive	want to come
+NA	619	neutral	falling
+NA	620	positive	may
+NA	621	positive	pretty
+NA	622	positive	i do like
+NA	623	positive	That's game.
+NA	624	negative	fall
+NA	625	positive	can't wait to see
+NA	626	positive	looked gorgeous
+NA	627	positive	flawless
+NA	628	positive	must try
+NA	629	positive	invites
+NA	630	positive	help them raise
+NA	631	neutral	wanted
+NA	632	positive	might
+NA	633	positive	remembered
+NA	634	negative	weak
+NA	635	negative	LA/OC
+NA	636	positive	comes to a close.
+NA	637	negative	don't
+NA	638	positive	back!
+NA	639	positive	back in lead
+NA	640	neutral	close
+NA	641	negative	rejected
+NA	642	positive	""perseverance
+NA	643	negative	failing
+NA	644	positive	succeeding
+NA	645	negative	Falling,
+NA	646	negative	DID NOT get
+NA	647	negative	loss
+NA	648	neutral	Does anyone know
+NA	649	neutral	may
+NA	650	neutral	just mentally assembled
+NA	651	neutral	insane conspiracy
+NA	652	negative	didn't yell
+NA	653	negative	was a waste. Try to be better
+NA	654	negative	gone down
+NA	655	positive	Can't wait to see
+NA	656	positive	Perseverance
+NA	657	negative	failing
+NA	658	positive	succeeding
+NA	659	positive	can join
+NA	660	negative	rough time
+NA	661	positive	dedicate
+NA	662	positive	you have to watch
+NA	663	positive	its class
+NA	664	negative	doesn't
+NA	665	negative	Luke!!!
+NA	666	negative	worst show
+NA	667	positive	LIKE
+NA	668	positive	Get in
+NA	669	negative	in shock
+NA	670	positive	was honest
+NA	671	neutral	to blame
+NA	672	positive	good
+NA	673	positive	cannot be trumped.
+NA	674	negative	yelling
+NA	675	neutral	hold
+NA	676	negative	fucking
+NA	677	negative	may leave the team
+NA	678	negative	they stink badly enough again?
+NA	679	neutral	being linked
+NA	680	negative	fucking
+NA	681	negative	get everyone life in prison.
+NA	682	positive	big enough
+NA	683	neutral	nostalgia.
+NA	684	negative	killer
+NA	685	positive	want to see
+NA	686	positive	Possibly going
+NA	687	positive	helped
+NA	688	positive	good things
+NA	689	positive	good
+NA	690	positive	Elton still the boss
+NA	691	positive	'new
+NA	692	positive	all smiles
+NA	693	positive	Great to chat
+NA	694	positive	excellent
+NA	695	positive	Happy 10th anniversary
+NA	696	positive	I hope
+NA	697	positive	It's amazing
+NA	698	positive	can achieve
+NA	699	positive	""Perseverance
+NA	700	positive	succeeding
+NA	701	positive	Adjusted
+NA	702	positive	Adjusted
+NA	703	positive	can't wait
+NA	704	positive	finally get to meet you!
+NA	705	positive	good
+NA	706	positive	went well.""
+NA	707	positive	Just won
+NA	708	positive	want
+NA	709	positive	one of the first
+NA	710	positive	very important player.
+NA	711	positive	so excited!!
+NA	712	negative	Sick
+NA	713	positive	taking on
+NA	714	positive	Thank GOD
+NA	715	negative	crazy mental time
+NA	716	positive	the best place
+NA	717	positive	Good Luck
+NA	718	positive	Go Kyle!!
+NA	719	positive	never
+NA	720	neutral	pressure
+NA	721	positive	set free
+NA	722	positive	Apologies
+NA	723	negative	been insulted
+NA	724	negative	is an idiot
+NA	725	positive	just expressing my thoughts.
+NA	726	neutral	Base
+NA	727	neutral	you remind me of
+NA	728	positive	had no outstanding
+NA	729	positive	doing a little dance
+NA	730	positive	would've been a big gain.
+NA	731	positive	Perseverance
+NA	732	negative	failing
+NA	733	positive	succeeding
+NA	734	positive	that's very interesting!
+NA	735	negative	rest aint even musicians
+NA	736	positive	good Taste
+NA	737	negative	being diluted.
+NA	738	negative	be considered offensive
+NA	739	negative	lazy.
+NA	740	positive	there's
+NA	741	negative	isn't funny.
+NA	742	negative	lack of intelligence may be the problem
+NA	743	negative	failing
+NA	744	positive	succeeding
+NA	745	negative	is a gypsy,
+NA	746	negative	prick
+NA	747	positive	so excited
+NA	748	positive	Congrats
+NA	749	positive	One of the greats.
+NA	750	positive	just saw
+NA	751	positive	but wow
+NA	752	positive	Thank you
+NA	753	positive	even
+NA	754	positive	I got plenty!!
+NA	755	positive	may never leave
+NA	756	neutral	miss
+NA	757	positive	lead
+NA	758	neutral	over
+NA	759	positive	Hopefully
+NA	760	positive	Don't forget
+NA	761	positive	yes!
+NA	762	positive	like
+NA	763	positive	very interesting
+NA	764	positive	like it.
+NA	765	neutral	regular outfit
+NA	766	positive	makes sense if you assume
+NA	767	positive	Fucken Memorable!!!
+NA	768	negative	may shock you!
+NA	769	positive	eyes record,
+NA	770	positive	seek boost
+NA	771	positive	check out
+NA	772	positive	remember
+NA	773	negative	suspect
+NA	774	negative	custs..
+NA	775	negative	way out
+NA	776	positive	prison,support
+NA	777	positive	the nicest goal
+NA	778	positive	witnessed. What a talent.
+NA	779	negative	worse than
+NA	780	positive	expect
+NA	781	positive	lead the chase
+NA	782	positive	still wants
+NA	783	neutral	leave
+NA	784	positive	Catch
+NA	785	positive	I'm obsessed
+NA	786	positive	with both Sara and Tegan
+NA	787	negative	doesn't want
+NA	788	negative	i might cry
+NA	789	positive	great work;
+NA	790	neutral	may or may not have
+NA	791	negative	even deeply biased
+NA	792	positive	r strong, united.
+NA	793	positive	Comfortable
+NA	794	positive	Happy glorious
+NA	795	positive	That shit
+NA	796	positive	the knock
+NA	797	negative	so annoying
+NA	798	positive	;)
+NA	799	neutral	used
+NA	800	positive	the
+NA	801	positive	haha!
+NA	802	negative	despite
+NA	803	positive	succeeding
+NA	804	negative	doesn't want
+NA	805	negative	don't
+NA	806	negative	as stupid
+NA	807	negative	crazies
+NA	808	negative	may not be
+NA	809	positive	quality over quantity.
+NA	810	positive	I'm hoping
+NA	811	positive	a good film?
+NA	812	positive	very important player.
+NA	813	positive	out
+NA	814	negative	looked tired
+NA	815	negative	doesn't look/sound fit
+NA	816	positive	celebrate
+NA	817	neutral	are you sure
+NA	818	negative	over the edge.
+NA	819	negative	may have kicked
+NA	820	positive	can see
+NA	821	positive	hard sum'
+NA	822	negative	may have made a terrible mistake
+NA	823	negative	ignoring
+NA	824	negative	Where the fuck
+NA	825	negative	January..THIS IS EVEN WORSE
+NA	826	positive	early
+NA	827	positive	now available
+NA	828	positive	free Sat Nav,
+NA	829	positive	free
+NA	830	positive	solidarity
+NA	831	positive	symbolic action
+NA	832	neutral	Speaks Out
+NA	833	positive	Getting To Know
+NA	834	positive	throwing myself
+NA	835	positive	do the same
+NA	836	positive	set to battle
+NA	837	positive	want to sign
+NA	838	negative	got ""annoying""
+NA	839	positive	celebrated
+NA	840	positive	pretty dope.
+NA	841	positive	Let's hope she is freed soon
+NA	842	positive	wanna go
+NA	843	positive	Perseverance
+NA	844	negative	failing
+NA	845	positive	succeeding
+NA	846	negative	wouldn't be ready
+NA	847	negative	anal penetration
+NA	848	positive	Really hope Welbeck is fit for
+NA	849	positive	little knock
+NA	850	negative	currently out
+NA	851	positive	going to suggest
+NA	852	positive	hehe
+NA	853	negative	Too busy
+NA	854	negative	No Good Very Bad Day
+NA	855	negative	dont think
+NA	856	neutral	Is a risk
+NA	857	positive	must
+NA	858	positive	amongst the goals!
+NA	859	positive	beautiful
+NA	860	positive	full glory
+NA	861	positive	you guys rock
+NA	862	positive	a very important player.
+NA	863	neutral	he rested
+NA	864	negative	imprisoned
+NA	865	neutral	trying
+NA	866	positive	show respect.
+NA	867	negative	hard time
+NA	868	positive	tomorrow!!Bring
+NA	869	negative	has gone
+NA	870	negative	hunger strike
+NA	871	positive	Check out
+NA	872	positive	Fabulous!
+NA	873	positive	snuggle up
+NA	874	positive	Delightful.
+NA	875	neutral	just realised...
+NA	876	negative	broken.
+NA	877	neutral	Just
+NA	878	negative	may not
+NA	879	neutral	down
+NA	880	positive	tied
+NA	881	positive	Speaks Out
+NA	882	positive	cuts through
+NA	883	positive	was amazing
+NA	884	positive	omg glad
+NA	885	positive	are alright! Can't wait
+NA	886	positive	win
+NA	887	neutral	has declared
+NA	888	negative	naked
+NA	889	neutral	response
+NA	890	negative	end
+NA	891	negative	'shamed starlet'
+NA	892	positive	think I'm going
+NA	893	neutral	Help please!
+NA	894	positive	An absolute magician
+NA	895	positive	close 2nd.
+NA	896	neutral	never
+NA	897	positive	Thanks
+NA	898	positive	sure
+NA	899	positive	free
+NA	900	neutral	may
+NA	901	positive	a nice surprise.
+NA	902	positive	Let's just hope
+NA	903	positive	quickly
+NA	904	positive	easily.
+NA	905	positive	Bring on Barca.
+NA	906	positive	A Good night
+NA	907	positive	scored,
+NA	908	positive	played well
+NA	909	positive	Wanted to be
+NA	910	negative	didn't
+NA	911	negative	no
+NA	912	positive	Need to
+NA	913	positive	securing
+NA	914	positive	opened
+NA	915	positive	scoring
+NA	916	positive	like""
+NA	917	neutral	pls educate
+NA	918	negative	bitch face
+NA	919	negative	make Wednesday Adams jealous
+NA	920	negative	Missing:
+NA	921	negative	may not be
+NA	922	positive	I'm glad ~smiles gently~
+NA	923	positive	I'm much better,
+NA	924	positive	May
+NA	925	neutral	just
+NA	926	negative	bottomed
+NA	927	negative	sliced
+NA	928	positive	shall be a grand day. A GRAND DAY
+NA	929	positive	Perseverance
+NA	930	negative	failing
+NA	931	positive	succeeding
+NA	932	positive	Getting To
+NA	933	negative	had to close below
+NA	934	positive	uptrend survives.
+NA	935	positive	have to rise
+NA	936	positive	is the best boyfriend ever!
+NA	937	positive	Love him""
+NA	938	positive	ahead
+NA	939	positive	scored
+NA	940	positive	beat
+NA	941	positive	just scores.
+NA	942	positive	Check out
+NA	943	positive	I'd love
+NA	944	positive	whoop
+NA	945	positive	Sign up
+NA	946	positive	a very important player.
+NA	947	positive	clown
+NA	948	positive	have backed himself into that
+NA	949	positive	Outrageous.
+NA	950	positive	imperious
+NA	951	neutral	Class overload.
+NA	952	negative	elbow
+NA	953	positive	*Starts
+NA	954	positive	noticed
+NA	955	neutral	agree
+NA	956	positive	do agree
+NA	957	negative	hell.
+NA	958	neutral	set to leave
+NA	959	positive	that's a good point.
+NA	960	neutral	didn't
+NA	961	positive	right
+NA	962	neutral	media coverage
+NA	963	negative	arrest
+NA	964	positive	outright
+NA	965	positive	you love
+NA	966	negative	I don't think
+NA	967	negative	understand
+NA	968	negative	obnoxiously loud
+NA	969	negative	Holy shit
+NA	970	negative	may not remember
+NA	971	positive	can bet
+NA	972	positive	remembers
+NA	973	neutral	might go
+NA	974	positive	Adjusted Up;
+NA	975	negative	Adjusted Down
+NA	976	positive	goalscorer
+NA	977	positive	strong team.
+NA	978	positive	must be the best
+NA	979	positive	to win tomorrow.""
+NA	980	neutral	keeping
+NA	981	neutral	weighing
+NA	982	negative	Market meltdown
+NA	983	positive	nice try
+NA	984	negative	cant stop it
+NA	985	negative	dont look like
+NA	986	negative	assaults
+NA	987	negative	mows
+NA	988	negative	isnt
+NA	989	positive	enough
+NA	990	positive	eaaaasy,eaaaasy
+NA	991	neutral	I doubt
+NA	992	neutral	joined
+NA	993	positive	all day
+NA	994	positive	like amazing
+NA	995	negative	would drop
+NA	996	negative	mocked
+NA	997	neutral	can ask
+NA	998	neutral	we r going
+NA	999	positive	Good Luck
+NA	1000	positive	support
+NA	1001	positive	awesome
+NA	1002	positive	is stronger
+NA	1003	negative	couldn't make it
+NA	1004	positive	sums it all up!
+NA	1005	positive	going home.
+NA	1006	positive	complete!!!
+NA	1007	positive	so excited
+NA	1008	positive	take a 6-4 lead
+NA	1009	positive	eyes record,
+NA	1010	positive	seek boost:
+NA	1011	positive	Perseverance
+NA	1012	positive	succeeding
+NA	1013	positive	preparing for
+NA	1014	positive	isn't scared,""
+NA	1015	negative	sues
+NA	1016	negative	claiming sexual assault
+NA	1017	negative	Shocking Secrets and Admissions!
+NA	1018	negative	may not be starring
+NA	1019	positive	never
+NA	1020	positive	right
+NA	1021	positive	pick us
+NA	1022	positive	Perseverance
+NA	1023	negative	failing
+NA	1024	positive	succeeding
+NA	1025	positive	Perseverance
+NA	1026	positive	shot at immortality.
+NA	1027	neutral	soloing
+NA	1028	negative	Still very glitchy
+NA	1029	positive	the place to be
+NA	1030	neutral	face to face
+NA	1031	negative	can't get on the pitch AT ALL.
+NA	1032	positive	is wise
+NA	1033	positive	Nice to
+NA	1034	positive	bringing
+NA	1035	positive	proper skill
+NA	1036	positive	Just tried
+NA	1037	neutral	May Have Teamed Up
+NA	1038	positive	Dare to be
+NA	1039	positive	I swear
+NA	1040	positive	a good
+NA	1041	negative	failing
+NA	1042	positive	succeeding
+NA	1043	neutral	he may start
+NA	1044	neutral	depends
+NA	1045	positive	hopefully
+NA	1046	neutral	may have actually been
+NA	1047	positive	may love
+NA	1048	negative	we hate ourselves
+NA	1049	negative	not
+NA	1050	negative	as sad
+NA	1051	positive	very important player.
+NA	1052	positive	we think
+NA	1053	negative	destroy
+NA	1054	neutral	officially reinstated. Happy
+NA	1055	neutral	keeping
+NA	1056	positive	to my boy
+NA	1057	positive	Very proud of him!
+NA	1058	positive	Happy birthday!! ""Thanks
+NA	1059	positive	remains focused
+NA	1060	positive	even more stronger/Unstoppable!
+NA	1061	negative	Abuse Allegations:
+NA	1062	positive	is my spirit
+NA	1063	negative	bitch
+NA	1064	negative	mad
+NA	1065	positive	Perseverance
+NA	1066	negative	failing
+NA	1067	positive	succeeding
+NA	1068	positive	Don't miss
+NA	1069	positive	interested
+NA	1070	positive	may have a solution
+NA	1071	positive	watch
+NA	1072	positive	routes for
+NA	1073	positive	fantasy world
+NA	1074	positive	I voted
+NA	1075	positive	Looking forward
+NA	1076	negative	who do you think you are fooling?
+NA	1077	negative	don't fucking cook
+NA	1078	negative	Lmfao
+NA	1079	positive	signed
+NA	1080	positive	awesome team
+NA	1081	positive	amazing...
+NA	1082	positive	so looking forward to seeing
+NA	1083	negative	cried
+NA	1084	positive	Get well soon
+NA	1085	negative	gonna fail
+NA	1086	negative	so fuck it
+NA	1087	negative	dont care anymore..
+NA	1088	positive	cheer myself up
+NA	1089	positive	Perseverance
+NA	1090	positive	succeeding
+NA	1091	negative	don't have anyone
+NA	1092	positive	top
+NA	1093	positive	I like
+NA	1094	neutral	probably
+NA	1095	positive	That's pretty cool.
+NA	1096	negative	a hard time
+NA	1097	neutral	need
+NA	1098	positive	fun
+NA	1099	positive	love the same toy.
+NA	1100	positive	something that went right.
+NA	1101	positive	please come
+NA	1102	negative	needs to be treated with caution
+NA	1103	negative	Unlucky!
+NA	1104	positive	a treat
+NA	1105	positive	a place in the stars,
+NA	1106	neutral	don't
+NA	1107	positive	1st
+NA	1108	positive	admit
+NA	1109	negative	blew away
+NA	1110	negative	may not make
+NA	1111	negative	lol
+NA	1112	negative	I may not approve
+NA	1113	positive	love.
+NA	1114	neutral	be
+NA	1115	neutral	miss
+NA	1116	positive	I'm very happy
+NA	1117	negative	Not sure
+NA	1118	positive	keep the mood fun and grooving,
+NA	1119	positive	Best
+NA	1120	positive	celebration
+NA	1121	positive	that's entertainment
+NA	1122	positive	was a good film
+NA	1123	positive	wanted to play
+NA	1124	positive	more
+NA	1125	negative	was hard to take
+NA	1126	positive	is a survivor.
+NA	1127	positive	so much.
+NA	1128	negative	holding her from freedom.
+NA	1129	negative	angry,
+NA	1130	positive	Go all Wednesday Adams
+NA	1131	positive	gorgeous Scalloped Collar
+NA	1132	negative	Weirdly,
+NA	1133	positive	Idea
+NA	1134	neutral	just agreed
+NA	1135	negative	#speechless
+NA	1136	negative	Abuse
+NA	1137	neutral	lawsuit
+NA	1138	positive	made history.
+NA	1139	positive	See
+NA	1140	positive	set to host
+NA	1141	neutral	believes
+NA	1142	positive	Going
+NA	1143	neutral	sounds
+NA	1144	positive	#GoBlue
+NA	1145	positive	very productive
+NA	1146	negative	crazy
+NA	1147	negative	only joined
+NA	1148	negative	for the money.""
+NA	1149	positive	Time to think
+NA	1150	negative	is in big trouble
+NA	1151	positive	consists
+NA	1152	positive	:)
+NA	1153	positive	Ok
+NA	1154	positive	winners
+NA	1155	neutral	we may be
+NA	1156	positive	I like how
+NA	1157	positive	like:
+NA	1158	negative	f-ing
+NA	1159	positive	still at the top
+NA	1160	positive	gorgeous
+NA	1161	negative	WTF is wrong with you
+NA	1162	negative	supposed to get work done
+NA	1163	positive	scored
+NA	1164	positive	different minute
+NA	1165	negative	arrest
+NA	1166	negative	detention
+NA	1167	negative	Not
+NA	1168	negative	despite the success.
+NA	1169	positive	make sure
+NA	1170	positive	catch the
+NA	1171	negative	fall
+NA	1172	positive	I strive to be like
+NA	1173	positive	every day.
+NA	1174	negative	woken with fever.
+NA	1175	negative	don't think either will play
+NA	1176	negative	less stupid
+NA	1177	positive	makes it
+NA	1178	positive	Let's hope
+NA	1179	positive	is freed soon
+NA	1180	positive	chance
+NA	1181	positive	notch
+NA	1182	positive	win.
+NA	1183	positive	the best
+NA	1184	positive	well represented
+NA	1185	positive	Wow.
+NA	1186	neutral	want to
+NA	1187	positive	presents human rights defender
+NA	1188	positive	Still
+NA	1189	positive	all-time number 1,
+NA	1190	neutral	where would
+NA	1191	neutral	I just sayin...
+NA	1192	neutral	were coming anyway
+NA	1193	positive	Going out like a lion
+NA	1194	negative	coming back
+NA	1195	negative	glad it's over.
+NA	1196	positive	Come on
+NA	1197	positive	will follow..
+NA	1198	negative	shouldn't start
+NA	1199	positive	Need
+NA	1200	positive	just fine..
+NA	1201	negative	insulting
+NA	1202	positive	more animated
+NA	1203	positive	joined
+NA	1204	positive	going out for
+NA	1205	positive	first time
+NA	1206	positive	so proud lol
+NA	1207	neutral	may be a very good year
+NA	1208	negative	a very bad
+NA	1209	positive	it went well.""
+NA	1210	positive	lovely too
+NA	1211	positive	but lovely.
+NA	1212	negative	missed a trick not
+NA	1213	positive	Just
+NA	1214	positive	expect
+NA	1215	positive	lead the chase
+NA	1216	neutral	wants
+NA	1217	neutral	leave
+NA	1218	negative	awful
+NA	1219	positive	was great
+NA	1220	positive	keen
+NA	1221	positive	return
+NA	1222	positive	very important
+NA	1223	positive	will start
+NA	1224	positive	Goalkeeper of the Week!
+NA	1225	negative	considered late
+NA	1226	negative	No love
+NA	1227	positive	very important player.
+NA	1228	negative	The problem
+NA	1229	negative	no extra holiday.
+NA	1230	positive	I must go!
+NA	1231	positive	Yaaaaay
+NA	1232	positive	gets the accolades
+NA	1233	positive	#fortunate
+NA	1234	negative	Kristen Stewart Were 'Hobbit' Like:
+NA	1235	positive	I actually love them
+NA	1236	positive	may
+NA	1237	positive	keeping
+NA	1238	negative	inferior
+NA	1239	positive	hook up
+NA	1240	negative	doesnt
+NA	1241	neutral	Speaks Out
+NA	1242	negative	down
+NA	1243	positive	hold
+NA	1244	neutral	Did you enjoy it?
+NA	1245	neutral	may
+NA	1246	positive	you may get a free game!
+NA	1247	positive	need
+NA	1248	neutral	more
+NA	1249	positive	so perfect
+NA	1250	positive	may have just turned me into a Taylor Swift fan,
+NA	1251	negative	snubbed
+NA	1252	positive	won
+NA	1253	positive	Hold up... Don't Trust
+NA	1254	positive	pls be there
+NA	1255	neutral	just
+NA	1256	neutral	normally
+NA	1257	positive	all smiles
+NA	1258	positive	going to plan.
+NA	1259	positive	recovered
+NA	1260	positive	ready to play,
+NA	1261	positive	Looking
+NA	1262	positive	join
+NA	1263	positive	Must love
+NA	1264	negative	so damn angsty
+NA	1265	positive	That moment
+NA	1266	positive	gorgeous Scalloped
+NA	1267	positive	good
+NA	1268	positive	went well.""
+NA	1269	positive	gorgeous products
+NA	1270	negative	up
+NA	1271	positive	Decent outing
+NA	1272	negative	Undone
+NA	1273	positive	bit
+NA	1274	positive	brilliance
+NA	1275	positive	screamed
+NA	1276	positive	family..LOVE YA!
+NA	1277	positive	Love them to bits
+NA	1278	positive	made
+NA	1279	positive	gonna support
+NA	1280	neutral	close
+NA	1281	positive	Don't forget
+NA	1282	positive	Check out
+NA	1283	positive	strong team.
+NA	1284	positive	must be the best
+NA	1285	positive	to win
+NA	1286	positive	Adjusted Up;
+NA	1287	positive	big social interaction.
+NA	1288	negative	alone in the dark
+NA	1289	positive	making it interesting
+NA	1290	neutral	reporting
+NA	1291	neutral	end up
+NA	1292	negative	beat
+NA	1293	positive	good stuff
+NA	1294	positive	keep it up
+NA	1295	negative	all time low
+NA	1296	negative	seeing seohyun
+NA	1297	negative	me cry
+NA	1298	positive	are looking the part
+NA	1299	negative	I'm so bored
+NA	1300	positive	I can think about
+NA	1301	positive	too cute and funny
+NA	1302	positive	I want
+NA	1303	negative	weird
+NA	1304	positive	Atta way
+NA	1305	positive	look it up
+NA	1306	negative	shit,
+NA	1307	negative	sorry
+NA	1308	negative	being sick
+NA	1309	negative	Still can't believe it..
+NA	1310	positive	consists
+NA	1311	positive	:)
+NA	1312	negative	super cold
+NA	1313	negative	no good reason.
+NA	1314	positive	perfect combination
+NA	1315	positive	just
+NA	1316	positive	you was amazing
+NA	1317	negative	wrong
+NA	1318	positive	is a must
+NA	1319	positive	you're better than that.
+NA	1320	positive	happy for you...
+NA	1321	positive	Bring back the magic
+NA	1322	positive	loves
+NA	1323	negative	Lost boy, disconnected,
+NA	1324	positive	never dies, heartache
+NA	1325	negative	don't
+NA	1326	positive	as good as it gets.
+NA	1327	positive	I want to see
+NA	1328	positive	that was funny
+NA	1329	positive	keen to return
+NA	1330	positive	paradise""
+NA	1331	positive	out
+NA	1332	negative	gonna molest you
+NA	1333	positive	break record, shock the world
+NA	1334	negative	may
+NA	1335	negative	rubbed off
+NA	1336	negative	hell yeah
+NA	1337	positive	seen like
+NA	1338	positive	understand
+NA	1339	negative	calm down
+NA	1340	positive	""live together peacefully
+NA	1341	positive	greatest advantages
+NA	1342	positive	I love that brand.
+NA	1343	negative	don't have
+NA	1344	positive	top
+NA	1345	positive	Atta way!
+NA	1346	negative	twisted
+NA	1347	positive	he is ok
+NA	1348	positive	Rest
+NA	1349	positive	God luck
+NA	1350	negative	big danger
+NA	1351	negative	may not want to play
+NA	1352	positive	LOVE
+NA	1353	negative	Do not
+NA	1354	negative	so done with
+NA	1355	neutral	looks like fetus ashton
+NA	1356	positive	more
+NA	1357	positive	Good morning!!
+NA	1358	positive	bright
+NA	1359	positive	early
+NA	1360	neutral	I want to be asking
+NA	1361	positive	just an incredible
+NA	1362	positive	an incredible winner?
+NA	1363	negative	may not be
+NA	1364	positive	crazy obsessed
+NA	1365	positive	really do like you.
+NA	1366	positive	hit safely
+NA	1367	negative	never got ready
+NA	1368	negative	Oops
+NA	1369	positive	could
+NA	1370	positive	legit
+NA	1371	positive	Wonderful gesture
+NA	1372	positive	friendly match
+NA	1373	negative	may not be starring
+NA	1374	positive	goalscorer
+NA	1375	positive	favoris
+NA	1376	positive	Huge run
+NA	1377	positive	Keeps
+NA	1378	positive	lead
+NA	1379	neutral	is being linked
+NA	1380	positive	Many thanks
+NA	1381	negative	can no longer make children...
+NA	1382	neutral	people could have seen
+NA	1383	positive	became a Trending Topic.
+NA	1384	neutral	Huge difference
+NA	1385	negative	absolutely fuck
+NA	1386	positive	if you'd like
+NA	1387	neutral	be sure
+NA	1388	positive	Perseverance
+NA	1389	positive	succeeding
+NA	1390	positive	Wish
+NA	1391	positive	will success
+NA	1392	positive	Show us your charm....
+NA	1393	positive	just saw
+NA	1394	positive	so proud lol
+NA	1395	positive	something fun
+NA	1396	positive	a giveaway.
+NA	1397	negative	may not
+NA	1398	positive	working
+NA	1399	positive	quality
+NA	1400	positive	get their chance.
+NA	1401	positive	girl scouts.
+NA	1402	negative	Starve her
+NA	1403	positive	the best mascara
+NA	1404	positive	just got
+NA	1405	positive	blessing
+NA	1406	positive	sympathizers
+NA	1407	negative	he may have injected
+NA	1408	positive	start it
+NA	1409	positive	needing
+NA	1410	positive	2nd-most popular
+NA	1411	neutral	may just be
+NA	1412	negative	doesn't like
+NA	1413	negative	&gt;not one for the
+NA	1414	negative	I think
+NA	1415	positive	super hot""
+NA	1416	negative	don't think
+NA	1417	positive	look too lil
+NA	1418	positive	even more stronger/Unstoppable!
+NA	1419	positive	i'm excited
+NA	1420	negative	just
+NA	1421	negative	failed
+NA	1422	positive	hope she likes it.
+NA	1423	positive	may
+NA	1424	negative	only
+NA	1425	negative	arrest
+NA	1426	positive	May is even cooler
+NA	1427	positive	Skye is better.
+NA	1428	positive	is cool.
+NA	1429	positive	Make sure
+NA	1430	positive	seriously knows how to make my mornings,
+NA	1431	positive	all I look forward to
+NA	1432	positive	Thank you
+NA	1433	positive	Looks Amazing
+NA	1434	negative	It's not easy
+NA	1435	positive	almost always scores
+NA	1436	positive	insisting
+NA	1437	positive	we need you
+NA	1438	positive	c'mon now
+NA	1439	positive	so amazed
+NA	1440	negative	beat
+NA	1441	neutral	Speaks Out
+NA	1442	negative	Abuse Allegations:
+NA	1443	negative	it's freaky
+NA	1444	negative	shivers...
+NA	1445	neutral	no idea
+NA	1446	neutral	am going to see
+NA	1447	neutral	signaling
+NA	1448	positive	advantage.
+NA	1449	negative	Wrong.
+NA	1450	positive	They won
+NA	1451	positive	They're up there
+NA	1452	neutral	have to blow one
+NA	1453	positive	stay awake
+NA	1454	positive	honestly
+NA	1455	positive	good
+NA	1456	positive	readily available.
+NA	1457	negative	Still don't think
+NA	1458	positive	Of course I would sign
+NA	1459	positive	see
+NA	1460	positive	again lol.
+NA	1461	positive	awesome
+NA	1462	negative	weren't
+NA	1463	positive	Wanna come
+NA	1464	positive	Looking forward
+NA	1465	negative	didn't play
+NA	1466	negative	this game away.
+NA	1467	negative	Not enough time
+NA	1468	negative	how is it
+NA	1469	negative	can
+NA	1470	negative	are not penalized
+NA	1471	negative	Totally forgot
+NA	1472	negative	too busy
+NA	1473	negative	fucking test
+NA	1474	positive	full
+NA	1475	positive	Best part
+NA	1476	positive	Very nice,
+NA	1477	positive	good weekend!
+NA	1478	positive	not plastic(its real)!
+NA	1479	positive	royal
+NA	1480	positive	trustfull
+NA	1481	negative	no
+NA	1482	negative	not
+NA	1483	neutral	Where's my comeback
+NA	1484	positive	will be able to
+NA	1485	negative	without vomming. Hopefully
+NA	1486	negative	incredibly stupid
+NA	1487	negative	:( ahhh
+NA	1488	positive	too much
+NA	1489	positive	absolutely right
+NA	1490	negative	wasn't
+NA	1491	negative	may not
+NA	1492	positive	please Take the
+NA	1493	positive	pledge
+NA	1494	positive	better
+NA	1495	positive	Help
+NA	1496	negative	may be worrying
+NA	1497	positive	ready
+NA	1498	negative	down
+NA	1499	negative	worthless
+NA	1500	negative	don think
+NA	1501	negative	without getting mad
+NA	1502	negative	make fun
+NA	1503	negative	ughh
+NA	1504	positive	can
+NA	1505	positive	successful':
+NA	1506	positive	wish
+NA	1507	positive	Oh God
+NA	1508	positive	so excited
+NA	1509	positive	freaking awesome
+NA	1510	positive	the best
+NA	1511	positive	now..best
+NA	1512	positive	Love this
+NA	1513	positive	Good to know
+NA	1514	positive	a good day.
+NA	1515	positive	Shoutout
+NA	1516	negative	#strangerdanger?
+NA	1517	negative	inconclusive:
+NA	1518	positive	here we come. Celebrating
+NA	1519	positive	sunny
+NA	1520	positive	So excited
+NA	1521	positive	beautiful boy
+NA	1522	positive	Yaaaay
+NA	1523	positive	always the best:
+NA	1524	positive	best day
+NA	1525	positive	free
+NA	1526	positive	Can't wait
+NA	1527	negative	didn't get
+NA	1528	positive	new
+NA	1529	positive	Happy Thursday.
+NA	1530	negative	Tough loss
+NA	1531	neutral	still be
+NA	1532	neutral	might get
+NA	1533	positive	yet get
+NA	1534	positive	SO EXCITED
+NA	1535	positive	Good excuse
+NA	1536	positive	All right.
+NA	1537	negative	Is he not afraid
+NA	1538	negative	may embarrass him?
+NA	1539	neutral	another big day
+NA	1540	negative	lasted shorter
+NA	1541	negative	Fuck!
+NA	1542	positive	hope
+NA	1543	negative	feel really stupid
+NA	1544	positive	delivers
+NA	1545	positive	win,
+NA	1546	positive	just write
+NA	1547	positive	sure
+NA	1548	positive	make me feel better
+NA	1549	positive	Would love
+NA	1550	positive	take me
+NA	1551	negative	im broke
+NA	1552	negative	over spent
+NA	1553	positive	try
+NA	1554	negative	missed
+NA	1555	positive	most unheralded
+NA	1556	negative	bad play calling
+NA	1557	negative	fake
+NA	1558	positive	#GoPackGo
+NA	1559	negative	completely disagree
+NA	1560	negative	never
+NA	1561	positive	Noble intentions
+NA	1562	neutral	the fact
+NA	1563	negative	no
+NA	1564	negative	ignored
+NA	1565	negative	long
+NA	1566	positive	wanna
+NA	1567	positive	Come on
+NA	1568	positive	more effective?
+NA	1569	neutral	can
+NA	1570	negative	some odd decisions.
+NA	1571	positive	fast
+NA	1572	positive	a surprise
+NA	1573	positive	Yeah buddy
+NA	1574	positive	Making jokes
+NA	1575	positive	helps
+NA	1576	positive	cope
+NA	1577	negative	forgot
+NA	1578	positive	will be me
+NA	1579	positive	gives us hope
+NA	1580	negative	no mention
+NA	1581	positive	Need
+NA	1582	negative	can't blame
+NA	1583	negative	not
+NA	1584	negative	sign
+NA	1585	negative	can't
+NA	1586	positive	want to come
+NA	1587	positive	same feeling
+NA	1588	positive	#CantSleep #SoExcited
+NA	1589	negative	giving
+NA	1590	negative	nightmares
+NA	1591	positive	a blowout.
+NA	1592	positive	Hope you are enjoying
+NA	1593	negative	r realy crazy.
+NA	1594	neutral	can
+NA	1595	positive	so i can celebrate
+NA	1596	positive	haha
+NA	1597	negative	disqualified
+NA	1598	neutral	May
+NA	1599	positive	as family
+NA	1600	positive	Glory of the Lord!
+NA	1601	positive	premium brand
+NA	1602	positive	Cool shot
+NA	1603	neutral	must
+NA	1604	positive	may
+NA	1605	positive	good recruiter,
+NA	1606	negative	never been impressed
+NA	1607	negative	have lost
+NA	1608	positive	the whole package.
+NA	1609	positive	some good things
+NA	1610	positive	better
+NA	1611	positive	inspired
+NA	1612	neutral	feel
+NA	1613	positive	alllll again
+NA	1614	negative	become bandwagon fans
+NA	1615	negative	Do y'all even know
+NA	1616	positive	my favorite thing
+NA	1617	negative	girlfriend is being to much of a pussy
+NA	1618	positive	looking beautiful!
+NA	1619	positive	shine
+NA	1620	positive	so easy
+NA	1621	positive	far too
+NA	1622	neutral	test vs FSU is big
+NA	1623	positive	won
+NA	1624	positive	Okay
+NA	1625	negative	I hate
+NA	1626	neutral	gonna have
+NA	1627	positive	most unheralded
+NA	1628	negative	will not complete
+NA	1629	negative	resign?
+NA	1630	negative	may want to retire
+NA	1631	negative	missing
+NA	1632	negative	may not be
+NA	1633	negative	great
+NA	1634	positive	great individual.
+NA	1635	positive	act of kindness.
+NA	1636	positive	dont worry
+NA	1637	positive	better
+NA	1638	negative	illegal
+NA	1639	negative	Won't be able
+NA	1640	negative	stupid
+NA	1641	neutral	Similar
+NA	1642	negative	don't have
+NA	1643	positive	Don't
+NA	1644	negative	may not like
+NA	1645	positive	really cool
+NA	1646	positive	can
+NA	1647	negative	pull out
+NA	1648	negative	dispute
+NA	1649	negative	Enough.
+NA	1650	positive	Looking forward
+NA	1651	negative	don't work
+NA	1652	negative	pull off
+NA	1653	negative	dispute
+NA	1654	negative	no
+NA	1655	negative	you fuckin jamoke
+NA	1656	negative	isn't particularly good
+NA	1657	positive	ever in our favor.
+NA	1658	negative	rest-scared of injury.Would
+NA	1659	positive	interested
+NA	1660	negative	no one
+NA	1661	positive	best
+NA	1662	negative	uncertainty
+NA	1663	negative	WHY DID THEY COME?#
+NA	1664	positive	the greatest organization ever.
+NA	1665	positive	here we come!
+NA	1666	positive	Be sure
+NA	1667	positive	love you
+NA	1668	positive	won
+NA	1669	positive	Excited
+NA	1670	positive	won
+NA	1671	positive	more
+NA	1672	positive	best
+NA	1673	positive	a great guy,
+NA	1674	negative	complete dumpster fire
+NA	1675	negative	not likin this
+NA	1676	negative	MAKE UP UR DAMN MIND
+NA	1677	negative	dump
+NA	1678	neutral	Maybe he'll qualify
+NA	1679	positive	going
+NA	1680	positive	just
+NA	1681	negative	don't
+NA	1682	positive	#geniuscoach
+NA	1683	positive	Can't wait
+NA	1684	positive	bad bitch
+NA	1685	negative	shit
+NA	1686	positive	boost
+NA	1687	negative	awh, boo them,
+NA	1688	positive	great weekend
+NA	1689	positive	IM SO EXCITED
+NA	1690	positive	be able
+NA	1691	positive	won
+NA	1692	negative	Sadly
+NA	1693	negative	has dropped
+NA	1694	positive	have never been more excited in my whole life!
+NA	1695	negative	destroyed
+NA	1696	positive	Such a complete
+NA	1697	positive	is up
+NA	1698	positive	don't miss it
+NA	1699	positive	free
+NA	1700	negative	are so hard
+NA	1701	negative	can't go on anything
+NA	1702	positive	hottest reporter
+NA	1703	negative	may suck
+NA	1704	positive	he still wins.
+NA	1705	negative	ruining my life
+NA	1706	negative	do not
+NA	1707	negative	no
+NA	1708	neutral	pulled out
+NA	1709	positive	needs
+NA	1710	positive	can help.
+NA	1711	positive	pretty nice....
+NA	1712	positive	may take my time
+NA	1713	negative	hurts
+NA	1714	negative	may actually collapse
+NA	1715	negative	Overpaid and under produce,
+NA	1716	positive	Exited.
+NA	1717	positive	Should
+NA	1718	negative	stuck
+NA	1719	positive	the best.
+NA	1720	positive	best
+NA	1721	positive	loves.
+NA	1722	negative	also ""risky""
+NA	1723	positive	Woop woop:)
+NA	1724	negative	long
+NA	1725	negative	still wait
+NA	1726	negative	AM DYING!!You
+NA	1727	negative	hurry up??
+NA	1728	negative	Rapes, Infects
+NA	1729	positive	great
+NA	1730	positive	unbelievably excited
+NA	1731	negative	haven't
+NA	1732	negative	really catching shit
+NA	1733	negative	Wtf.
+NA	1734	positive	worked like magic.
+NA	1735	negative	complain
+NA	1736	positive	agree
+NA	1737	negative	may not have
+NA	1738	positive	is:)
+NA	1739	negative	Asiata is useless
+NA	1740	positive	decent
+NA	1741	negative	was racist,
+NA	1742	positive	Excited
+NA	1743	positive	always the best!
+NA	1744	positive	so adorrbbs!
+NA	1745	negative	horror
+NA	1746	negative	Not feeling
+NA	1747	negative	isn't my style.
+NA	1748	positive	he's best at.
+NA	1749	positive	so excited
+NA	1750	positive	will be bright.
+NA	1751	neutral	this be the last
+NA	1752	negative	excuse?
+NA	1753	negative	cried like a baby
+NA	1754	positive	Good weekend plans.
+NA	1755	positive	reclaims
+NA	1756	positive	lead.
+NA	1757	positive	galore
+NA	1758	positive	awesome
+NA	1759	positive	Can't wait
+NA	1760	negative	(unfortunately)
+NA	1761	positive	straight
+NA	1762	positive	fall in love
+NA	1763	positive	Happy to know
+NA	1764	positive	New
+NA	1765	negative	only good enough
+NA	1766	positive	happy
+NA	1767	positive	can
+NA	1768	positive	accelerates
+NA	1769	positive	reform
+NA	1770	negative	makes no memorable plays.
+NA	1771	positive	won
+NA	1772	negative	Unfortunately,
+NA	1773	negative	will be delayed
+NA	1774	positive	Ears in heaven
+NA	1775	positive	loving it, enjoyed
+NA	1776	positive	Expect
+NA	1777	positive	kindly
+NA	1778	positive	upgrading
+NA	1779	negative	no butt fucking sorry,
+NA	1780	negative	bound to shit
+NA	1781	positive	healthy.
+NA	1782	negative	weird.
+NA	1783	positive	will
+NA	1784	neutral	really
+NA	1785	positive	would love to know
+NA	1786	positive	decent
+NA	1787	positive	Come on
+NA	1788	positive	let's not give up
+NA	1789	positive	definitely
+NA	1790	positive	Cheer on
+NA	1791	positive	Hope
+NA	1792	positive	quality performances
+NA	1793	positive	beat
+NA	1794	negative	awkward place...
+NA	1795	negative	Angry Rodgers
+NA	1796	positive	would've been perfect
+NA	1797	negative	haven't been
+NA	1798	negative	Like WTF!
+NA	1799	positive	Great
+NA	1800	positive	Awsome
+NA	1801	negative	grimey.
+NA	1802	positive	ready
+NA	1803	negative	get sacked
+NA	1804	negative	don't let
+NA	1805	negative	run down
+NA	1806	positive	So excited
+NA	1807	neutral	May
+NA	1808	negative	may miss
+NA	1809	negative	amid fears
+NA	1810	negative	serious
+NA	1811	negative	you're an idiot.
+NA	1812	positive	Can't wait
+NA	1813	positive	hope
+NA	1814	negative	doesn't get off
+NA	1815	positive	Good Morning
+NA	1816	positive	hope
+NA	1817	positive	amazing day.
+NA	1818	positive	look forward
+NA	1819	negative	selfishness
+NA	1820	negative	may
+NA	1821	negative	violence,
+NA	1822	positive	may
+NA	1823	positive	optimist
+NA	1824	positive	might cooperate
+NA	1825	negative	fucking hate
+NA	1826	neutral	All sports have quirks.
+NA	1827	positive	good luck
+NA	1828	positive	Seriously nothing better than
+NA	1829	negative	going to be a problem.
+NA	1830	positive	you like
+NA	1831	positive	love to see you
+NA	1832	positive	look forward
+NA	1833	positive	support
+NA	1834	positive	appreciate it!
+NA	1835	positive	controls its own destiny
+NA	1836	positive	No.
+NA	1837	positive	makes me so happy!
+NA	1838	neutral	surprise
+NA	1839	negative	short
+NA	1840	positive	good
+NA	1841	negative	picking
+NA	1842	negative	'incredibly contagious,'
+NA	1843	negative	be honest
+NA	1844	negative	may not be a good
+NA	1845	positive	hard
+NA	1846	positive	hate
+NA	1847	neutral	may
+NA	1848	positive	;)
+NA	1849	negative	chagrined
+NA	1850	negative	pissed?
+NA	1851	negative	terrible
+NA	1852	positive	terrific
+NA	1853	positive	won
+NA	1854	positive	RUN IT
+NA	1855	positive	may
+NA	1856	positive	the best
+NA	1857	positive	so good
+NA	1858	negative	should not come
+NA	1859	negative	""without
+NA	1860	negative	not
+NA	1861	positive	loosen
+NA	1862	negative	raging
+NA	1863	negative	never
+NA	1864	positive	brilliant work.@cctheatreco
+NA	1865	neutral	Should
+NA	1866	negative	fear
+NA	1867	positive	just won
+NA	1868	positive	can win
+NA	1869	negative	WICKEDNESS:
+NA	1870	negative	listed as out
+NA	1871	negative	are you serious...
+NA	1872	positive	New
+NA	1873	positive	So Happy
+NA	1874	positive	something about
+NA	1875	positive	get chills
+NA	1876	positive	super damn goooood
+NA	1877	positive	was incredible.
+NA	1878	positive	lucky
+NA	1879	positive	sense
+NA	1880	positive	Damn sure wouldn't mind
+NA	1881	positive	be your friend
+NA	1882	positive	hahaha yeah!
+NA	1883	positive	Good to know
+NA	1884	negative	wary
+NA	1885	positive	big-play
+NA	1886	positive	can think
+NA	1887	positive	#OBSESSED
+NA	1888	positive	WOW,
+NA	1889	negative	may not
+NA	1890	negative	may be a back
+NA	1891	negative	never amount to much
+NA	1892	positive	feel great
+NA	1893	positive	#gorgeous
+NA	1894	negative	hasnt
+NA	1895	negative	dumbest
+NA	1896	negative	fake
+NA	1897	positive	whole package.
+NA	1898	neutral	may
+NA	1899	positive	would be proud
+NA	1900	negative	Franklin...not.
+NA	1901	positive	good
+NA	1902	negative	can't coach
+NA	1903	negative	shit.
+NA	1904	neutral	Typical
+NA	1905	positive	just hope
+NA	1906	negative	:(
+NA	1907	negative	not
+NA	1908	negative	poor
+NA	1909	negative	may cause failure
+NA	1910	positive	willingly
+NA	1911	positive	great way
+NA	1912	positive	new
+NA	1913	negative	only
+NA	1914	negative	2nd worst
+NA	1915	negative	out
+NA	1916	negative	#BlatantLiar
+NA	1917	positive	favorite memory
+NA	1918	negative	may be wrong
+NA	1919	negative	tries
+NA	1920	negative	what the hell
+NA	1921	positive	by far the most dominant player
+NA	1922	positive	dominate
+NA	1923	positive	Good luck
+NA	1924	positive	support
+NA	1925	negative	resignd
+NA	1926	negative	why
+NA	1927	negative	left
+NA	1928	negative	destroyed
+NA	1929	positive	complete
+NA	1930	positive	great
+NA	1931	negative	sorts of rubbish""
+NA	1932	negative	pull off
+NA	1933	negative	doesn't give a shit
+NA	1934	positive	good
+NA	1935	positive	school,wld be gr8
+NA	1936	negative	problems.
+NA	1937	negative	Very Unfair:
+NA	1938	positive	appreciates
+NA	1939	neutral	might as well
+NA	1940	positive	second-best
+NA	1941	negative	tough
+NA	1942	positive	still lean him
+NA	1943	positive	playing it safe.
+NA	1944	positive	can't wait
+NA	1945	neutral	speaks volumes
+NA	1946	negative	not using
+NA	1947	negative	properly.
+NA	1948	negative	don't
+NA	1949	positive	a surprise visit
+NA	1950	positive	Bonus points
+NA	1951	negative	won't be
+NA	1952	positive	pretty funny. not
+NA	1953	negative	Seriously not putting up with Nicole's shit
+NA	1954	negative	made
+NA	1955	negative	garbage free, did not need
+NA	1956	positive	won
+NA	1957	positive	the better
+NA	1958	positive	HUGE
+NA	1959	positive	should
+NA	1960	positive	a nice
+NA	1961	negative	having problems.
+NA	1962	negative	missed
+NA	1963	negative	will never be okay
+NA	1964	negative	have to miss
+NA	1965	negative	repair canceled.
+NA	1966	positive	Tuesday...grrrr...can't wait
+NA	1967	positive	impressive
+NA	1968	negative	destroyed Brian Cushing
+NA	1969	positive	a complete
+NA	1970	positive	better
+NA	1971	neutral	surprised,
+NA	1972	negative	fatal.
+NA	1973	positive	wanna watch
+NA	1974	positive	Thanks
+NA	1975	negative	Makes me sad
+NA	1976	negative	""Not
+NA	1977	positive	YOU GO NASH
+NA	1978	negative	not been
+NA	1979	negative	best
+NA	1980	positive	better than
+NA	1981	neutral	may force
+NA	1982	positive	best
+NA	1983	negative	terrified
+NA	1984	negative	Don't pass
+NA	1985	positive	should declare
+NA	1986	positive	Gotta make
+NA	1987	positive	New
+NA	1988	negative	no
+NA	1989	positive	I am excited!
+NA	1990	negative	so aggressive,
+NA	1991	negative	never
+NA	1992	positive	strong
+NA	1993	positive	Welcome
+NA	1994	positive	Aaaalllll Aboard!
+NA	1995	positive	want to get
+NA	1996	negative	can't figure out
+NA	1997	negative	Worst
+NA	1998	negative	Sorry,
+NA	1999	negative	worst.
+NA	2000	negative	may be
+NA	2001	positive	always
+NA	2002	positive	winner
+NA	2003	negative	got sacked
+NA	2004	positive	winning
+NA	2005	negative	#Mad
+NA	2006	negative	not
+NA	2007	positive	expected
+NA	2008	negative	rapes and infects two kids
+NA	2009	positive	with love
+NA	2010	negative	Is he Mad?
+NA	2011	positive	good
+NA	2012	negative	too cautious
+NA	2013	negative	right
+NA	2014	positive	can
+NA	2015	positive	here to support!
+NA	2016	positive	can't wait
+NA	2017	positive	so cute
+NA	2018	negative	the death of me
+NA	2019	positive	splendid
+NA	2020	negative	may
+NA	2021	negative	far too much
+NA	2022	negative	expect...
+NA	2023	positive	One of my favorite shows
+NA	2024	positive	hope
+NA	2025	positive	good
+NA	2026	positive	sign
+NA	2027	positive	something
+NA	2028	negative	hate
+NA	2029	neutral	may be
+NA	2030	negative	Not going to be able
+NA	2031	negative	fucking
+NA	2032	negative	closed again,
+NA	2033	negative	fucker
+NA	2034	negative	weight loss, fatigue,
+NA	2035	positive	great
+NA	2036	negative	down
+NA	2037	positive	so spot on, great look forward
+NA	2038	negative	may not be
+NA	2039	positive	big
+NA	2040	positive	good point,
+NA	2041	negative	already wasted
+NA	2042	positive	top fucking notch
+NA	2043	positive	fine
+NA	2044	negative	sounds like
+NA	2045	positive	Please support
+NA	2046	positive	helps.""
+NA	2047	positive	Best day EVER!
+NA	2048	positive	Get better
+NA	2049	positive	Glad
+NA	2050	positive	have fun
+NA	2051	positive	Psyched!
+NA	2052	positive	Great start
+NA	2053	positive	Hope
+NA	2054	negative	won't AGAIN try
+NA	2055	negative	block
+NA	2056	positive	watch
+NA	2057	positive	makes me happy.
+NA	2058	positive	want
+NA	2059	positive	""HAPPY BIRTHDAY
+NA	2060	negative	wouldn't believe
+NA	2061	positive	honest
+NA	2062	negative	i give up on life
+NA	2063	positive	straight win
+NA	2064	negative	locked in
+NA	2065	positive	in 1st!
+NA	2066	negative	a lot of mud pies.#KeepPounding
+NA	2067	positive	loved
+NA	2068	negative	how ugly
+NA	2069	positive	want
+NA	2070	negative	nervous
+NA	2071	negative	Hip pain
+NA	2072	negative	might not be wise
+NA	2073	positive	Cool shot
+NA	2074	neutral	slowly
+NA	2075	positive	ton...Well played
+NA	2076	negative	Obamacare Fears May Not Come To Pass
+NA	2077	neutral	wants better
+NA	2078	negative	#ugly #blowout
+NA	2079	positive	pardon
+NA	2080	positive	loves a
+NA	2081	negative	fouls.
+NA	2082	negative	unnecessary drama;
+NA	2083	negative	unfit
+NA	2084	positive	still a home....
+NA	2085	negative	can't
+NA	2086	positive	want
+NA	2087	positive	Great
+NA	2088	negative	really crappy
+NA	2089	positive	okay
+NA	2090	positive	happy
+NA	2091	positive	/cutest/ shows
+NA	2092	positive	help
+NA	2093	positive	Outstanding,
+NA	2094	positive	won
+NA	2095	negative	have been
+NA	2096	negative	without
+NA	2097	positive	amazing
+NA	2098	positive	working
+NA	2099	positive	@fast pace.
+NA	2100	positive	C'mon,
+NA	2101	positive	come clean
+NA	2102	positive	living life to the fullest
+NA	2103	positive	please all hail
+NA	2104	positive	have
+NA	2105	positive	conflict
+NA	2106	positive	Staying positive
+NA	2107	positive	Welcome
+NA	2108	positive	of choice
+NA	2109	positive	get hyped
+NA	2110	positive	Need
+NA	2111	positive	can do it
+NA	2112	negative	No
+NA	2113	neutral	already
+NA	2114	negative	not
+NA	2115	negative	may not
+NA	2116	positive	real deal
+NA	2117	neutral	no
+NA	2118	positive	need
+NA	2119	negative	manhandle
+NA	2120	negative	only
+NA	2121	positive	looked forward
+NA	2122	positive	still
+NA	2123	positive	top
+NA	2124	negative	didn't warrant
+NA	2125	negative	really don't see
+NA	2126	negative	not that great
+NA	2127	negative	not confirmed
+NA	2128	positive	hope I can
+NA	2129	positive	Support
+NA	2130	negative	couldn't
+NA	2131	negative	didn't
+NA	2132	negative	may not
+NA	2133	negative	is dangerous.
+NA	2134	negative	living your life wrong
+NA	2135	positive	opportunity
+NA	2136	positive	went crazy
+NA	2137	positive	rushed into
+NA	2138	positive	appreciation day!
+NA	2139	positive	slowly comin back,
+NA	2140	positive	best is yet to come
+NA	2141	positive	I'm obsessed
+NA	2142	positive	obsessed
+NA	2143	negative	never
+NA	2144	positive	Best!
+NA	2145	positive	wish
+NA	2146	negative	SOO tired
+NA	2147	negative	have to
+NA	2148	positive	in my opinion
+NA	2149	positive	played ""schlubby"" well
+NA	2150	positive	may
+NA	2151	positive	run
+NA	2152	positive	really good
+NA	2153	positive	the best
+NA	2154	positive	yes okay
+NA	2155	positive	did okay
+NA	2156	negative	suffering
+NA	2157	positive	honestly
+NA	2158	positive	wanna
+NA	2159	positive	just realize
+NA	2160	positive	like
+NA	2161	positive	Who wants to
+NA	2162	positive	#free
+NA	2163	positive	Good Luck
+NA	2164	positive	might
+NA	2165	positive	Very excited! Sooo amazing;)
+NA	2166	positive	tomorrow,too!Cant wait!!Love
+NA	2167	positive	can't wait
+NA	2168	positive	spot on
+NA	2169	positive	expect
+NA	2170	positive	big
+NA	2171	positive	""Love""
+NA	2172	positive	Love him more than
+NA	2173	negative	""Hate""
+NA	2174	negative	wrong
+NA	2175	neutral	know
+NA	2176	positive	friendly
+NA	2177	positive	favorite
+NA	2178	positive	so relaxed
+NA	2179	negative	MY GOD
+NA	2180	positive	Ready
+NA	2181	negative	couldn't go
+NA	2182	negative	I'm sad
+NA	2183	positive	how happy
+NA	2184	negative	dont know
+NA	2185	positive	getting
+NA	2186	positive	*justkidd.
+NA	2187	negative	isn't liberal.
+NA	2188	negative	thinking he's funny.
+NA	2189	positive	offensive threat
+NA	2190	positive	THE x-factor
+NA	2191	negative	Worst Start
+NA	2192	positive	them down
+NA	2193	negative	got shelled
+NA	2194	positive	able to count
+NA	2195	positive	Get ready
+NA	2196	positive	opponent
+NA	2197	positive	best
+NA	2198	negative	ruined.
+NA	2199	negative	ruined.
+NA	2200	positive	fascinating
+NA	2201	negative	not
+NA	2202	positive	well happy
+NA	2203	positive	are good
+NA	2204	positive	going to be a lot better
+NA	2205	positive	a lot better
+NA	2206	positive	Looking forward
+NA	2207	positive	best
+NA	2208	negative	Lame
+NA	2209	positive	happy
+NA	2210	positive	happier
+NA	2211	positive	brighter than the sun
+NA	2212	positive	interested!!!#free
+NA	2213	positive	won
+NA	2214	positive	made
+NA	2215	positive	most talented
+NA	2216	positive	Ahaha
+NA	2217	neutral	not
+NA	2218	positive	100% worth it
+NA	2219	positive	step up
+NA	2220	negative	don't expect
+NA	2221	positive	really
+NA	2222	positive	:)
+NA	2223	positive	win
+NA	2224	negative	very mediocre
+NA	2225	negative	tonight...""sigh""
+NA	2226	positive	Getting pumped
+NA	2227	negative	forgot
+NA	2228	negative	no explanation,
+NA	2229	negative	:(
+NA	2230	negative	kick my ass.
+NA	2231	positive	dear
+NA	2232	positive	may be hooked???
+NA	2233	negative	Nothing to do
+NA	2234	positive	Preettyy pretty
+NA	2235	positive	like
+NA	2236	positive	rollin
+NA	2237	positive	#Cinderella team
+NA	2238	negative	can't go
+NA	2239	negative	won't stop swelling
+NA	2240	positive	over
+NA	2241	positive	love life
+NA	2242	negative	very sad
+NA	2243	positive	fav
+NA	2244	positive	damn good
+NA	2245	positive	it's amazing.
+NA	2246	negative	didn't
+NA	2247	negative	WTF!!!
+NA	2248	negative	getting old.
+NA	2249	positive	over
+NA	2250	neutral	different
+NA	2251	negative	didnt
+NA	2252	negative	Don't
+NA	2253	negative	only
+NA	2254	positive	great songs
+NA	2255	negative	Rebecca Black shit
+NA	2256	positive	can't miss
+NA	2257	positive	Food &amp; Drink Specials
+NA	2258	positive	love
+NA	2259	positive	""surprise"" guest
+NA	2260	positive	great
+NA	2261	positive	Hope
+NA	2262	positive	actually happens
+NA	2263	positive	I love you
+NA	2264	positive	have to
+NA	2265	positive	celebration
+NA	2266	negative	so weird.
+NA	2267	negative	want to crai.
+NA	2268	negative	ThingsThatNeedToEnd ThingsThatNeedToEnd:
+NA	2269	negative	a doubt
+NA	2270	negative	a doubt
+NA	2271	positive	Can't wait
+NA	2272	positive	Hope
+NA	2273	positive	win!
+NA	2274	negative	""April"" fools joke?
+NA	2275	positive	woooo
+NA	2276	positive	just wanna see
+NA	2277	negative	wasn't happy
+NA	2278	negative	sad
+NA	2279	positive	the 1st
+NA	2280	positive	are upbeat
+NA	2281	negative	volatile
+NA	2282	positive	seems relevant
+NA	2283	negative	dumb ass
+NA	2284	negative	to annoy the shit out of
+NA	2285	neutral	may be right
+NA	2286	positive	need to temper
+NA	2287	positive	funnier that Bill Maher. Secret genius!
+NA	2288	neutral	imagine
+NA	2289	negative	just ruins
+NA	2290	negative	won't
+NA	2291	positive	fun
+NA	2292	neutral	Might be
+NA	2293	positive	stronger,
+NA	2294	negative	don't want
+NA	2295	positive	would love
+NA	2296	negative	never ever
+NA	2297	positive	Ladies...Don't forget
+NA	2298	positive	free
+NA	2299	positive	gonna be
+NA	2300	positive	full
+NA	2301	positive	widely excepted
+NA	2302	positive	funnier
+NA	2303	positive	Secret genius!
+NA	2304	positive	perfect example
+NA	2305	negative	gross and ignorant
+NA	2306	negative	not
+NA	2307	positive	Can't wait
+NA	2308	positive	wish
+NA	2309	positive	let's go
+NA	2310	positive	so amazing
+NA	2311	positive	hope
+NA	2312	positive	come back again :)
+NA	2313	positive	love you...
+NA	2314	positive	seems very proud of.
+NA	2315	negative	vetoed.
+NA	2316	negative	a lot worse
+NA	2317	negative	don't get kidnapped.
+NA	2318	negative	impossible
+NA	2319	positive	this is fun:
+NA	2320	neutral	never
+NA	2321	positive	want
+NA	2322	positive	lol
+NA	2323	positive	best
+NA	2324	positive	could
+NA	2325	positive	Its funny
+NA	2326	positive	Love this!
+NA	2327	positive	future of baseball, expensive
+NA	2328	negative	just killed
+NA	2329	negative	awesome
+NA	2330	positive	Thank God
+NA	2331	negative	didn't get
+NA	2332	negative	get that beatdown
+NA	2333	positive	miss
+NA	2334	neutral	might
+NA	2335	negative	hell,
+NA	2336	negative	I doubt
+NA	2337	positive	played better
+NA	2338	positive	are the best.
+NA	2339	positive	can still do
+NA	2340	positive	can win
+NA	2341	positive	CAN win
+NA	2342	negative	don't thin we will.
+NA	2343	negative	WTF!!!
+NA	2344	negative	getting old.
+NA	2345	positive	best
+NA	2346	negative	Sucks to know
+NA	2347	negative	only
+NA	2348	positive	3rd sexiest dude
+NA	2349	positive	white hot
+NA	2350	positive	liking
+NA	2351	positive	Specially
+NA	2352	negative	that....no
+NA	2353	positive	still going
+NA	2354	positive	#goodstuff
+NA	2355	positive	Gotta get
+NA	2356	positive	forward
+NA	2357	positive	isn't over
+NA	2358	positive	;)
+NA	2359	positive	Good morning,
+NA	2360	negative	led us nowhere
+NA	2361	negative	Wouldn't have been
+NA	2362	negative	just isn't gonna work
+NA	2363	negative	can't tell
+NA	2364	negative	sacked
+NA	2365	negative	fault
+NA	2366	positive	have a soft spot
+NA	2367	positive	make
+NA	2368	positive	run higher
+NA	2369	negative	go quietly
+NA	2370	positive	Lovely-
+NA	2371	positive	Hoping
+NA	2372	positive	can still get it.
+NA	2373	positive	GO
+NA	2374	negative	only
+NA	2375	positive	better
+NA	2376	negative	earthquake
+NA	2377	positive	LOVE
+NA	2378	positive	great
+NA	2379	positive	really enjoy
+NA	2380	negative	I'm sorry,
+NA	2381	positive	better than
+NA	2382	positive	win
+NA	2383	positive	like
+NA	2384	negative	Except
+NA	2385	negative	poor decision.
+NA	2386	negative	fucking time
+NA	2387	negative	a pain. Ban it
+NA	2388	positive	mean a lot. Hope
+NA	2389	positive	have a great
+NA	2390	positive	suitable
+NA	2391	negative	angry
+NA	2392	positive	may be
+NA	2393	negative	not
+NA	2394	positive	always loved
+NA	2395	negative	not so much.
+NA	2396	positive	winning
+NA	2397	negative	fuck you.
+NA	2398	negative	don't need
+NA	2399	negative	don't remember
+NA	2400	positive	unforgettable!
+NA	2401	positive	wants
+NA	2402	negative	never would have thought
+NA	2403	negative	lose
+NA	2404	positive	I hope
+NA	2405	negative	Poor
+NA	2406	positive	gonna DIE because of excitement...
+NA	2407	negative	just disappointed
+NA	2408	negative	didn't give October 3rd proper justice
+NA	2409	positive	easy win. Let's do
+NA	2410	positive	great sitcom
+NA	2411	positive	beauty
+NA	2412	positive	just happy
+NA	2413	negative	not
+NA	2414	positive	i hope
+NA	2415	positive	happy
+NA	2416	negative	so sad
+NA	2417	neutral	all the talk
+NA	2418	positive	greatness,
+NA	2419	positive	win
+NA	2420	negative	just
+NA	2421	negative	I don't want!!!!
+NA	2422	negative	think I need help
+NA	2423	positive	Really want to
+NA	2424	negative	laughed at me
+NA	2425	negative	mental
+NA	2426	negative	FUCK
+NA	2427	positive	still compelled
+NA	2428	positive	Too excited
+NA	2429	positive	Lovely-
+NA	2430	positive	Hoping
+NA	2431	negative	So sad.
+NA	2432	negative	good ones dying?
+NA	2433	positive	really nice
+NA	2434	positive	may be interested
+NA	2435	positive	can't be stopped.
+NA	2436	positive	pays tribute
+NA	2437	negative	experts
+NA	2438	positive	unbeaten
+NA	2439	negative	drop
+NA	2440	negative	dont,
+NA	2441	negative	just may suck.
+NA	2442	negative	just isn't
+NA	2443	negative	was a tool.
+NA	2444	negative	aint.
+NA	2445	negative	hasn't
+NA	2446	positive	I'm glad
+NA	2447	positive	looked amazing.
+NA	2448	negative	WTF!!!
+NA	2449	negative	getting old. Stop it.
+NA	2450	positive	Playing Legend
+NA	2451	positive	more exciting
+NA	2452	negative	gonna miss
+NA	2453	positive	A highlight
+NA	2454	negative	bitch
+NA	2455	negative	fucking
+NA	2456	negative	motherfucking
+NA	2457	negative	fucking FUCK
+NA	2458	negative	dont even like
+NA	2459	positive	shoutouts
+NA	2460	positive	was an experience!
+NA	2461	positive	win
+NA	2462	positive	winning shot!
+NA	2463	negative	Still sad
+NA	2464	negative	terrible?
+NA	2465	negative	Had to
+NA	2466	neutral	weird
+NA	2467	neutral	What a coincidence
+NA	2468	negative	Reeling
+NA	2469	positive	insane buzzer-beating
+NA	2470	positive	such heart.
+NA	2471	negative	no
+NA	2472	positive	happy
+NA	2473	positive	Haha get it
+NA	2474	positive	funny
+NA	2475	positive	Very excited! Sooo amazing;)
+NA	2476	positive	tomorrow,too!Cant wait!!Love you
+NA	2477	positive	may give
+NA	2478	positive	the ability
+NA	2479	positive	thanks
+NA	2480	positive	love
+NA	2481	positive	Celebrating
+NA	2482	positive	looking forward
+NA	2483	positive	Thanks
+NA	2484	positive	win
+NA	2485	positive	celebrate
+NA	2486	negative	can't hit lefties, but he's taken
+NA	2487	positive	Love,
+NA	2488	negative	Have It Worse!:
+NA	2489	negative	still yawning
+NA	2490	positive	At least
+NA	2491	neutral	hard-fought
+NA	2492	negative	stupid.
+NA	2493	negative	not
+NA	2494	negative	wrong.
+NA	2495	negative	misunderstands
+NA	2496	negative	disease
+NA	2497	negative	never talking
+NA	2498	negative	all be dead
+NA	2499	negative	can't explain
+NA	2500	negative	had to wait
+NA	2501	negative	fucking
+NA	2502	positive	would do it
+NA	2503	negative	are annoying.
+NA	2504	positive	may even win
+NA	2505	negative	Kill
+NA	2506	positive	Wow.
+NA	2507	negative	So sad.
+NA	2508	neutral	young...makes
+NA	2509	positive	also believe
+NA	2510	positive	ideal:
+NA	2511	negative	WTF!!!
+NA	2512	negative	getting old. Stop it. :ahhh::ahhh::ahhh:
+NA	2513	positive	started crying
+NA	2514	positive	wouldnt stfu
+NA	2515	positive	#MillionMemories
+NA	2516	negative	want to die
+NA	2517	positive	beaten
+NA	2518	negative	can't
+NA	2519	positive	win
+NA	2520	positive	win
+NA	2521	positive	#havefaith
+NA	2522	negative	crazy folk
+NA	2523	positive	a big hit. #sarcasm
+NA	2524	positive	Great trip
+NA	2525	negative	Last chance
+NA	2526	positive	Finally
+NA	2527	positive	So grown up
+NA	2528	positive	love you so much
+NA	2529	positive	I hope
+NA	2530	positive	best
+NA	2531	positive	thanks
+NA	2532	positive	gr8.
+NA	2533	negative	doubt
+NA	2534	negative	injury.
+NA	2535	negative	lowest
+NA	2536	positive	spirit! #tpride
+NA	2537	negative	Tough loss,
+NA	2538	positive	beat
+NA	2539	negative	weren't
+NA	2540	negative	Ugh
+NA	2541	positive	full
+NA	2542	negative	dead
+NA	2543	negative	getting old. Stop
+NA	2544	neutral	yell
+NA	2545	positive	Thank you
+NA	2546	positive	further
+NA	2547	positive	impressive start.
+NA	2548	positive	best QB
+NA	2549	positive	completely agree.
+NA	2550	negative	sucks
+NA	2551	positive	Favorites:
+NA	2552	negative	destroy
+NA	2553	positive	So psyched
+NA	2554	positive	wicked way
+NA	2555	positive	start a Friday!
+NA	2556	positive	be best friends.
+NA	2557	positive	:)
+NA	2558	positive	#EMABiggestFans1D
+NA	2559	negative	pretty stupid
+NA	2560	negative	yelling
+NA	2561	negative	just don't feel
+NA	2562	positive	doing so well.
+NA	2563	positive	looking forward
+NA	2564	positive	da true best
+NA	2565	negative	difficult place
+NA	2566	positive	make things easy
+NA	2567	positive	What a weekend.
+NA	2568	positive	just
+NA	2569	positive	Best day
+NA	2570	negative	Soo pissed
+NA	2571	negative	crazy
+NA	2572	negative	fucking
+NA	2573	positive	Gonna be great
+NA	2574	positive	hahaha
+NA	2575	positive	optimistic
+NA	2576	negative	not
+NA	2577	positive	easily
+NA	2578	negative	hard enough
+NA	2579	positive	cant wait
+NA	2580	positive	hard core
+NA	2581	positive	100% correct.
+NA	2582	neutral	I have a feeling
+NA	2583	positive	fierce pass rush.
+NA	2584	positive	Easy
+NA	2585	positive	good
+NA	2586	positive	may be right
+NA	2587	positive	acting smarter than most
+NA	2588	neutral	Apparently
+NA	2589	negative	missed their chance
+NA	2590	positive	Wish
+NA	2591	negative	may not
+NA	2592	positive	best day
+NA	2593	positive	please come back
+NA	2594	positive	Hotty
+NA	2595	negative	So tired
+NA	2596	negative	mind games
+NA	2597	positive	Win
+NA	2598	negative	impossible
+NA	2599	positive	INCREDIBLE
+NA	2600	negative	will not win
+NA	2601	positive	good defense,
+NA	2602	positive	good
+NA	2603	positive	decent
+NA	2604	negative	may not
+NA	2605	positive	win
+NA	2606	positive	must!!
+NA	2607	positive	Goodluck
+NA	2608	negative	confusion
+NA	2609	negative	topical dissonance,
+NA	2610	positive	top
+NA	2611	positive	new
+NA	2612	positive	Salutes
+NA	2613	positive	casually
+NA	2614	positive	Love
+NA	2615	positive	What a game
+NA	2616	positive	pride
+NA	2617	positive	still hasn't hit me
+NA	2618	positive	Happy
+NA	2619	negative	not the right time
+NA	2620	positive	Trust
+NA	2621	negative	won't let me
+NA	2622	negative	hard
+NA	2623	negative	so stressed.
+NA	2624	positive	best
+NA	2625	positive	Go
+NA	2626	negative	off.
+NA	2627	negative	""April"" fools joke?
+NA	2628	positive	luck
+NA	2629	negative	isn't so strong
+NA	2630	negative	great...just not
+NA	2631	positive	makes me happy
+NA	2632	positive	rest in peace, stay strong
+NA	2633	positive	available
+NA	2634	negative	Not
+NA	2635	negative	without
+NA	2636	positive	cute
+NA	2637	negative	alone just chillin
+NA	2638	positive	about to smack
+NA	2639	positive	look healthier
+NA	2640	negative	laugh
+NA	2641	positive	most
+NA	2642	positive	'HAPPY TUESDAY.'
+NA	2643	positive	just been made
+NA	2644	positive	can trust
+NA	2645	neutral	still
+NA	2646	negative	""just
+NA	2647	positive	Happy Friday
+NA	2648	positive	open late
+NA	2649	positive	lovers!
+NA	2650	negative	trouble
+NA	2651	positive	really good
+NA	2652	negative	cannot
+NA	2653	positive	excited
+NA	2654	negative	not
+NA	2655	positive	possible
+NA	2656	positive	just
+NA	2657	positive	cheers hope
+NA	2658	positive	right.
+NA	2659	positive	haha!
+NA	2660	positive	good
+NA	2661	neutral	really
+NA	2662	negative	need a life,
+NA	2663	positive	really interested
+NA	2664	negative	not entirely sure
+NA	2665	positive	hopefully
+NA	2666	positive	Agreed.
+NA	2667	negative	still hungover
+NA	2668	positive	So excited
+NA	2669	positive	here we come!
+NA	2670	positive	hoping
+NA	2671	positive	can beat
+NA	2672	negative	bad feeling
+NA	2673	positive	catching up
+NA	2674	positive	really wanna
+NA	2675	positive	would be proud
+NA	2676	positive	HAPPY FRIDAY!
+NA	2677	negative	attention seeker. Fooling
+NA	2678	negative	kill
+NA	2679	negative	always mess up
+NA	2680	negative	mess up. PLEASE WIN
+NA	2681	positive	Don't miss
+NA	2682	positive	best! Always...Happy birthday
+NA	2683	positive	tomorrow....love you
+NA	2684	positive	got better!
+NA	2685	positive	truly
+NA	2686	positive	unbelievably excited
+NA	2687	positive	can help
+NA	2688	neutral	need
+NA	2689	positive	reminds
+NA	2690	negative	only
+NA	2691	positive	like
+NA	2692	positive	Happy Thursday,
+NA	2693	positive	welcome
+NA	2694	positive	Ridiculously Sexy
+NA	2695	positive	simply
+NA	2696	positive	the best
+NA	2697	positive	great casting
+NA	2698	negative	lame
+NA	2699	negative	shame
+NA	2700	positive	deep condolences
+NA	2701	positive	rest in peace
+NA	2702	positive	good place
+NA	2703	negative	Couldn't
+NA	2704	negative	tonight...couldn't take
+NA	2705	positive	big thumbs up.
+NA	2706	positive	Condolence
+NA	2707	positive	may
+NA	2708	positive	best
+NA	2709	positive	win
+NA	2710	negative	Totally forgot
+NA	2711	negative	miss
+NA	2712	positive	Dang good times
+NA	2713	positive	best
+NA	2714	negative	trouble
+NA	2715	positive	sweety!
+NA	2716	positive	available!
+NA	2717	negative	not
+NA	2718	positive	thank you
+NA	2719	positive	thank you
+NA	2720	positive	GO COLTS!
+NA	2721	negative	stopped
+NA	2722	negative	won't miss
+NA	2723	positive	have
+NA	2724	positive	tremendously more entertaining.
+NA	2725	negative	moronic
+NA	2726	positive	best
+NA	2727	negative	the worst
+NA	2728	positive	Seriously loving
+NA	2729	positive	like
+NA	2730	positive	still beat
+NA	2731	positive	right way
+NA	2732	positive	so happy
+NA	2733	positive	entirely responsible.
+NA	2734	positive	Can't wait
+NA	2735	positive	Good luck
+NA	2736	positive	Love
+NA	2737	positive	Love
+NA	2738	positive	dress!Love
+NA	2739	positive	Go Colts!
+NA	2740	positive	Wanna
+NA	2741	neutral	want
+NA	2742	negative	worst
+NA	2743	negative	hasn't been funny
+NA	2744	positive	even funny.
+NA	2745	negative	laughing at
+NA	2746	negative	jokes
+NA	2747	negative	be down
+NA	2748	positive	best
+NA	2749	positive	can dream right?
+NA	2750	positive	looked good
+NA	2751	positive	confident
+NA	2752	negative	sorry
+NA	2753	negative	don't have
+NA	2754	positive	welcome.
+NA	2755	positive	safe
+NA	2756	positive	Just
+NA	2757	negative	fuck
+NA	2758	positive	good friend
+NA	2759	positive	may come up
+NA	2760	positive	worked
+NA	2761	negative	worrying comment
+NA	2762	negative	displeased indeed
+NA	2763	negative	sick
+NA	2764	negative	bitch
+NA	2765	negative	c'mon
+NA	2766	negative	even not accepted.
+NA	2767	negative	Sick of
+NA	2768	positive	how good
+NA	2769	positive	Happy Friday
+NA	2770	positive	don't forget
+NA	2771	positive	believes
+NA	2772	positive	correct way....
+NA	2773	positive	alright
+NA	2774	positive	beat
+NA	2775	positive	Greetings.
+NA	2776	positive	would LOVE
+NA	2777	positive	best present!
+NA	2778	positive	new
+NA	2779	positive	Happy Friday
+NA	2780	positive	rest in peace
+NA	2781	positive	best
+NA	2782	positive	stay strong
+NA	2783	positive	good morning! Cute pic!
+NA	2784	positive	so adorable
+NA	2785	positive	Happy Friday!
+NA	2786	positive	to be won
+NA	2787	positive	especially
+NA	2788	positive	only
+NA	2789	positive	:)
+NA	2790	positive	can't wait!
+NA	2791	positive	love
+NA	2792	positive	sincere condolences
+NA	2793	positive	rest in peace.
+NA	2794	positive	Best
+NA	2795	positive	better.
+NA	2796	positive	kiss
+NA	2797	positive	#FUCKYES
+NA	2798	positive	Congrats
+NA	2799	positive	Even better
+NA	2800	negative	may
+NA	2801	negative	enigmatic
+NA	2802	negative	struggle
+NA	2803	positive	Thanks
+NA	2804	positive	made my Friday!!
+NA	2805	positive	may have an obsession
+NA	2806	negative	doubtful
+NA	2807	positive	big
+NA	2808	positive	may
+NA	2809	negative	still struggling
+NA	2810	negative	may
+NA	2811	negative	lost
+NA	2812	positive	may
+NA	2813	negative	still struggling
+NA	2814	positive	be amazing
+NA	2815	positive	Thanks
+NA	2816	positive	best
+NA	2817	negative	lousy
+NA	2818	positive	tough
+NA	2819	positive	Looking forward
+NA	2820	positive	Haha!
+NA	2821	positive	great day
+NA	2822	positive	may have been
+NA	2823	positive	best drive
+NA	2824	negative	not being shown
+NA	2825	positive	practicing hard
+NA	2826	positive	reaction
+NA	2827	negative	dumb
+NA	2828	positive	5th best
+NA	2829	negative	cahoots
+NA	2830	positive	the funniest finds! Happy Friday,
+NA	2831	neutral	may also
+NA	2832	negative	NOTHING to do
+NA	2833	negative	NOT
+NA	2834	positive	awesome
+NA	2835	positive	that's DADDY
+NA	2836	positive	excitement
+NA	2837	positive	excited
+NA	2838	positive	Happy Birthday
+NA	2839	negative	disappointed
+NA	2840	negative	cannot be disclosed:
+NA	2841	negative	sadness.
+NA	2842	positive	Rest in Peace
+NA	2843	positive	may have solved
+NA	2844	negative	still struggling
+NA	2845	positive	rest in peace. stay strong
+NA	2846	positive	Good afternoon!
+NA	2847	positive	already
+NA	2848	positive	Approves
+NA	2849	positive	Good
+NA	2850	positive	hope so.
+NA	2851	positive	right
+NA	2852	positive	obsession
+NA	2853	positive	pretty sure
+NA	2854	neutral	may
+NA	2855	negative	may not
+NA	2856	positive	great news..on
+NA	2857	positive	Monday..can't wait..he's
+NA	2858	positive	legend
+NA	2859	positive	Hahaha!
+NA	2860	positive	funny
+NA	2861	positive	Happy Wednesday
+NA	2862	positive	YALL SHOULD COME!!!!!
+NA	2863	positive	definitely do
+NA	2864	neutral	Maybe
+NA	2865	positive	Condolence
+NA	2866	positive	top
+NA	2867	positive	top
+NA	2868	positive	rest in peace
+NA	2869	positive	RIP
+NA	2870	positive	may she blessed
+NA	2871	positive	gone in peace
+NA	2872	positive	huge kill
+NA	2873	positive	same
+NA	2874	positive	hung on
+NA	2875	positive	won
+NA	2876	positive	Salutes
+NA	2877	positive	more open,
+NA	2878	positive	good.
+NA	2879	negative	doesn't
+NA	2880	negative	just add
+NA	2881	negative	Seriously,
+NA	2882	negative	fault
+NA	2883	negative	doesn't
+NA	2884	positive	sure
+NA	2885	neutral	to know
+NA	2886	positive	a happy one,
+NA	2887	positive	Looking forward
+NA	2888	negative	passed away
+NA	2889	positive	worth watching...and
+NA	2890	positive	wonderful.
+NA	2891	positive	Just
+NA	2892	positive	can
+NA	2893	positive	want
+NA	2894	negative	U turn/hypocrisy whatever
+NA	2895	positive	want
+NA	2896	negative	not
+NA	2897	negative	Big
+NA	2898	negative	not
+NA	2899	positive	NFL ready
+NA	2900	negative	look better
+NA	2901	positive	Great
+NA	2902	negative	Tough loss
+NA	2903	positive	pride!
+NA	2904	positive	really hope
+NA	2905	positive	way better.
+NA	2906	positive	better
+NA	2907	positive	Approves
+NA	2908	negative	no
+NA	2909	negative	may not
+NA	2910	negative	may not
+NA	2911	positive	pretty attractive.
+NA	2912	negative	overly upset like someone died
+NA	2913	negative	:(
+NA	2914	positive	favorite
+NA	2915	negative	negative energy
+NA	2916	negative	passed away,
+NA	2917	positive	R.I.P.
+NA	2918	positive	could
+NA	2919	negative	Wasn't going
+NA	2920	neutral	in time
+NA	2921	positive	already
+NA	2922	neutral	even
+NA	2923	negative	give up
+NA	2924	positive	looked good
+NA	2925	positive	confident
+NA	2926	negative	No one likes
+NA	2927	positive	intensity
+NA	2928	positive	hilarious
+NA	2929	positive	hope
+NA	2930	positive	remember
+NA	2931	positive	haha
+NA	2932	negative	dismisses
+NA	2933	positive	favorite
+NA	2934	negative	didn't care
+NA	2935	negative	don't agree
+NA	2936	negative	May stop
+NA	2937	negative	to
+NA	2938	positive	Might
+NA	2939	positive	good day!
+NA	2940	positive	so strong
+NA	2941	positive	MAY BE SPIDERMAN!
+NA	2942	negative	forgotten
+NA	2943	positive	Sincerely,
+NA	2944	positive	amazing
+NA	2945	positive	Rest in peace
+NA	2946	positive	deep condolences
+NA	2947	positive	consolation
+NA	2948	negative	to run
+NA	2949	negative	finish
+NA	2950	negative	off!
+NA	2951	positive	Deepest condolences
+NA	2952	positive	better
+NA	2953	positive	beautiful
+NA	2954	positive	Beautiful
+NA	2955	positive	enjoy
+NA	2956	positive	Approves
+NA	2957	negative	Not at all happy
+NA	2958	negative	can't play
+NA	2959	negative	bummed out
+NA	2960	positive	gladly accept
+NA	2961	neutral	have
+NA	2962	positive	great
+NA	2963	negative	forgot
+NA	2964	negative	scares the crap
+NA	2965	positive	may agree
+NA	2966	positive	So happy
+NA	2967	positive	Lovely.
+NA	2968	positive	Happy Friday!!!Stephen
+NA	2969	positive	should
+NA	2970	negative	no way
+NA	2971	positive	huge fan
+NA	2972	positive	passed
+NA	2973	positive	big test
+NA	2974	negative	Not
+NA	2975	positive	Settled in.
+NA	2976	negative	didn't
+NA	2977	negative	limited
+NA	2978	positive	can go
+NA	2979	positive	credited
+NA	2980	positive	success.
+NA	2981	negative	will lose
+NA	2982	positive	Thank you
+NA	2983	positive	entertainment!
+NA	2984	neutral	may
+NA	2985	positive	too much credit,
+NA	2986	positive	beat
+NA	2987	positive	Happy Friday,
+NA	2988	positive	big
+NA	2989	positive	great day!
+NA	2990	positive	Nice relaxing
+NA	2991	positive	win
+NA	2992	positive	frosty
+NA	2993	positive	amazing
+NA	2994	negative	not
+NA	2995	positive	may have solved
+NA	2996	negative	still struggling
+NA	2997	positive	depend
+NA	2998	positive	pretty convenient...still
+NA	2999	positive	So excited!!
+NA	3000	positive	GOOD MORNING!!!
+NA	3001	positive	may have solved
+NA	3002	negative	still struggling
+NA	3003	positive	thanks
+NA	3004	positive	dominate
+NA	3005	positive	Excited
+NA	3006	positive	may have solved
+NA	3007	negative	still struggling
+NA	3008	positive	may like
+NA	3009	positive	better
+NA	3010	negative	hate
+NA	3011	positive	Super Duper Excited...I
+NA	3012	positive	Happy Friday!!
+NA	3013	positive	honor
+NA	3014	positive	want
+NA	3015	positive	haha
+NA	3016	positive	a good medicine
+NA	3017	positive	can
+NA	3018	negative	probably
+NA	3019	positive	hope you enjoy
+NA	3020	negative	Condolence
+NA	3021	positive	best for her
+NA	3022	positive	Big shout out
+NA	3023	negative	Feel cheated
+NA	3024	positive	#HottieOfTheWeek
+NA	3025	negative	uncomfortably close
+NA	3026	negative	will be bounced
+NA	3027	negative	passed away,
+NA	3028	positive	might've won
+NA	3029	positive	big positive impact
+NA	3030	negative	died
+NA	3031	negative	panic attack
+NA	3032	negative	went nuts
+NA	3033	positive	big
+NA	3034	positive	free
+NA	3035	negative	Harsh.
+NA	3036	positive	can't wait
+NA	3037	negative	Sorry
+NA	3038	positive	world champion
+NA	3039	positive	happy ass down
+NA	3040	neutral	may
+NA	3041	positive	dare
+NA	3042	negative	not
+NA	3043	negative	unusual
+NA	3044	positive	haha.
+NA	3045	positive	like
+NA	3046	positive	best
+NA	3047	negative	don't care
+NA	3048	positive	Lots of coffee
+NA	3049	negative	dumbest decisions
+NA	3050	positive	smile
+NA	3051	negative	sorrow? #HottieOfTheWeek
+NA	3052	positive	a toast to you
+NA	3053	positive	Happy Friday
+NA	3054	negative	so weird
+NA	3055	positive	ahahaha,
+NA	3056	positive	right,,
+NA	3057	positive	Don't miss
+NA	3058	neutral	needs
+NA	3059	neutral	move
+NA	3060	positive	want to see
+NA	3061	negative	sold out.
+NA	3062	positive	Salutes
+NA	3063	negative	may not know
+NA	3064	positive	fool-proof
+NA	3065	positive	right way
+NA	3066	negative	without
+NA	3067	positive	Best
+NA	3068	positive	like
+NA	3069	positive	may love
+NA	3070	positive	Woo Hoo!
+NA	3071	negative	aren't
+NA	3072	positive	best
+NA	3073	positive	gettin deep
+NA	3074	neutral	Guess I'm
+NA	3075	negative	Obviously a wasted pick.
+NA	3076	negative	...must've been wrong
+NA	3077	positive	may be cute,
+NA	3078	negative	lot of
+NA	3079	positive	Condole the passing
+NA	3080	positive	still
+NA	3081	negative	may not be
+NA	3082	positive	you excited
+NA	3083	neutral	confirmed
+NA	3084	positive	agrees
+NA	3085	positive	Interesting
+NA	3086	positive	Deep Condolance
+NA	3087	positive	rest in peace
+NA	3088	positive	strong
+NA	3089	positive	Just Beat it
+NA	3090	positive	pretty much
+NA	3091	positive	answer

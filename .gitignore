@@ -5,3 +5,11 @@
 /.idea/twitter-sentiment.iml
 /.idea/vcs.xml
 /Very useful tutorials/emotion_analysis_elastic_pytorch-master/.gitignore
+/__pycache__/Training.cpython-37.pyc
+/configs/__pycache__/__init__.cpython-37.pyc
+/configs/__pycache__/serde.cpython-37.pyc
+/data/__pycache__/__init__.cpython-37.pyc
+/data/__pycache__/data_handler.cpython-37.pyc
+/data/network_data/
+/data/tensor_board_logs/
+/models/__pycache__/

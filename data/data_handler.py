@@ -26,7 +26,7 @@ class data_provider(Dataset):
                 Default value: Mode.TRAIN
         '''
         params = read_config(cfg_path)
-        self.cfg_path = params['cfg_path']
+        self.cfg_path = cfg_path
         self.mode = mode
         self.datset_name = dataset_name
         self.dataset_path = os.path.join(params['input_data_path'], dataset_name)
@@ -63,7 +63,7 @@ class data_provider(Dataset):
         @inspired_from: Elvis Saravia
         '''
         # Dataset path
-        if self.mode==Mode.PREDICT:
+        if self.mode==Mode.VALID:
             dataset_path = self.testset_path
         else:
             dataset_path = self.dataset_path

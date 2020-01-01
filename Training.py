@@ -65,7 +65,7 @@ class Training:
         :param optimiser_params: is a dictionary containing parameters for the optimiser, e.g. {'lr':7e-3}
         '''
         #Tensor Board Graph
-        # self.add_tensorboard_graph(model)
+        self.add_tensorboard_graph(model)
 
         self.model = model.to(self.device)
         self.optimiser = optimiser(self.model.parameters(), **optimiser_params)
@@ -87,8 +87,9 @@ class Training:
         '''
         Creates a tensor board graph for network visualisation
         '''
-        dummy_input = torch.rand(208, 256)  # To show tensor sizes in graph
-        self.writer.add_graph(model, dummy_input.long())
+        dummy_input = torch.rand(1, 256).long()  # To show tensor sizes in graph
+        dummy_hidden = torch.rand(1, 256, 1024)  # To show tensor sizes in graph
+        self.writer.add_graph(model, (dummy_input, dummy_hidden), verbose=False)
 
 
     def execute_training(self, train_loader, test_loader=None, num_epochs=None):
@@ -121,8 +122,8 @@ class Training:
 
             '''Saving the model'''
             # Saving every epoch
-            torch.save(self.model.state_dict(), self.params['network_output_path'] +
-                       "/epoch_" + str(self.epoch) + '_' + self.params['trained_model_name'])
+            # torch.save(self.model.state_dict(), self.params['network_output_path'] +
+            #            "/epoch_" + str(self.epoch) + '_' + self.params['trained_model_name'])
             # Saving the last epoch
             # torch.save(self.model.state_dict(), self.params['network_output_path'] +
             # "/" + self.params['trained_model_name'])
@@ -153,11 +154,13 @@ class Training:
             message = message.to(self.device)
             label = label.to(self.device)
 
+            hidden_units = torch.zeros((1, message.shape[0], 1024)).to(self.device)
+
             #Forward pass.
             self.optimiser.zero_grad()
 
             with torch.set_grad_enabled(True):
-                output, hidden_unit = self.model(message.permute(1,0), self.device)
+                output, hidden_unit = self.model(message.permute(1,0), hidden_units)
 
                 # Loss & converting from one-hot encoding to class indices
                 loss = self.loss_function(output , torch.max(label, 1)[1])

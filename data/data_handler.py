@@ -32,7 +32,7 @@ class data_provider(Dataset):
         self.dataset_path = os.path.join(params['input_data_path'], dataset_name)
         self.testset_path = os.path.join(params['test_data_path'], dataset_name)
         self.size = size
-        self.input_tensor, self.target_tensor = self._init_dataset(seed)
+        self.input_tensor, self.target_tensor, self.vocab_size = self._init_dataset(seed)
 
 
     def __len__(self):
@@ -87,7 +87,7 @@ class data_provider(Dataset):
 
         elif len(messages) > self.size:
             print('The size you requested is less than the total available messages. '
-                  'The desired number of messages randomly will be picked.')
+                  'The desired number of messages will randomly be picked.')
             random.seed(seed)
             random.shuffle(messages)
             messages = messages[:self.size]
@@ -135,4 +135,4 @@ class data_provider(Dataset):
             target_tensor[i] = (emotion_dict[label])
 
 
-        return input_tensor, target_tensor
+        return input_tensor, target_tensor, len(word2idx)

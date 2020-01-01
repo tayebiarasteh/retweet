@@ -10,16 +10,16 @@ import warnings
 import shutil
 
 
-
 def read_config(cfg_path):
     with open(cfg_path, 'r') as f:
         params = json.load(f)
+
     return params
 
 
-def write_config(params, cfg_path, sort_keys = False):
+def write_config(params, cfg_path, sort_keys=False):
     with open(cfg_path, 'w') as f:
-        json.dump(params, f, indent = 2,sort_keys = sort_keys)
+        json.dump(params, f, indent=2, sort_keys=sort_keys)
 
 
 def create_experiment(experiment_name):
@@ -30,6 +30,7 @@ def create_experiment(experiment_name):
     cfg_path = os.path.join(params['network_output_path'], cfg_file_name)
     params['cfg_path'] = cfg_path
     write_config(params, cfg_path)
+
     return params
 
 

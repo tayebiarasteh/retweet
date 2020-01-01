@@ -35,14 +35,13 @@ class GRUU(nn.Module):
         self.gru = nn.GRU(self.embedding_dim, self.num_hidden_units)
         self.fc = nn.Linear(self.num_hidden_units, self.output_size)
 
-    def initialize_hidden_state(self, device):
-        return torch.zeros((1, self.batch_size, self.num_hidden_units)).to(device)
+    # def initialize_hidden_state(self, device):
+    #     return torch.zeros((1, self.batch_size, self.num_hidden_units)).to(device)
 
-    def forward(self, x, device):
-        x = self.embedding(x)
-        self.hidden = torch.zeros((1, self.batch_size, self.num_hidden_units)).to(device)
-        output, self.hidden = self.gru(x, self.hidden)  # max_len X batch_size X hidden_units
+    def forward(self, x, hidden_units):
+        input_tensor = self.embedding(x)
+        output, hidden_tensor = self.gru(input_tensor, hidden_units)  # max_len X batch_size X hidden_units
         out = output[-1, :, :]
         out = self.dropout(out)
         out = self.fc(out)
-        return out, self.hidden
+        return out, hidden_tensor

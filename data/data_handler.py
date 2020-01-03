@@ -128,7 +128,7 @@ class data_provider(Dataset):
         # Converting targets to one-hot encoding vectors
         classes = list(set(labels))
         # Binarizer
-        emotion_dict = {'positive': [0, 0, 0], 'negative': [0, 1, 0], 'neutral': [0, 0, 1]}
+        emotion_dict = {'positive': [1, 0, 0], 'negative': [0, 1, 0], 'neutral': [0, 0, 1]}
 
         target_tensor = np.zeros((len(labels), len(classes)))
         for i, label in enumerate(labels):

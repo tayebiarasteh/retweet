@@ -69,11 +69,11 @@ class Training:
 
         self.model = model.to(self.device)
         self.optimiser = optimiser(self.model.parameters(), **optimiser_params)
-        self.loss_function = loss_function()
+        self.loss_function = loss_function(reduction='none')
 
         if 'retrain' in self.model_info and self.model_info['retrain']==True:
             self.load_pretrained_model()
-            
+
         # Saves the model, optimiser,loss function name for writing to config file
         # self.model_info['model_name'] = model.__name__
         self.model_info['optimiser'] = optimiser.__name__
@@ -113,7 +113,7 @@ class Training:
         print('Starting time:' + str(datetime.datetime.now()) +'\n')
         for epoch in range(num_epochs):
             self.epoch = epoch
-            print('Training:')
+            print('\nTraining:')
             self.train_epoch(train_loader)
             print('')
             if test_loader:
@@ -144,9 +144,13 @@ class Training:
         print("Epoch [{}/{}] \n".format(self.epoch +1, self.model_info['num_epochs']))
 
         # loss value to display statistics
-        loss_list = []
-        # number of correct message predictions
-        corrects = 0
+        total_loss = 0
+        train_accuracy = 0
+        batch_count = 0
+        batch_accuracy = 0
+
+        # initializing hidden states
+        hidden_units = self.model.initialize_hidden_state(self.device)
 
         for batch, (message, label) in enumerate(train_loader):
             message = message.long()
@@ -154,7 +158,6 @@ class Training:
             message = message.to(self.device)
             label = label.to(self.device)
 
-            hidden_units = torch.zeros((1, message.shape[0], 1024)).to(self.device)
 
             #Forward pass.
             self.optimiser.zero_grad()
@@ -163,8 +166,16 @@ class Training:
                 output, hidden_unit = self.model(message.permute(1,0), hidden_units)
 
                 # Loss & converting from one-hot encoding to class indices
-                loss = self.loss_function(output , torch.max(label, 1)[1])
-                loss_list.append(loss.data)
+                # pdb.set_trace()
+                loss = self.loss_function(output, torch.max(label, 1)[1])
+                loss = torch.mean(loss)
+                total_loss += (loss / label.shape[1]).item()
+                batch_count += 1
+
+                # number of correct message predictions
+                corrects = (torch.max(output, 1)[1].data == torch.max(label, 1)[1]).sum()
+                # Accuracy
+                batch_accuracy += 100.0 * corrects / len(output)
 
                 #Backward and optimize
                 loss.backward()
@@ -172,69 +183,85 @@ class Training:
 
                 #TODO: metrics to be modified.
 
-                # number of correct message predictions
-                corrects = (torch.max(output, 1)[1].data == torch.max(label, 1)[1]).sum()
-
                 # Prints loss statistics and writes to the tensorboard after number of steps specified.
-                if (batch+1)%self.params['display_stats_freq'] == 0:
-                    self.calculate_loss_stats(loss_list, corrects)
+                if (batch)%self.params['display_stats_freq'] == 0:
+                    print('Epoch {} Batch {} Loss {}'.format(self.epoch + 1, batch, total_loss / batch_count))
+                    self.calculate_tb_stats(total_loss / batch_count, batch_accuracy / batch_count)
+                    total_loss = 0
+                    batch_count = 0
+                    train_accuracy += batch_accuracy
+                    batch_accuracy = 0
 
-                    #reset loss list after number of steps as specified in params['display_stats_freq']
-                    loss_list = []
-                    corrects = 0
-                    self.step += 1
-
+        # Print accuracy after each epoch
+        print('Epoch {} -- Train Acc. {}'.format(
+            self.epoch + 1, train_accuracy / (batch+1) ))
 
     def test_epoch(self, test_loader):
         '''Test model after an epoch and calculate loss on test dataset'''
         self.model.eval()
 
         with torch.no_grad():
-            loss_list = []
-            corrects = 0
+            # loss value to display statistics
+            total_loss = 0
+            test_accuracy = 0
+            batch_count = 0
+            batch_accuracy = 0
+
+            hidden_units = self.model.initialize_hidden_state(self.device)
 
             for batch, (message, label) in enumerate(test_loader):
-                message = message.float()
+                message = message.long()
                 label = label.long()
                 message = message.to(self.device)
                 label = label.to(self.device)
 
-                output = self.model(message)
-                loss = self.loss_function(output, label)
-                loss_list.append(loss.data[0])
+                output, hidden_units = self.model(message.permute(1,0), hidden_units)
+
+                # Loss & converting from one-hot encoding to class indices
+                loss = self.loss_function(output, torch.max(label, 1)[1])
+                loss = torch.mean(loss)
+                total_loss += (loss / label.shape[1]).item()
+                batch_count += 1
+
+                # number of correct message predictions
+                corrects = (torch.max(output, 1)[1].data == torch.max(label, 1)[1]).sum()
+                # Accuracy
+                batch_accuracy += 100.0 * corrects / len(output)
+
 
                 if batch % 5 == 0:
-                    self.calculate_loss_stats(loss_list, corrects, is_train=False)
-                    loss_list = []
-                    corrects = 0
+                    print('Epoch {} Batch {} Loss {}'.format(self.epoch + 1, batch, total_loss / batch_count))
+                    self.calculate_tb_stats(total_loss / batch_count, batch_accuracy / batch_count)
+                    total_loss = 0
+                    batch_count = 0
+                    test_accuracy += batch_accuracy
+                    batch_accuracy = 0
+
+        # Print accuracy after each epoch
+        print('Epoch {} -- Test Acc. {}'.format(
+            self.epoch + 1, test_accuracy / (batch+1) ))
+
         self.model.train()
 
 
-    def calculate_loss_stats(self, loss_list, corrects, is_train=True):
-
-        # Converts list to array in order to use other torch functions to calculate statistics later
-        loss_list = torch.stack(loss_list)
-        avg = torch.mean(loss_list)
-
-        # Prints stats
-        print('average value of the losses: ', avg.item())
-
-        num_correct = torch.tensor(corrects)
-
+    def calculate_tb_stats(self, batch_loss, batch_accuracy, is_train=True):
+        '''
+        Adds the statistics of metrics to the tensorboard.
+        '''
         if is_train:
             mode='Training'
         else:
             mode='Validation'
             
-        # Adds average loss value & number & accuracy of correct predictions to TensorBoard
-        self.writer.add_scalar(mode+'_Loss', avg, self.step)
-        self.writer.add_scalar(mode+'_Number of Correctly Predicted messages', num_correct, self.step)
+        # Adds loss value & number & accuracy of correct predictions to TensorBoard
+        self.writer.add_scalar(mode+'_Loss', batch_loss, self.step)
+        self.writer.add_scalar(mode+'_Accuracy', batch_accuracy, self.step)
 
         # Adds all the network's trainable parameters to TensorBoard
         for name, param in self.model.named_parameters():
             self.writer.add_histogram(name, param, self.step)
             self.writer.add_histogram(f'{name}.grad', param.grad, self.step)
-
+        self.step += 1
 
     def load_pretrained_model(self):
         '''Load pre trained model to the using pre-trained_model_path parameter from config file'''

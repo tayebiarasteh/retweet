@@ -24,10 +24,10 @@ warnings.filterwarnings('ignore')
 
 
 '''Hyper-parameters'''
-NUM_EPOCH = 1
+NUM_EPOCH = 15
 LOSS_FUNCTION = CrossEntropyLoss
 OPTIMIZER = optim.Adam
-parameters = dict(lr = [.01, .001], batch_size = [10, 30])
+parameters = dict(lr = [.01, .001], batch_size = [64, 32])
 param_values = [v for v in parameters.values()]
 
 
@@ -41,24 +41,30 @@ param_values = [v for v in parameters.values()]
 for lr, BATCH_SIZE in product(*param_values):
 
     # put the new experiment name here.
-    params = create_experiment("Adam_" + str(NUM_EPOCH) + "epochs_lr"+ str(lr) +'_batch_size'+ str(BATCH_SIZE))
+    params = create_experiment("newAdam_" + str(NUM_EPOCH) + "epochs_lr"+ str(lr) +'_batch_size'+ str(BATCH_SIZE))
     cfg_path = params["cfg_path"]
 
     '''Prepare data'''
     # Train Set
-    train_dataset = data_provider(dataset_name='2014_b_train.txt', size=1000, cfg_path=cfg_path)
-    VOCAB_SIZE = train_dataset.vocab_size
+    full_train_dataset = data_provider(dataset_name='2014_b_train.txt', size=1000, cfg_path=cfg_path)
+    VOCAB_SIZE = full_train_dataset.vocab_size
+    train_size = int(0.8 * len(full_train_dataset))
+    valid_size = len(full_train_dataset) - train_size
+    train_dataset, test_dataset = torch.utils.data.random_split(full_train_dataset, [train_size, valid_size])
+
     # train_dataset = ConcatDataset([
     #     data_provider(dataset_name='2014_b_train.txt', size=10222, cfg_path=CFG_PATH),
     #     data_provider(dataset_name='2014_b_dev.txt', size=1000, cfg_path=CFG_PATH)])
     train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=BATCH_SIZE,
                                                drop_last=True, shuffle=True, num_workers=4)
-    # Validation Set
-    test_dataset = ConcatDataset([
-        data_provider(dataset_name='2015_b_test_gold.txt', size=500, cfg_path=cfg_path, mode=Mode.VALID, seed=5),
-        data_provider(dataset_name='2014_b_test_gold.txt', size=500, cfg_path=cfg_path, mode=Mode.VALID, seed=5)])
     test_loader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=BATCH_SIZE,
-                                              drop_last=True, shuffle=False, num_workers=4)
+                                               drop_last=True, shuffle=True, num_workers=4)
+    # Validation Set
+    # test_dataset = ConcatDataset([
+    #     data_provider(dataset_name='2015_b_test_gold.txt', size=500, cfg_path=cfg_path, mode=Mode.VALID, seed=5),
+    #     data_provider(dataset_name='2014_b_test_gold.txt', size=500, cfg_path=cfg_path, mode=Mode.VALID, seed=5)])
+    # test_loader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=BATCH_SIZE,
+    #                                           drop_last=True, shuffle=False, num_workers=4)
 
     '''Initialize trainer'''
     trainer = Training(cfg_path)
@@ -69,4 +75,4 @@ for lr, BATCH_SIZE in product(*param_values):
                         optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION)
 
     '''Execute Training'''
-    trainer.execute_training(train_loader, test_loader=None, num_epochs=NUM_EPOCH)
+    trainer.execute_training(train_loader, test_loader=test_loader, num_epochs=NUM_EPOCH)

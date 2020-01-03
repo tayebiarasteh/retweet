@@ -3,7 +3,7 @@
 """
 
 '''
-GRU
+This is a prototype GRU newtwork to just make the framwork work and see decrease in the learning curves.
 '''
 
 import torch
@@ -35,12 +35,13 @@ class GRUU(nn.Module):
         self.gru = nn.GRU(self.embedding_dim, self.num_hidden_units)
         self.fc = nn.Linear(self.num_hidden_units, self.output_size)
 
-    # def initialize_hidden_state(self, device):
-    #     return torch.zeros((1, self.batch_size, self.num_hidden_units)).to(device)
+    def initialize_hidden_state(self, device):
+        return torch.zeros((1, self.batch_size, self.num_hidden_units)).to(device)
 
     def forward(self, x, hidden_units):
         input_tensor = self.embedding(x)
         output, hidden_tensor = self.gru(input_tensor, hidden_units)  # max_len X batch_size X hidden_units
+        # just want last time step hidden states!
         out = output[-1, :, :]
         out = self.dropout(out)
         out = self.fc(out)

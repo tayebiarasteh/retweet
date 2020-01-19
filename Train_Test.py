@@ -22,15 +22,11 @@ import pdb
 class Training:
     '''
     This class represents training process.
-    Various functionalities in the training process such as setting up of devices, defining model and its parameters,
-    executing training can be found here.
     '''
     def __init__(self, cfg_path, torch_seed=None):
         '''
-        cfg_path (string):
-            path of the experiment config file
-        torch_seed (int):
-            Seed used for random generators in PyTorch functions
+        :cfg_path (string): path of the experiment config file
+        :torch_seed (int): Seed used for random generators in PyTorch functions
         '''
         self.params = read_config(cfg_path)
         self.cfg_path = cfg_path
@@ -58,8 +54,6 @@ class Training:
 
     def setup_model(self, model, optimiser, optimiser_params, loss_function):
         '''
-        Setup the model by defining the model, optimiser,loss function and learning rate.
-
         :param model: an object of our network
         :param optimiser: an object of our optimizer, e.g. torch.optim.SGD
         :param optimiser_params: is a dictionary containing parameters for the optimiser, e.g. {'lr':7e-3}
@@ -84,9 +78,7 @@ class Training:
 
 
     def add_tensorboard_graph(self, model):
-        '''
-        Creates a tensor board graph for network visualisation
-        '''
+        '''Creates a tensor board graph for network visualisation'''
         dummy_input = torch.rand(1, 256).long()  # To show tensor sizes in graph
         dummy_hidden = torch.rand(1, 256, 1024)  # To show tensor sizes in graph
         self.writer.add_graph(model, (dummy_input, dummy_hidden), verbose=False)
@@ -96,7 +88,6 @@ class Training:
         '''
         Executes training by running training and validation at each epoch
         '''
-
         # reads param file again to include changes if any
         self.params = read_config(self.cfg_path)
 
@@ -120,13 +111,13 @@ class Training:
                 print('Testing:')
                 self.test_epoch(test_loader)
 
-            '''Saving the model'''
+        '''Saving the model'''
             # Saving every epoch
             # torch.save(self.model.state_dict(), self.params['network_output_path'] +
             #            "/epoch_" + str(self.epoch) + '_' + self.params['trained_model_name'])
-            # Saving the last epoch
-            # torch.save(self.model.state_dict(), self.params['network_output_path'] +
-            # "/" + self.params['trained_model_name'])
+        # Saving the last epoch
+        # torch.save(self.model.state_dict(), self.params['network_output_path'] +
+        # "/" + self.params['trained_model_name'])
 
         # Saves information about training to config file
         self.model_info['num_steps'] = self.epoch
@@ -158,7 +149,6 @@ class Training:
             message = message.to(self.device)
             label = label.to(self.device)
 
-
             #Forward pass.
             self.optimiser.zero_grad()
 
@@ -166,7 +156,6 @@ class Training:
                 output, hidden_unit = self.model(message.permute(1,0), hidden_units)
 
                 # Loss & converting from one-hot encoding to class indices
-                # pdb.set_trace()
                 loss = self.loss_function(output, torch.max(label, 1)[1])
                 loss = torch.mean(loss)
                 total_loss += (loss / label.shape[1]).item()
@@ -196,8 +185,9 @@ class Training:
         print('Epoch {} -- Train Acc. {}'.format(
             self.epoch + 1, train_accuracy / (batch+1) ))
 
+
     def test_epoch(self, test_loader):
-        '''Test model after an epoch and calculate loss on test dataset'''
+        '''Test (validation) model after an epoch and calculate loss on test dataset'''
         self.model.eval()
 
         with torch.no_grad():
@@ -227,7 +217,6 @@ class Training:
                 corrects = (torch.max(output, 1)[1].data == torch.max(label, 1)[1]).sum()
                 # Accuracy
                 batch_accuracy += 100.0 * corrects / len(output)
-
 
                 if batch % 5 == 0:
                     print('Epoch {} Batch {} Loss {}'.format(self.epoch + 1, batch, total_loss / batch_count))
@@ -274,6 +263,16 @@ class Training:
                                             "2.To start fresh with same experiment name, delete the experiment  \n"
                                             "using delete_experiment function and create experiment "
                             "               again.".format(self.model_info['trained_time']))
+
+
+
+class Prediction:
+    '''
+    This class represents prediction (testing) process similar to the Training class.
+    TO BE IMPLEMENTED.
+    '''
+    pass
+
 
 
 class Mode(Enum):

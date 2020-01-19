@@ -9,6 +9,7 @@ import os
 import warnings
 import shutil
 
+path = '/home/mehrpad/Desktop/dl_seminar/seminar_code/configs/config.json'
 
 def read_config(cfg_path):
     with open(cfg_path, 'r') as f:
@@ -23,7 +24,7 @@ def write_config(params, cfg_path, sort_keys=False):
 
 
 def create_experiment(experiment_name):
-    params = read_config('/home/soroosh/Documents/Repositories/twitter_sentiment/configs/config.json')
+    params = read_config(path)
     params['experiment_name'] = experiment_name
     create_experiment_folders(params)
     cfg_file_name = params['experiment_name'] + '_config.json'
@@ -47,7 +48,7 @@ def create_experiment_folders(params):
 def open_experiment(experiment_name):
     '''Open Existing Experiments'''
     
-    default_params = read_config('/home/soroosh/Documents/Repositories/twitter_sentiment/configs/config.json')
+    default_params = read_config(path)
     cfg_file_name = experiment_name + '_config.json'
     cfg_path = os.path.join(default_params['network_output_path'], experiment_name, cfg_file_name)
     params = read_config(cfg_path)
@@ -57,7 +58,7 @@ def open_experiment(experiment_name):
 def delete_experiment(experiment_name):
     '''Delete Existing Experiment folder'''
     
-    default_params = read_config('/home/soroosh/Documents/Repositories/twitter_sentiment/configs/config.json')
+    default_params = read_config(path)
     cfg_file_name = experiment_name + '_config.json'
     cfg_path = os.path.join(default_params['network_output_path'], experiment_name, cfg_file_name)
 

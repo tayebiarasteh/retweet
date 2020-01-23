@@ -8,7 +8,7 @@ import os
 import csv
 import torch
 from torch.utils.data import Dataset
-from Train_Test import Mode
+from Training import Mode
 from configs.serde import read_config
 
 
@@ -134,14 +134,5 @@ class data_provider(Dataset):
         for i, label in enumerate(labels):
             target_tensor[i] = (emotion_dict[label])
 
+
         return input_tensor, target_tensor, len(word2idx)
-
-
-
-if __name__=='__main__':
-    CONFIG_PATH = '/home/soroosh/Documents/Repositories/twitter_sentiment/configs/config.json'
-    full_train_dataset = data_provider(cfg_path=CONFIG_PATH, dataset_name='2014_b_train.txt', size=1000)
-    VOCAB_SIZE = full_train_dataset.vocab_size
-    train_size = int(0.8 * len(full_train_dataset))
-    valid_size = len(full_train_dataset) - train_size
-    train_dataset, test_dataset = torch.utils.data.random_split(full_train_dataset, [train_size, valid_size])

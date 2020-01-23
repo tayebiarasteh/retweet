@@ -31,7 +31,7 @@ class GRUU(nn.Module):
 
         # layers
         self.embedding = nn.Embedding(self.vocab_size, self.embedding_dim)
-        #self.dropout = nn.Dropout(p=0.5)
+        self.dropout = nn.Dropout(p=0.5)
         self.gru = nn.GRU(self.embedding_dim, self.num_hidden_units)
         self.fc = nn.Linear(self.num_hidden_units, self.output_size)
 
@@ -40,10 +40,9 @@ class GRUU(nn.Module):
 
     def forward(self, x, hidden_units):
         input_tensor = self.embedding(x)
-        hidden_units = torch.zeros_like(hidden_units)
         output, hidden_tensor = self.gru(input_tensor, hidden_units)  # max_len X batch_size X hidden_units
         # just want last time step hidden states!
         out = output[-1, :, :]
-        # out = self.dropout(out)
+        out = self.dropout(out)
         out = self.fc(out)
         return out, hidden_tensor

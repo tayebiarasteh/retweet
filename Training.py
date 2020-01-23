@@ -19,7 +19,6 @@ from configs.serde import *
 import pdb
 
 
-
 class Training:
     '''
     This class represents training process.

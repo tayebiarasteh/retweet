@@ -27,13 +27,14 @@ warnings.filterwarnings('ignore')
 NUM_EPOCH = 15
 LOSS_FUNCTION = CrossEntropyLoss
 OPTIMIZER = optim.Adam
-parameters = dict(lr = [.01], batch_size = [64])
+parameters = dict(lr = [.01, .001], batch_size = [64, 32])
 param_values = [v for v in parameters.values()]
 
 
 '''Use below lines if you want to delete an experiment and reuse the same experiment name'''
-for lr, BATCH_SIZE in product(*param_values):
-    delete_experiment("newAdam_" + str(NUM_EPOCH) + "epochs_lr"+ str(lr) +'_batch_size'+ str(BATCH_SIZE))
+# for lr, BATCH_SIZE in product(*param_values):
+#     delete_experiment("Adam_" + str(NUM_EPOCH) + "epochs_lr"+ str(lr) +'_batch_size'+ str(BATCH_SIZE))
+
 
 
 '''Hyper-parameter testing'''
@@ -45,11 +46,8 @@ for lr, BATCH_SIZE in product(*param_values):
 
     '''Prepare data'''
     # Train Set
-    full_train_dataset = data_provider(dataset_name='2014_b_train.txt', size=10000, cfg_path=cfg_path)
-    print(len(full_train_dataset))
-    print(full_train_dataset.size)
+    full_train_dataset = data_provider(dataset_name='2014_b_train.txt', size=1000, cfg_path=cfg_path)
     VOCAB_SIZE = full_train_dataset.vocab_size
-    print(VOCAB_SIZE)
     train_size = int(0.8 * len(full_train_dataset))
     valid_size = len(full_train_dataset) - train_size
     train_dataset, test_dataset = torch.utils.data.random_split(full_train_dataset, [train_size, valid_size])

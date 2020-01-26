@@ -13,3 +13,5 @@
 /data/network_data/
 /data/tensor_board_logs/
 /models/__pycache__/
+/__pycache__/
+/data/.vector_cache/

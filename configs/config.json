@@ -11,12 +11,10 @@
     "total_dataset_number": 0
   },
   "display_stats_freq": 10,
-  "input_data_path": "/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_SemEval/message_level/train/",
+  "input_data_path": "/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_SemEval/message_level/",
   "network_output_path": "./data/network_data/",
   "network_save_freq": 1000,
   "output_data_path": "./data/output_data/",
   "tb_logs_path": "./data/tensor_board_logs/",
-  "test_data_path": "/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_SemEval/message_level/test/",
-  "trained_model_name": "trained_model.pth",
-  "valid_data_path": "/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_SemEval/message_level/train/"
+  "trained_model_name": "trained_model.pth"
 }

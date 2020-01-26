@@ -13,9 +13,9 @@ import torch.optim as optim
 
 # User Defined Modules
 from configs.serde import *
-from Train_Test import Training, Prediction
+from Train_Test_Valid import Training, Prediction
 from data.data_handler import *
-from models.RNN import *
+from models.biLSTM import *
 
 #System Modules
 from itertools import product

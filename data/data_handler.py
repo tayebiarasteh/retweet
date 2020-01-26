@@ -6,7 +6,7 @@ import numpy as np
 import random
 import torch
 from torchtext import data
-from Train_Test import Mode
+from Train_Test_Valid import Mode
 from configs.serde import read_config
 import pdb
 
@@ -17,7 +17,7 @@ class data_provider_V2():
     '''
     Packed padded sequences
     Pre-trained embedding: glove.6B.100d
-    tokenizer: spacy
+    Tokenizer: spacy
     '''
     def __init__(self, cfg_path, batch_size, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, seed=1):
         '''
@@ -49,6 +49,7 @@ class data_provider_V2():
         '''
         :include_lengths: Packed padded sequences: will make our RNN only process the non-padded elements of our sequence,
             and for any padded element the `output` will be a zero tensor.
+            Note: padding is done by adding <pad> (not zero!)
         :tokenize: the "tokenization" (the act of splitting the string into discrete "tokens") should be done using the spaCy tokenizer.
         '''
         '''Packed padded sequences'''
@@ -76,12 +77,18 @@ class data_provider_V2():
 
         vocab_size = len(TEXT.vocab)
 
+        # the index of the padding token <pad> in the vocabulary
+        pad_idx = TEXT.vocab.stoi[TEXT.pad_token]
+        # What do we do with words that appear in examples but we have cut from the vocabulary?
+        # We replace them with a special unknown or <unk> token.
+
+
         # for packed padded sequences all of the tensors within a batch need to be sorted by their lengths
         train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits((
             train_data, valid_data, test_data), batch_size=self.batch_size,
             sort_within_batch=True, sort_key=lambda x: len(x.text))
 
-        return train_iterator, valid_iterator, test_iterator, vocab_size
+        return train_iterator, valid_iterator, test_iterator, vocab_size, pad_idx
 
 
 
@@ -89,6 +96,6 @@ class data_provider_V2():
 if __name__=='__main__':
     CONFIG_PATH = '/home/soroosh/Documents/Repositories/twitter_sentiment/configs/config.json'
     data_handler = data_provider_V2(cfg_path=CONFIG_PATH, batch_size=1, split_ratio=0.8, max_vocab_size=25000)
-    train_iterator, valid_iterator, test_iterator, vocab_size = data_handler.data_loader()
+    train_iterator, valid_iterator, test_iterator, vocab_size, pad_idx = data_handler.data_loader()
     # pdb.set_trace()
     # a=2

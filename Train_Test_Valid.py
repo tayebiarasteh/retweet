@@ -7,6 +7,7 @@
 import os.path
 from enum import Enum
 import datetime
+import time
 
 # Deep Learning Modules
 from tensorboardX import SummaryWriter
@@ -58,12 +59,15 @@ class Training:
         :param optimiser: an object of our optimizer, e.g. torch.optim.SGD
         :param optimiser_params: is a dictionary containing parameters for the optimiser, e.g. {'lr':7e-3}
         '''
+        # number of parameters of the model
+        print(f'\nThe model has {sum(p.numel() for p in model.parameters() if p.requires_grad):,} trainable parameters!\n')
+
         #Tensor Board Graph
         self.add_tensorboard_graph(model)
 
         self.model = model.to(self.device)
         self.optimiser = optimiser(self.model.parameters(), **optimiser_params)
-        self.loss_function = loss_function(reduction='none')
+        self.loss_function = loss_function()
 
         if 'retrain' in self.model_info and self.model_info['retrain']==True:
             self.load_pretrained_model()
@@ -79,12 +83,19 @@ class Training:
 
     def add_tensorboard_graph(self, model):
         '''Creates a tensor board graph for network visualisation'''
-        dummy_input = torch.rand(1, 256).long()  # To show tensor sizes in graph
-        dummy_hidden = torch.rand(1, 256, 1024)  # To show tensor sizes in graph
-        self.writer.add_graph(model, (dummy_input, dummy_hidden), verbose=False)
+        dummy_input = torch.rand(19, 1).long()  # To show tensor sizes in graph
+        dummy_text_length = torch.ones(1).long()  # To show tensor sizes in graph
+        self.writer.add_graph(model, (dummy_input, dummy_text_length))
 
 
-    def execute_training(self, train_loader, test_loader=None, num_epochs=None):
+    def epoch_time(self, start_time, end_time):
+        elapsed_time = end_time - start_time
+        elapsed_mins = int(elapsed_time / 60)
+        elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
+        return elapsed_mins, elapsed_secs
+
+
+    def execute_training(self, train_loader, valid_loader=None, num_epochs=None):
         '''
         Executes training by running training and validation at each epoch
         '''
@@ -100,16 +111,28 @@ class Training:
         self.model_info['num_epochs'] = num_epochs or self.model_info['num_epochs']
 
         self.epoch = 0
-        self.step = 0
+        self.tb_train_step = 0
+        self.tb_val_step = 0
         print('Starting time:' + str(datetime.datetime.now()) +'\n')
         for epoch in range(num_epochs):
             self.epoch = epoch
-            print('\nTraining:')
-            self.train_epoch(train_loader)
-            print('')
-            if test_loader:
-                print('Testing:')
-                self.test_epoch(test_loader)
+            start_time = time.time()
+            print('Training:')
+            train_loss, train_acc = self.train_epoch(train_loader)
+            if valid_loader:
+                print('\nValidation:')
+                valid_loss, valid_acc = self.valid_epoch(valid_loader)
+
+            end_time = time.time()
+            epoch_mins, epoch_secs = self.epoch_time(start_time, end_time)
+
+            # Print accuracy and loss after each epoch
+            print('\n-----------------------------------------------')
+            print(f'Epoch: {self.epoch + 1} | Epoch Time: {epoch_mins}m {epoch_secs}s')
+            print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc * 100:.2f}%')
+            if valid_loader:
+                print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc * 100:.2f}%')
+            print('-----------------------------------------------\n')
 
         '''Saving the model'''
             # Saving every epoch
@@ -132,18 +155,20 @@ class Training:
         '''
         Train using one single iteration of all messages (epoch) in dataset
         '''
-        print("Epoch [{}/{}] \n".format(self.epoch +1, self.model_info['num_epochs']))
+        print("Epoch [{}/{}]".format(self.epoch +1, self.model_info['num_epochs']))
+        self.model.train()
+        previous_idx = 0
 
         # loss value to display statistics
         total_loss = 0
-        train_accuracy = 0
+        batch_loss = 0
+        total_accuracy = 0
         batch_count = 0
         batch_accuracy = 0
 
-        # initializing hidden states
-        hidden_units = self.model.initialize_hidden_state(self.device)
-
-        for batch, (message, label) in enumerate(train_loader):
+        for idx, batch in enumerate(train_loader):
+            message, message_lengths = batch.text
+            label = batch.label
             message = message.long()
             label = label.long()
             message = message.to(self.device)
@@ -153,104 +178,113 @@ class Training:
             self.optimiser.zero_grad()
 
             with torch.set_grad_enabled(True):
-                output, hidden_unit = self.model(message.permute(1,0), hidden_units)
+                output = self.model(message, message_lengths).squeeze(1)
 
-                # Loss & converting from one-hot encoding to class indices
-                loss = self.loss_function(output, torch.max(label, 1)[1])
-                loss = torch.mean(loss)
-                total_loss += (loss / label.shape[1]).item()
+                # Loss
+                loss = self.loss_function(output, label)
+                batch_loss += loss.item()
+                total_loss += loss.item()
                 batch_count += 1
 
-                # number of correct message predictions
-                corrects = (torch.max(output, 1)[1].data == torch.max(label, 1)[1]).sum()
                 # Accuracy
-                batch_accuracy += 100.0 * corrects / len(output)
+                max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
+                correct = max_preds.squeeze(1).eq(label)
+                batch_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
+                total_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
 
                 #Backward and optimize
                 loss.backward()
                 self.optimiser.step()
 
-                #TODO: metrics to be modified.
+                #TODO: other metrics to be added.
 
                 # Prints loss statistics and writes to the tensorboard after number of steps specified.
-                if (batch)%self.params['display_stats_freq'] == 0:
-                    print('Epoch {} Batch {} Loss {}'.format(self.epoch + 1, batch, total_loss / batch_count))
-                    self.calculate_tb_stats(total_loss / batch_count, batch_accuracy / batch_count)
-                    total_loss = 0
+                if (idx + 1)%self.params['display_stats_freq'] == 0:
+                    print('Epoch {} | Batch {}-{} | Average train loss: {:.3f}'.
+                          format(self.epoch + 1, previous_idx, idx, batch_loss / batch_count))
+                    previous_idx = idx + 1
+                    self.tb_train_step += 1
+                    self.calculate_tb_stats(batch_loss / batch_count, batch_accuracy / batch_count, is_train=True)
+                    batch_loss = 0
                     batch_count = 0
-                    train_accuracy += batch_accuracy
                     batch_accuracy = 0
 
-        # Print accuracy after each epoch
-        print('Epoch {} -- Train Acc. {}'.format(
-            self.epoch + 1, train_accuracy / (batch+1) ))
+        epoch_accuracy = total_accuracy / len(train_loader)
+        epoch_loss = total_loss / len(train_loader)
+        return epoch_loss, epoch_accuracy
 
 
-    def test_epoch(self, test_loader):
+    def valid_epoch(self, valid_loader):
         '''Test (validation) model after an epoch and calculate loss on test dataset'''
+        print("Epoch [{}/{}]".format(self.epoch + 1, self.model_info['num_epochs']))
         self.model.eval()
+        previous_idx = 0
 
         with torch.no_grad():
             # loss value to display statistics
             total_loss = 0
-            test_accuracy = 0
+            batch_loss = 0
+            total_accuracy = 0
             batch_count = 0
             batch_accuracy = 0
 
-            hidden_units = self.model.initialize_hidden_state(self.device)
-
-            for batch, (message, label) in enumerate(test_loader):
+            for idx, batch in enumerate(valid_loader):
+                message, message_lengths = batch.text
+                label = batch.label
                 message = message.long()
                 label = label.long()
                 message = message.to(self.device)
                 label = label.to(self.device)
+                output = self.model(message, message_lengths).squeeze(1)
 
-                output, hidden_units = self.model(message.permute(1,0), hidden_units)
-
-                # Loss & converting from one-hot encoding to class indices
-                loss = self.loss_function(output, torch.max(label, 1)[1])
-                loss = torch.mean(loss)
-                total_loss += (loss / label.shape[1]).item()
+                # Loss
+                loss = self.loss_function(output, label)
+                batch_loss += loss.item()
+                total_loss += loss.item()
                 batch_count += 1
 
-                # number of correct message predictions
-                corrects = (torch.max(output, 1)[1].data == torch.max(label, 1)[1]).sum()
                 # Accuracy
-                batch_accuracy += 100.0 * corrects / len(output)
+                max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
+                correct = max_preds.squeeze(1).eq(label)
+                batch_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
+                total_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
 
-                if batch % 5 == 0:
-                    print('Epoch {} Batch {} Loss {}'.format(self.epoch + 1, batch, total_loss / batch_count))
-                    self.calculate_tb_stats(total_loss / batch_count, batch_accuracy / batch_count)
-                    total_loss = 0
+                # Prints loss statistics and writes to the tensorboard after number of steps specified.
+                if (idx + 1) % self.params['display_stats_freq'] == 0:
+                    print('Epoch {} | Batch {}-{} | Average Val. loss: {:.3f}'.
+                          format(self.epoch + 1, previous_idx, idx, batch_loss / batch_count))
+                    previous_idx = idx + 1
+                    self.tb_val_step += 1
+                    self.calculate_tb_stats(batch_loss / batch_count, batch_accuracy / batch_count, is_train=False)
+                    batch_loss = 0
                     batch_count = 0
-                    test_accuracy += batch_accuracy
                     batch_accuracy = 0
 
-        # Print accuracy after each epoch
-        print('Epoch {} -- Test Acc. {}'.format(
-            self.epoch + 1, test_accuracy / (batch+1) ))
-
         self.model.train()
+        epoch_accuracy = total_accuracy / len(valid_loader)
+        epoch_loss = total_loss / len(valid_loader)
+        return epoch_loss, epoch_accuracy
 
 
     def calculate_tb_stats(self, batch_loss, batch_accuracy, is_train=True):
-        '''
-        Adds the statistics of metrics to the tensorboard.
-        '''
+        '''Adds the statistics of metrics to the tensorboard'''
         if is_train:
             mode='Training'
+            step = self.tb_train_step
         else:
             mode='Validation'
+            step = self.tb_val_step
             
         # Adds loss value & number & accuracy of correct predictions to TensorBoard
-        self.writer.add_scalar(mode+'_Loss', batch_loss, self.step)
-        self.writer.add_scalar(mode+'_Accuracy', batch_accuracy, self.step)
+        self.writer.add_scalar(mode+'_Loss', batch_loss, step)
+        self.writer.add_scalar(mode+'_Accuracy', batch_accuracy, step)
 
         # Adds all the network's trainable parameters to TensorBoard
-        for name, param in self.model.named_parameters():
-            self.writer.add_histogram(name, param, self.step)
-            self.writer.add_histogram(f'{name}.grad', param.grad, self.step)
-        self.step += 1
+        if is_train:
+            for name, param in self.model.named_parameters():
+                self.writer.add_histogram(name, param, self.tb_train_step)
+                self.writer.add_histogram(f'{name}.grad', param.grad, self.tb_train_step)
+
 
     def load_pretrained_model(self):
         '''Load pre trained model to the using pre-trained_model_path parameter from config file'''

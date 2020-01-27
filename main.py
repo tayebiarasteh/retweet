@@ -25,7 +25,7 @@ def main_train():
     '''Main function for training + validation.'''
 
     '''Hyper-parameters'''
-    NUM_EPOCH = 15
+    NUM_EPOCH = 5
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     MAX_VOCAB_SIZE = 2500 #take the 2500 most frequent words as the vocab
@@ -76,6 +76,6 @@ def experiment_deleter():
 
 
 if __name__ == '__main__':
-    experiment_deleter()
+    # experiment_deleter()
     main_train()
     # main_test()

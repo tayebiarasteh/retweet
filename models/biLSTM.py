@@ -17,7 +17,7 @@ class biLSTM(nn.Module):
         self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=pad_idx)
         # replace the initial weights of the `embedding` layer with the pre-trained embeddings.
         self.embedding.weight.data.copy_(embeddings)
-        # these are irrelevant for determining sentiment
+        # these are irrelevant for determining sentiment:
         self.embedding.weight.data[pad_idx] = torch.zeros(embedding_dim)
         self.embedding.weight.data[unk_idx] = torch.zeros(embedding_dim)
 

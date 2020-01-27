@@ -12,7 +12,6 @@ import pdb
 
 
 
-
 class data_provider_V2():
     '''
     Packed padded sequences
@@ -42,6 +41,11 @@ class data_provider_V2():
         self.split_ratio = split_ratio
         self.max_vocab_size = max_vocab_size
         self.dataset_path = params['input_data_path']
+        self.train_file_name = params['train_file_name']
+        self.test_file_name = params['test_file_name']
+        self.data_format = params['data_format']
+        self.pretrained_embedding = params['pretrained_embedding']
+        self.tokenizer = params['tokenizer']
         self.batch_size = batch_size
 
 
@@ -53,15 +57,15 @@ class data_provider_V2():
         :tokenize: the "tokenization" (the act of splitting the string into discrete "tokens") should be done using the spaCy tokenizer.
         '''
         '''Packed padded sequences'''
-        TEXT = data.Field(tokenize='spacy', include_lengths=True)  # For saving the length of sentences
+        TEXT = data.Field(tokenize=self.tokenizer, include_lengths=True)  # For saving the length of sentences
         LABEL = data.LabelField()
 
         fields = [('id', None), ('user_id', None),  ('label', LABEL), ('text', TEXT)]
         train_data, test_data = data.TabularDataset.splits(
             path=self.dataset_path,
-            train='train_and_dev_b_2014.txt',
-            test='test_gold_b_2014_2015.txt',
-            format='tsv',  # tab separated value
+            train=self.train_file_name,
+            test=self.test_file_name,
+            format=self.data_format,
             fields=fields,
             skip_header=False)
 
@@ -72,13 +76,15 @@ class data_provider_V2():
         # vectors: instead of having our word embeddings initialized randomly, they are initialized with these pre-trained vectors.
         # initialize words in your vocabulary but not in your pre-trained embeddings to Gaussian
         TEXT.build_vocab(train_data, max_size=self.max_vocab_size,
-                         vectors="glove.6B.100d", unk_init=torch.Tensor.normal_)
+                         vectors=self.pretrained_embedding, unk_init=torch.Tensor.normal_)
         LABEL.build_vocab(train_data)
 
         vocab_size = len(TEXT.vocab)
+        pretrained_embeddings = TEXT.vocab.vectors
 
-        # the index of the padding token <pad> in the vocabulary
-        pad_idx = TEXT.vocab.stoi[TEXT.pad_token]
+        # the indices of the padding token <pad> and <unk> in the vocabulary
+        PAD_IDX = TEXT.vocab.stoi[TEXT.pad_token]
+        UNK_IDX = TEXT.vocab.stoi[TEXT.unk_token]
         # What do we do with words that appear in examples but we have cut from the vocabulary?
         # We replace them with a special unknown or <unk> token.
 
@@ -88,7 +94,7 @@ class data_provider_V2():
             train_data, valid_data, test_data), batch_size=self.batch_size,
             sort_within_batch=True, sort_key=lambda x: len(x.text))
 
-        return train_iterator, valid_iterator, test_iterator, vocab_size, pad_idx
+        return train_iterator, valid_iterator, test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
 
 
 
@@ -96,6 +102,6 @@ class data_provider_V2():
 if __name__=='__main__':
     CONFIG_PATH = '/home/soroosh/Documents/Repositories/twitter_sentiment/configs/config.json'
     data_handler = data_provider_V2(cfg_path=CONFIG_PATH, batch_size=1, split_ratio=0.8, max_vocab_size=25000)
-    train_iterator, valid_iterator, test_iterator, vocab_size, pad_idx = data_handler.data_loader()
+    train_iterator, valid_iterator, test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
     # pdb.set_trace()
     # a=2

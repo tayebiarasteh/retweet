@@ -1,19 +1,16 @@
 {
   "Network": {
-    "loss_function": "CrossEntropyLoss",
-    "num_epochs": 1,
-    "num_steps": 0,
-    "optimiser": "Adam",
-    "optimiser_params": {
-      "lr": 0.001
-    },
-    "seed": 1,
-    "total_dataset_number": 0
+    "seed": 1
   },
   "display_stats_freq": 10,
-  "input_data_path": "/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_SemEval/message_level/",
-  "network_output_path": "./data/network_data/",
   "network_save_freq": 1000,
+  "input_data_path": "/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_SemEval/message_level/",
+  "train_file_name": "train_and_dev_b_2014.txt",
+  "test_file_name": "test_gold_b_2014_2015.txt",
+  "data_format": "tsv",
+  "pretrained_embedding": "glove.6B.100d",
+  "tokenizer": "spacy",
+  "network_output_path": "./data/network_data/",
   "output_data_path": "./data/output_data/",
   "tb_logs_path": "./data/tensor_board_logs/",
   "trained_model_name": "trained_model.pth"

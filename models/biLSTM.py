@@ -5,17 +5,22 @@ Bidirectional LSTM with 2 layers + dropout + fully connected
 
 import torch
 import torch.nn as nn
-import pdb
 
 
 class biLSTM(nn.Module):
-    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, pad_idx):
+    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, embeddings, pad_idx, unk_idx):
         '''
         :pad_idx: the index of the padding token <pad> in the vocabulary
         :num_layers: number of biLSTMs stacked on top of each other
         '''
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=pad_idx)
+        # replace the initial weights of the `embedding` layer with the pre-trained embeddings.
+        self.embedding.weight.data.copy_(embeddings)
+        # these are irrelevant for determining sentiment
+        self.embedding.weight.data[pad_idx] = torch.zeros(embedding_dim)
+        self.embedding.weight.data[unk_idx] = torch.zeros(embedding_dim)
+
         self.rnn = nn.LSTM(embedding_dim, hidden_dim, num_layers=2,
                            bidirectional=True, dropout=0.5)
         self.dropout = nn.Dropout(0.5)

@@ -1,5 +1,5 @@
 # Twitter Sentiment Analysis from SemEval 2015
 
-In **Python 3.7** and **PyTorch 1.2.0**.
+In **Python 3.7** and **PyTorch 1.3**.
 
-The main function running the training and validation process is `train_main.py`.
+The main function running the training, testing and validation process is `main.py`.

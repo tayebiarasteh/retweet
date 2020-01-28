@@ -16,3 +16,4 @@
 /__pycache__/
 /data/.vector_cache/
 /.vector_cache/
+/.ipynb_checkpoints/

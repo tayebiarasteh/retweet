@@ -8,6 +8,7 @@ import os.path
 from enum import Enum
 import datetime
 import time
+import spacy
 
 # Deep Learning Modules
 from tensorboardX import SummaryWriter
@@ -424,6 +425,29 @@ class Prediction:
         print('----------------------------------------------------------------------\n')
 
 
+    def manual_predict(self, labels, vocab_idx, phrase, min_len = 4):
+        '''
+        Manually predicts the polarity of the given sentence.
+        Possible polarities: 1.neutral, 2.positive, 3.negative
+        '''
+        # Reads params to check if any params have been changed by user
+        self.params = read_config(self.cfg_path)
+        self.model_p.eval()
+
+        nlp = spacy.load('en')
+        tokenized = [tok.text for tok in nlp.tokenizer(phrase)]
+        if len(tokenized) < min_len:
+            tokenized += ['<pad>'] * (min_len - len(tokenized))
+        indexed = [vocab_idx[t] for t in tokenized]
+        tensor = torch.LongTensor(indexed).to(self.device)
+        tensor = tensor.unsqueeze(1)
+        preds = self.model_p(tensor, torch.Tensor([tensor.shape[0]]))
+        max_preds = preds.argmax(dim=1)
+        print('\n----------------------------------')
+        print(f'\tThis is a {labels[max_preds.item()]} phrase!')
+        print('----------------------------------')
+
+
 
 class Mode(Enum):
     '''
@@ -432,6 +456,7 @@ class Mode(Enum):
     '''
     TRAIN = 0
     VALID = 1
-    PREDICT = 2
+    TEST = 2
+    PREDICTION = 3
 
 

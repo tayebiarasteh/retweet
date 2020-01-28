@@ -18,7 +18,7 @@ class data_provider_V2():
     Pre-trained embedding: glove.6B.100d
     Tokenizer: spacy
     '''
-    def __init__(self, cfg_path, batch_size, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, seed=1):
+    def __init__(self, cfg_path, batch_size=1, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, seed=1):
         '''
         Args:
             cfg_path (string):
@@ -31,7 +31,7 @@ class data_provider_V2():
                 train-valid splitting
             mode (enumeration Mode):
                 Nature of operation to be done with the data.
-                Possible inputs are Mode.PREDICT, Mode.TRAIN, Mode.VALID
+                Possible inputs are Mode.PREDICTION, Mode.TRAIN, Mode.VALID, Mode.TEST
                 Default value: Mode.TRAIN
         '''
         params = read_config(cfg_path)
@@ -79,6 +79,9 @@ class data_provider_V2():
                          vectors=self.pretrained_embedding, unk_init=torch.Tensor.normal_)
         LABEL.build_vocab(train_data)
 
+        labels = LABEL.vocab.itos
+        vocab_idx = TEXT.vocab.stoi
+
         vocab_size = len(TEXT.vocab)
         pretrained_embeddings = TEXT.vocab.vectors
 
@@ -93,8 +96,10 @@ class data_provider_V2():
         train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits((
             train_data, valid_data, test_data), batch_size=self.batch_size,
             sort_within_batch=True, sort_key=lambda x: len(x.text))
-        if self.mode == Mode.PREDICT:
+        if self.mode == Mode.TEST:
             return test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
+        elif self.mode == Mode.PREDICTION:
+            return labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
         else:
             return train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
 

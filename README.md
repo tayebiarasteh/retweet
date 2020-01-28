@@ -21,7 +21,7 @@ All Python modules required for the software can be installed from ./requirement
 
 ```
 $ conda env create -f environment.yml
-$ activate DeepLearningExercises
+$ activate SentimentAnalysis
 ```
 
 

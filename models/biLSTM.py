@@ -8,7 +8,7 @@ import torch.nn as nn
 
 
 class biLSTM(nn.Module):
-    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, embeddings, pad_idx, unk_idx):
+    def __init__(self, vocab_size, embeddings, embedding_dim=100, hidden_dim=256, output_dim=3, pad_idx=1, unk_idx=0):
         '''
         :pad_idx: the index of the padding token <pad> in the vocabulary
         :num_layers: number of biLSTMs stacked on top of each other

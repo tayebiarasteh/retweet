@@ -18,7 +18,7 @@ class data_provider_V2():
     Pre-trained embedding: glove.6B.100d
     Tokenizer: spacy
     '''
-    def __init__(self, cfg_path, batch_size, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, seed=1):
+    def __init__(self, cfg_path, batch_size, split_ratio=0.8, max_vocab_size=2500, mode=Mode.TRAIN, seed=1):
         '''
         Args:
             cfg_path (string):
@@ -93,8 +93,10 @@ class data_provider_V2():
         train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits((
             train_data, valid_data, test_data), batch_size=self.batch_size,
             sort_within_batch=True, sort_key=lambda x: len(x.text))
-
-        return train_iterator, valid_iterator, test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
+        if self.mode == Mode.PREDICT:
+            return test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
+        else:
+            return train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
 
 
 
@@ -102,6 +104,6 @@ class data_provider_V2():
 if __name__=='__main__':
     CONFIG_PATH = '/home/soroosh/Documents/Repositories/twitter_sentiment/configs/config.json'
     data_handler = data_provider_V2(cfg_path=CONFIG_PATH, batch_size=1, split_ratio=0.8, max_vocab_size=25000)
-    train_iterator, valid_iterator, test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
+    train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
     # pdb.set_trace()
     # a=2

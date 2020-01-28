@@ -4,7 +4,6 @@
 
 
 #System Modules
-import os
 import os.path
 from enum import Enum
 import datetime
@@ -13,7 +12,6 @@ import time
 # Deep Learning Modules
 from tensorboardX import SummaryWriter
 import torch
-import torch.nn.functional as F
 import torch.nn as nn
 from sklearn import metrics
 
@@ -130,7 +128,7 @@ class Training:
             end_time = time.time()
             epoch_mins, epoch_secs = self.epoch_time(start_time, end_time)
 
-            # Print accuracy and loss after each epoch
+            # Print accuracy, F1, and loss after each epoch
             print('\n---------------------------------------------------------------')
             print(f'Epoch: {self.epoch + 1:02} | Epoch Time: {epoch_mins}m {epoch_secs}s')
             print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc * 100:.2f}% | Train F1: {train_F1:.3f}')
@@ -341,9 +339,89 @@ class Training:
 class Prediction:
     '''
     This class represents prediction (testing) process similar to the Training class.
-    TO BE IMPLEMENTED.
     '''
-    pass
+    def __init__(self, cfg_path):
+        '''
+        :cfg_path (string): path of the experiment config file
+        '''
+        self.params = read_config(cfg_path)
+        self.cfg_path = cfg_path
+        self.setup_cuda()
+
+
+    def setup_cuda(self, cuda_device_id=0):
+        '''Setup the CUDA device'''
+        if torch.cuda.is_available():
+            torch.backends.cudnn.fastest = True
+            torch.cuda.set_device(cuda_device_id)
+            self.device = torch.device('cuda')
+        else:
+            self.device = torch.device('cpu')
+
+
+    def epoch_time(self, start_time, end_time):
+        elapsed_time = end_time - start_time
+        elapsed_mins = int(elapsed_time / 60)
+        elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
+        return elapsed_mins, elapsed_secs
+
+
+    def setup_model(self, model, vocab_size, embeddings, pad_idx, unk_idx, model_file_name=None):
+        '''
+        Setup the model by defining the model, load the model from the pth file saved during training.
+        '''
+        if model_file_name == None:
+            model_file_name = self.params['trained_model_name']
+        self.model_p = model(vocab_size=vocab_size, embeddings=embeddings,
+                             pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
+
+        # Loads model from model_file_name and default network_output_path
+        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+
+
+    def predict(self, test_loader):
+        # Reads params to check if any params have been changed by user
+        self.params = read_config(self.cfg_path)
+        self.model_p.eval()
+
+        start_time = time.time()
+        with torch.no_grad():
+            # initializing the metrics
+            total_accuracy = 0
+            total_f1_score = 0
+
+            for idx, batch in enumerate(test_loader):
+                message, message_lengths = batch.text
+                label = batch.label
+                message = message.long()
+                label = label.long()
+                message = message.to(self.device)
+                label = label.to(self.device)
+                output = self.model_p(message, message_lengths).squeeze(1)
+
+                '''Metrics calculation'''
+                max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
+
+                # Accuracy
+                correct = max_preds.squeeze(1).eq(label)
+                total_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
+
+                max_preds = max_preds.cpu()
+                label = label.cpu()
+
+                # F1 Score
+                total_f1_score += metrics.f1_score(label, max_preds, average='micro')
+
+        final_accuracy = total_accuracy / len(test_loader)
+        final_f1_score  = total_f1_score / len(test_loader)
+        end_time = time.time()
+        test_mins, test_secs = self.epoch_time(start_time, end_time)
+
+        # Print the final accuracy and F1 score
+        print('\n----------------------------------------------------------------------')
+        print(f'Testing for the SemEval 2014 and 2015 gold data | Testing Time: {test_mins}m {test_secs}s')
+        print(f'\tTesting Acc: {final_accuracy * 100:.2f}% | Testing F1: {final_f1_score:.3f}')
+        print('----------------------------------------------------------------------\n')
 
 
 
@@ -352,7 +430,6 @@ class Mode(Enum):
     Class Enumerating the 3 modes of operation of the network.
     This is used while loading datasets
     '''
-
     TRAIN = 0
     VALID = 1
     PREDICT = 2

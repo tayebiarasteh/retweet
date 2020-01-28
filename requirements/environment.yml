@@ -1,0 +1,17 @@
+name: SentimentAnalysis
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python==3.7
+  - numpy
+  - scipy
+  - ipython
+  - jupyter
+  - cython
+  - pip
+  - torch
+  - torchvision
+  - torchtext
+

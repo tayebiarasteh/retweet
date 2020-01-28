@@ -4,6 +4,7 @@
 
 
 #System Modules
+import os
 import os.path
 from enum import Enum
 import datetime
@@ -14,10 +15,12 @@ from tensorboardX import SummaryWriter
 import torch
 import torch.nn.functional as F
 import torch.nn as nn
+from sklearn import metrics
 
 # User Defined Modules
 from configs.serde import *
 import pdb
+os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 
 
 class Training:
@@ -110,6 +113,7 @@ class Training:
         self.model_info = self.params['Network']
         self.model_info['num_epochs'] = num_epochs or self.model_info['num_epochs']
 
+        best_valid_F1 = 0.0
         self.epoch = 0
         self.tb_train_step = 0
         self.tb_val_step = 0
@@ -118,10 +122,10 @@ class Training:
             self.epoch = epoch
             start_time = time.time()
             print('Training:')
-            train_loss, train_acc = self.train_epoch(train_loader)
+            train_loss, train_acc, train_F1 = self.train_epoch(train_loader)
             if valid_loader:
                 print('\nValidation:')
-                valid_loss, valid_acc = self.valid_epoch(valid_loader)
+                valid_loss, valid_acc, valid_F1 = self.valid_epoch(valid_loader)
 
             end_time = time.time()
             epoch_mins, epoch_secs = self.epoch_time(start_time, end_time)
@@ -129,15 +133,17 @@ class Training:
             # Print accuracy and loss after each epoch
             print('\n-----------------------------------------------')
             print(f'Epoch: {self.epoch + 1} | Epoch Time: {epoch_mins}m {epoch_secs}s')
-            print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc * 100:.2f}%')
+            print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc * 100:.2f}% | Train F1: {train_F1:.3f}')
             if valid_loader:
-                print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc * 100:.2f}%')
+                print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc * 100:.2f}% | Val. F1: {valid_F1:.3f}')
             print('-----------------------------------------------\n')
 
-        '''Saving the model'''
-            # Saving every epoch
-            # torch.save(self.model.state_dict(), self.params['network_output_path'] +
-            #            "/epoch_" + str(self.epoch) + '_' + self.params['trained_model_name'])
+            '''Saving the model'''
+            # Saving a specific epoch
+            if valid_F1 > best_valid_F1:
+                best_valid_F1 = valid_F1
+                torch.save(self.model.state_dict(), self.params['network_output_path'] + '/' +
+                           self.params['trained_model_name'])
         # Saving the last epoch
         # torch.save(self.model.state_dict(), self.params['network_output_path'] +
         # "/" + self.params['trained_model_name'])
@@ -159,12 +165,14 @@ class Training:
         self.model.train()
         previous_idx = 0
 
-        # loss value to display statistics
+        # initializing the metrics
         total_loss = 0
         batch_loss = 0
         total_accuracy = 0
         batch_count = 0
         batch_accuracy = 0
+        total_f1_score = 0
+        f1_score = 0
 
         for idx, batch in enumerate(train_loader):
             message, message_lengths = batch.text
@@ -186,32 +194,47 @@ class Training:
                 total_loss += loss.item()
                 batch_count += 1
 
-                # Accuracy
+                '''Metrics calculation'''
                 max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
+
+                # Accuracy
                 correct = max_preds.squeeze(1).eq(label)
                 batch_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
                 total_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
+
+                max_preds = max_preds.cpu()
+                label = label.cpu()
+
+                # F1 Score
+                f1_score += metrics.f1_score(label, max_preds, average='micro')
+                total_f1_score += metrics.f1_score(label, max_preds, average='micro')
+
+                # # Precision
+                # precision += metrics.precision_score(label, max_preds, average='micro')
+                # # Recall
+                # recall += metrics.recall_score(label, max_preds, average='micro')
 
                 #Backward and optimize
                 loss.backward()
                 self.optimiser.step()
 
-                #TODO: other metrics to be added.
-
                 # Prints loss statistics and writes to the tensorboard after number of steps specified.
                 if (idx + 1)%self.params['display_stats_freq'] == 0:
-                    print('Epoch {} | Batch {}-{} | Average train loss: {:.3f}'.
-                          format(self.epoch + 1, previous_idx, idx, batch_loss / batch_count))
+                    print('Epoch {} | Batch {}-{} | Train loss: {:.3f} | Train F1: {:.3f}'.
+                          format(self.epoch + 1, previous_idx, idx, batch_loss / batch_count, f1_score / batch_count))
                     previous_idx = idx + 1
                     self.tb_train_step += 1
-                    self.calculate_tb_stats(batch_loss / batch_count, batch_accuracy / batch_count, is_train=True)
+                    self.calculate_tb_stats(batch_loss / batch_count, batch_accuracy / batch_count,
+                                            f1_score / batch_count, is_train=True)
                     batch_loss = 0
                     batch_count = 0
                     batch_accuracy = 0
+                    f1_score = 0
 
         epoch_accuracy = total_accuracy / len(train_loader)
         epoch_loss = total_loss / len(train_loader)
-        return epoch_loss, epoch_accuracy
+        epoch_f1_score  = total_f1_score / len(train_loader)
+        return epoch_loss, epoch_accuracy, epoch_f1_score
 
 
     def valid_epoch(self, valid_loader):
@@ -221,12 +244,14 @@ class Training:
         previous_idx = 0
 
         with torch.no_grad():
-            # loss value to display statistics
+            # initializing the metrics
             total_loss = 0
             batch_loss = 0
             total_accuracy = 0
             batch_count = 0
             batch_accuracy = 0
+            total_f1_score = 0
+            f1_score = 0
 
             for idx, batch in enumerate(valid_loader):
                 message, message_lengths = batch.text
@@ -243,30 +268,42 @@ class Training:
                 total_loss += loss.item()
                 batch_count += 1
 
-                # Accuracy
+                '''Metrics calculation'''
                 max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
+
+                # Accuracy
                 correct = max_preds.squeeze(1).eq(label)
                 batch_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
                 total_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
 
+                max_preds = max_preds.cpu()
+                label = label.cpu()
+
+                # F1 Score
+                f1_score += metrics.f1_score(label, max_preds, average='micro')
+                total_f1_score += metrics.f1_score(label, max_preds, average='micro')
+
                 # Prints loss statistics and writes to the tensorboard after number of steps specified.
                 if (idx + 1) % self.params['display_stats_freq'] == 0:
-                    print('Epoch {} | Batch {}-{} | Average Val. loss: {:.3f}'.
-                          format(self.epoch + 1, previous_idx, idx, batch_loss / batch_count))
+                    print('Epoch {} | Batch {}-{} | Val. loss: {:.3f} | Val. F1: {:.3f}'.
+                          format(self.epoch + 1, previous_idx, idx, batch_loss / batch_count, f1_score / batch_count))
                     previous_idx = idx + 1
                     self.tb_val_step += 1
-                    self.calculate_tb_stats(batch_loss / batch_count, batch_accuracy / batch_count, is_train=False)
+                    self.calculate_tb_stats(batch_loss / batch_count, batch_accuracy / batch_count,
+                                            f1_score / batch_count, is_train=False)
                     batch_loss = 0
                     batch_count = 0
                     batch_accuracy = 0
+                    f1_score = 0
 
         self.model.train()
         epoch_accuracy = total_accuracy / len(valid_loader)
         epoch_loss = total_loss / len(valid_loader)
-        return epoch_loss, epoch_accuracy
+        epoch_f1_score  = total_f1_score / len(valid_loader)
+        return epoch_loss, epoch_accuracy, epoch_f1_score
 
 
-    def calculate_tb_stats(self, batch_loss, batch_accuracy, is_train=True):
+    def calculate_tb_stats(self, batch_loss, batch_accuracy, batch_f1_score, is_train=True):
         '''Adds the statistics of metrics to the tensorboard'''
         if is_train:
             mode='Training'
@@ -278,6 +315,7 @@ class Training:
         # Adds loss value & number & accuracy of correct predictions to TensorBoard
         self.writer.add_scalar(mode+'_Loss', batch_loss, step)
         self.writer.add_scalar(mode+'_Accuracy', batch_accuracy, step)
+        self.writer.add_scalar(mode+'_F1_Score', batch_f1_score, step)
 
         # Adds all the network's trainable parameters to TensorBoard
         if is_train:

@@ -2,7 +2,7 @@
   "Network": {
     "seed": 1
   },
-  "display_stats_freq": 40,
+  "display_stats_freq": 80,
   "network_save_freq": 1000,
   "input_data_path": "/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_SemEval/message_level/",
   "train_file_name": "train_and_dev_b_2014.txt",

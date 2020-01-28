@@ -25,11 +25,11 @@ def main_train():
     '''Main function for training + validation.'''
 
     '''Hyper-parameters'''
-    NUM_EPOCH = 5
+    NUM_EPOCH = 15
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     MAX_VOCAB_SIZE = 2500 #take the 2500 most frequent words as the vocab
-    parameters = dict(lr = [.01], batch_size = [32])
+    parameters = dict(lr = [5e-4], batch_size = [32])
     param_values = [v for v in parameters.values()]
 
     '''Hyper-parameter testing'''
@@ -68,7 +68,7 @@ def main_test():
 
 def experiment_deleter():
     '''To delete an experiment and reuse the same experiment name'''
-    parameters = dict(lr = [.01], batch_size = [32])
+    parameters = dict(lr = [5e-4], batch_size = [32])
     param_values = [v for v in parameters.values()]
     for lr, BATCH_SIZE in product(*param_values):
         delete_experiment("Adam_lr" + str(lr))

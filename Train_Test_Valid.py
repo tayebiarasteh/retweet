@@ -131,12 +131,12 @@ class Training:
             epoch_mins, epoch_secs = self.epoch_time(start_time, end_time)
 
             # Print accuracy and loss after each epoch
-            print('\n-----------------------------------------------')
-            print(f'Epoch: {self.epoch + 1} | Epoch Time: {epoch_mins}m {epoch_secs}s')
+            print('\n---------------------------------------------------------------')
+            print(f'Epoch: {self.epoch + 1:02} | Epoch Time: {epoch_mins}m {epoch_secs}s')
             print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc * 100:.2f}% | Train F1: {train_F1:.3f}')
             if valid_loader:
-                print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc * 100:.2f}% | Val. F1: {valid_F1:.3f}')
-            print('-----------------------------------------------\n')
+                print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc * 100:.2f}% |  Val. F1: {valid_F1:.3f}')
+            print('---------------------------------------------------------------\n')
 
             '''Saving the model'''
             # Saving a specific epoch
@@ -220,7 +220,7 @@ class Training:
 
                 # Prints loss statistics and writes to the tensorboard after number of steps specified.
                 if (idx + 1)%self.params['display_stats_freq'] == 0:
-                    print('Epoch {} | Batch {}-{} | Train loss: {:.3f} | Train F1: {:.3f}'.
+                    print('Epoch {:02} | Batch {:03}-{:03} | Train loss: {:.3f} | Train F1: {:.3f}'.
                           format(self.epoch + 1, previous_idx, idx, batch_loss / batch_count, f1_score / batch_count))
                     previous_idx = idx + 1
                     self.tb_train_step += 1
@@ -285,7 +285,7 @@ class Training:
 
                 # Prints loss statistics and writes to the tensorboard after number of steps specified.
                 if (idx + 1) % self.params['display_stats_freq'] == 0:
-                    print('Epoch {} | Batch {}-{} | Val. loss: {:.3f} | Val. F1: {:.3f}'.
+                    print('Epoch {:02} | Batch {:03}-{:03} | Train loss: {:.3f} | Train F1: {:.3f}'.
                           format(self.epoch + 1, previous_idx, idx, batch_loss / batch_count, f1_score / batch_count))
                     previous_idx = idx + 1
                     self.tb_val_step += 1

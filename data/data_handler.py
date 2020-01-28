@@ -18,7 +18,7 @@ class data_provider_V2():
     Pre-trained embedding: glove.6B.100d
     Tokenizer: spacy
     '''
-    def __init__(self, cfg_path, batch_size, split_ratio=0.8, max_vocab_size=2500, mode=Mode.TRAIN, seed=1):
+    def __init__(self, cfg_path, batch_size, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, seed=1):
         '''
         Args:
             cfg_path (string):

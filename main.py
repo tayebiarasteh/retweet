@@ -15,6 +15,7 @@ from configs.serde import *
 from Train_Test_Valid import Training, Prediction
 from data.data_handler import *
 from models.biLSTM import *
+from utils.summarizer import *
 
 #System Modules
 from itertools import product
@@ -22,6 +23,7 @@ import time
 import csv
 import warnings
 warnings.filterwarnings('ignore')
+
 
 
 def main_train():
@@ -134,7 +136,7 @@ def main_reply_predict():
     predictor.setup_model(model=biLSTM, vocab_size=vocab_size,
                           embeddings=pretrained_embeddings, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
     reply_dataset = []
-    with open('/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_postreply/data_post_reply.csv') as csv_file:
+    with open(os.path.join(params['postreply_data_path'], params['reply_file_name'])) as csv_file:
         data = csv.reader(csv_file)
         for row in data:
             reply_dataset.append(row)
@@ -148,10 +150,15 @@ def main_reply_predict():
             reply_dataset[idx][0] = predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=PHRASE,
                                                              tokenizer=nlp, mode=Mode.REPLY_PREDICTION)
     # Writing the labels to a csv file
-    with open('/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_postreply/data_post_reply_withlabel.csv', 'w') as myfile:
+    with open(os.path.join(params['postreply_data_path'], params['reply_with_label_file_name']), 'w') as myfile:
         updated_reply_dataset = csv.writer(myfile)
         for row in reply_dataset:
             updated_reply_dataset.writerow(row)
+
+    # Removing the repetitions
+    summarizer(data_path=params['postreply_data_path'],
+               input_file_name=params['reply_with_label_file_name'],
+               output_file_name=params['reply_with_max_label_file_name'])
     # Duration
     end_time = time.time()
     test_mins, test_secs = prediction_time(start_time, end_time)

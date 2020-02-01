@@ -13,8 +13,8 @@ def summarizer(data_path, input_file_name, output_file_name):
 
     data = pd.read_csv(os.path.join(data_path, input_file_name))
 
-    print('finish reading data\n')
-    print('length of the data:', len(data))
+    # print('finish reading data\n')
+    # print('length of the data:', len(data))
 
     data_new = data.drop(['id', 'user', 'reply'], axis=1)
     data_final = pd.DataFrame(columns=['label', 'tweet'])

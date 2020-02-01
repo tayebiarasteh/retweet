@@ -425,7 +425,7 @@ class Prediction:
         print('----------------------------------------------------------------------\n')
 
 
-    def manual_predict(self, labels, vocab_idx, phrase, min_len = 4):
+    def manual_predict(self, labels, vocab_idx, phrase, min_len = 4, tokenizer=spacy.load('en'), mode=None):
         '''
         Manually predicts the polarity of the given sentence.
         Possible polarities: 1.neutral, 2.positive, 3.negative
@@ -434,8 +434,7 @@ class Prediction:
         self.params = read_config(self.cfg_path)
         self.model_p.eval()
 
-        nlp = spacy.load('en')
-        tokenized = [tok.text for tok in nlp.tokenizer(phrase)]
+        tokenized = [tok.text for tok in tokenizer.tokenizer(phrase)]
         if len(tokenized) < min_len:
             tokenized += ['<pad>'] * (min_len - len(tokenized))
         indexed = [vocab_idx[t] for t in tokenized]
@@ -443,6 +442,10 @@ class Prediction:
         tensor = tensor.unsqueeze(1)
         preds = self.model_p(tensor, torch.Tensor([tensor.shape[0]]))
         max_preds = preds.argmax(dim=1)
+
+        if mode == Mode.REPLY_PREDICTION:
+            return labels[max_preds.item()]
+
         print('\n----------------------------------')
         print(f'\tThis is a {labels[max_preds.item()]} phrase!')
         print('----------------------------------')
@@ -458,5 +461,6 @@ class Mode(Enum):
     VALID = 1
     TEST = 2
     PREDICTION = 3
+    REPLY_PREDICTION = 4
 
 

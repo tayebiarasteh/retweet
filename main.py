@@ -8,6 +8,7 @@ Set the hyper-parameters and model parameters here. [data parameters from config
 from torch.nn import *
 import torch
 import torch.optim as optim
+import spacy
 
 # User Defined Modules
 from configs.serde import *
@@ -18,6 +19,7 @@ from models.biLSTM import *
 #System Modules
 from itertools import product
 import time
+import csv
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -26,7 +28,7 @@ def main_train():
     '''Main function for training + validation.'''
 
     '''Hyper-parameters'''
-    NUM_EPOCH = 10
+    NUM_EPOCH = 15
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 32
@@ -113,6 +115,49 @@ def main_manual_predict():
 
 
 
+def main_reply_predict():
+    '''
+    Manually predicts the polarity of the given replies,
+    which will be regarded as the labels for the corresponding tweets.
+    Note: first you need to create a csv file which you want to save the labels in.
+    '''
+    # Configs
+    start_time = time.time()
+    EXPERIMENT_NAME = 'Adam_lr0.0005_max_vocab_size25000'
+    params = open_experiment(EXPERIMENT_NAME)
+    cfg_path = params['cfg_path']
+    # Prepare the network parameters (use the same "max_vocab_size" as in training)
+    data_handler_test = data_provider_V2(cfg_path=cfg_path, max_vocab_size=25000, mode=Mode.PREDICTION)
+    labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler_test.data_loader()
+    # Initialize prediction
+    predictor = Prediction(cfg_path)
+    predictor.setup_model(model=biLSTM, vocab_size=vocab_size,
+                          embeddings=pretrained_embeddings, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
+    reply_dataset = []
+    with open('/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_postreply/data_post_reply.csv') as csv_file:
+        data = csv.reader(csv_file)
+        for row in data:
+            reply_dataset.append(row)
+    reply_dataset[0][0] = 'label'
+
+    # Execute Prediction
+    nlp = spacy.load('en')
+    for idx, item in enumerate(reply_dataset):
+        if idx != 0:
+            PHRASE = item[4]
+            reply_dataset[idx][0] = predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=PHRASE,
+                                                             tokenizer=nlp, mode=Mode.REPLY_PREDICTION)
+    # Writing the labels to a csv file
+    with open('/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_postreply/data_post_reply_withlabel.csv', 'w') as myfile:
+        updated_reply_dataset = csv.writer(myfile)
+        for row in reply_dataset:
+            updated_reply_dataset.writerow(row)
+    # Duration
+    end_time = time.time()
+    test_mins, test_secs = prediction_time(start_time, end_time)
+    print(f'Total Time: {test_mins}m {test_secs}s')
+
+
 
 def prediction_time(start_time, end_time):
     elapsed_time = end_time - start_time
@@ -133,4 +178,5 @@ if __name__ == '__main__':
     # experiment_deleter()
     # main_train()
     # main_test()
-    main_manual_predict()
+    # main_manual_predict()
+    main_reply_predict()

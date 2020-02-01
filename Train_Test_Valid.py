@@ -2,7 +2,6 @@
 @author: Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
 """
 
-
 #System Modules
 import os.path
 from enum import Enum
@@ -208,11 +207,6 @@ class Training:
                 f1_score += metrics.f1_score(label, max_preds, average='micro')
                 total_f1_score += metrics.f1_score(label, max_preds, average='micro')
 
-                # # Precision
-                # precision += metrics.precision_score(label, max_preds, average='micro')
-                # # Recall
-                # recall += metrics.recall_score(label, max_preds, average='micro')
-
                 #Backward and optimize
                 loss.backward()
                 self.optimiser.step()
@@ -237,7 +231,7 @@ class Training:
 
 
     def valid_epoch(self, valid_loader):
-        '''Test (validation) model after an epoch and calculate loss on test dataset'''
+        '''Test (validation) model after an epoch and calculate loss on valid dataset'''
         print("Epoch [{}/{}]".format(self.epoch + 1, self.model_info['num_epochs']))
         self.model.eval()
         previous_idx = 0
@@ -461,6 +455,5 @@ class Mode(Enum):
     VALID = 1
     TEST = 2
     PREDICTION = 3
-    REPLY_PREDICTION = 4
 
 

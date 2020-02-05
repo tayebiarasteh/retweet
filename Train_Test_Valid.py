@@ -484,12 +484,12 @@ class Prediction:
         tensor = tensor.unsqueeze(1)
         preds = self.model_p(tensor, torch.Tensor([tensor.shape[0]]))
         max_preds = preds.argmax(dim=1)
-
-        if mode == Mode.REPLY_PREDICTION:
+        if mode == Mode.REPLYPREDICTION:
             return labels[max_preds.item()]
 
-        print('\n----------------------------------')
-        print(f'\tThis is a {labels[max_preds.item()]} phrase!')
+        print('\n\t', '"' + phrase + '"')
+        print('----------------------------------')
+        print(f'\t This is a {labels[max_preds.item()]} phrase!')
         print('----------------------------------')
 
 
@@ -503,5 +503,6 @@ class Mode(Enum):
     VALID = 1
     TEST = 2
     PREDICTION = 3
+    REPLYPREDICTION = 4
 
 

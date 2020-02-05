@@ -41,13 +41,13 @@ def main_train():
     #max_vocab_size: takes the 25000 most frequent words as the vocab
     MAX_VOCAB_SIZE = 25000
     lr = 5e-4
+    EXPERIMENT_NAME = "new2Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
 
     if RESUME == True:
-        EXPERIMENT_NAME = "newAdam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
         params = open_experiment(EXPERIMENT_NAME)
     else:
         # put the new experiment name here.
-        params = create_experiment("newAdam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
+        params = create_experiment(EXPERIMENT_NAME)
     cfg_path = params["cfg_path"]
 
     # Prepare data
@@ -99,15 +99,16 @@ def main_test():
 
 
 
-def main_manual_predict():
+def main_manual_predict(PHRASE=None):
     '''Manually predicts the polarity of the given sentence.'''
 
-    # Enter your phrase below here:
-    PHRASE = "How you doin? :D"
+    if PHRASE == None:
+        # Enter your phrase below here:
+        PHRASE = "How you doin? :D"
 
     # Configs
     start_time = time.time()
-    EXPERIMENT_NAME = 'newAdam_lr0.0005_max_vocab_size25000'
+    EXPERIMENT_NAME = 'new2Adam_lr0.0005_max_vocab_size25000'
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
     # Prepare the network parameters
@@ -119,7 +120,7 @@ def main_manual_predict():
     predictor.setup_model(model=biLSTM, vocab_size=vocab_size,
                           embeddings=pretrained_embeddings, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
     # Execute Prediction
-    predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=PHRASE)
+    predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=PHRASE, mode=Mode.PREDICTION)
     # Duration
     end_time = time.time()
     test_mins, test_secs = prediction_time(start_time, end_time)
@@ -194,13 +195,13 @@ def main_train_postreply():
     #max_vocab_size: takes the 25000 most frequent words as the vocab
     MAX_VOCAB_SIZE = 25000
     lr = 5e-4
+    EXPERIMENT_NAME = "POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
 
     if RESUME == True:
-        EXPERIMENT_NAME = "POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
         params = open_experiment(EXPERIMENT_NAME)
     else:
         # put the new experiment name here.
-        params = create_experiment("POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
+        params = create_experiment(EXPERIMENT_NAME)
     cfg_path = params["cfg_path"]
 
     # Prepare data
@@ -244,9 +245,9 @@ def experiment_deleter():
 
 
 if __name__ == '__main__':
-    experiment_deleter()
-    main_train()
+    # experiment_deleter()
+    # main_train()
     # main_test()
-    # main_manual_predict()
+    main_manual_predict()
     # main_reply_predict()
     # main_train_postreply()

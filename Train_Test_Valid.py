@@ -33,13 +33,13 @@ class Training:
         self.params = read_config(cfg_path)
         self.cfg_path = cfg_path
         self.RESUME = RESUME
-        self.best_loss = float('inf')
 
         if RESUME == False:
             self.model_info = self.params['Network']
             self.model_info['seed'] = torch_seed or self.model_info['seed']
             self.epoch = 0
             self.num_epochs = num_epochs
+            self.best_loss = float('inf')
 
             if 'trained_time' in self.model_info:
                 self.raise_training_complete_exception()

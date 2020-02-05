@@ -263,10 +263,11 @@ class Training:
         epoch_accuracy = (correct.sum() / torch.FloatTensor([labels_cache.shape[0]])).item()
 
         max_preds_cache = max_preds_cache.cpu()
-        labels_cache = labels_cache.long().cpu()
+        labels_cache = labels_cache.cpu()
 
         # F1 Score
         epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        labels_cache = labels_cache.long()
 
         # Loss
         loss = self.loss_function(logits_cache.to(self.device), labels_cache.to(self.device))
@@ -328,10 +329,11 @@ class Training:
         epoch_accuracy = (correct.sum() / torch.FloatTensor([labels_cache.shape[0]])).item()
 
         max_preds_cache = max_preds_cache.cpu()
-        labels_cache = labels_cache.long().cpu()
+        labels_cache = labels_cache.cpu()
 
         # F1 Score
         epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        labels_cache = labels_cache.long()
 
         # Loss
         loss = self.loss_function(logits_cache.to(self.device), labels_cache.to(self.device))
@@ -414,16 +416,17 @@ class Prediction:
         self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
 
 
-    def predict(self, test_loader):
+    def predict(self, test_loader, batch_size):
         # Reads params to check if any params have been changed by user
         self.params = read_config(self.cfg_path)
         self.model_p.eval()
 
         start_time = time.time()
         with torch.no_grad():
-            # initializing the metrics
-            total_accuracy = 0
-            total_f1_score = 0
+            # initializing the caches
+            logits_cache = torch.from_numpy(np.zeros((len(test_loader) * batch_size, 3)))
+            max_preds_cache = torch.from_numpy(np.zeros((len(test_loader) * batch_size, 1)))
+            labels_cache = torch.from_numpy(np.zeros(len(test_loader) * batch_size))
 
             for idx, batch in enumerate(test_loader):
                 message, message_lengths = batch.text
@@ -433,22 +436,27 @@ class Prediction:
                 message = message.to(self.device)
                 label = label.to(self.device)
                 output = self.model_p(message, message_lengths).squeeze(1)
-
-                '''Metrics calculation'''
                 max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
 
-                # Accuracy
-                correct = max_preds.squeeze(1).eq(label)
-                total_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
+                # saving the logits and labels of this batch
+                for i, batch_vector in enumerate(max_preds):
+                    max_preds_cache[idx * batch_size + i] = batch_vector
+                for i, batch_vector in enumerate(output):
+                    logits_cache[idx * batch_size + i] = batch_vector
+                for i, value in enumerate(label):
+                    labels_cache[idx * batch_size + i] = value
 
-                max_preds = max_preds.cpu()
-                label = label.cpu()
+        '''Metrics calculation over the whole set'''
+        # Accuracy
+        correct = max_preds_cache.squeeze(1).eq(labels_cache)
+        final_accuracy = (correct.sum() / torch.FloatTensor([labels_cache.shape[0]])).item()
 
-                # F1 Score
-                total_f1_score += metrics.f1_score(label, max_preds, average='micro')
+        max_preds_cache = max_preds_cache.cpu()
+        labels_cache = labels_cache.cpu()
 
-        final_accuracy = total_accuracy / len(test_loader)
-        final_f1_score  = total_f1_score / len(test_loader)
+        # F1 Score
+        final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+
         end_time = time.time()
         test_mins, test_secs = self.epoch_time(start_time, end_time)
 

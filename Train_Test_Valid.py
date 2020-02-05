@@ -121,7 +121,7 @@ class Training:
         return elapsed_mins, elapsed_secs
 
 
-    def execute_training(self, train_loader, valid_loader=None):
+    def execute_training(self, train_loader, valid_loader=None, batch_size=1):
         '''
         Executes training by running training and validation at each epoch
         '''
@@ -143,11 +143,11 @@ class Training:
             start_time = time.time()
 
             print('Training (intermediate metrics):')
-            train_loss, train_acc, train_F1 = self.train_epoch(train_loader)
+            train_loss, train_acc, train_F1 = self.train_epoch(train_loader, batch_size)
 
             if valid_loader:
                 print('\nValidation (intermediate metrics):')
-                valid_loss, valid_acc, valid_F1 = self.valid_epoch(valid_loader)
+                valid_loss, valid_acc, valid_F1 = self.valid_epoch(valid_loader, batch_size)
 
             end_time = time.time()
             epoch_mins, epoch_secs = self.epoch_time(start_time, end_time)
@@ -200,7 +200,7 @@ class Training:
             print('---------------------------------------------------------------\n')
 
 
-    def train_epoch(self, train_loader):
+    def train_epoch(self, train_loader, batch_size):
         '''
         Train using one single iteration of all messages (epoch) in dataset
         '''
@@ -208,17 +208,16 @@ class Training:
         self.model.train()
         previous_idx = 0
 
-        # initializing the metrics
-        total_loss = 0
+        # initializing the loss list
         batch_loss = 0
-        total_accuracy = 0
         batch_count = 0
-        batch_accuracy = 0
-        total_f1_score = 0
-        f1_score = 0
+
+        # initializing the caches
+        logits_cache = torch.from_numpy(np.zeros((len(train_loader) * batch_size, 3)))
+        max_preds_cache = torch.from_numpy(np.zeros((len(train_loader) * batch_size, 1)))
+        labels_cache = torch.from_numpy(np.zeros(len(train_loader) * batch_size))
 
         for idx, batch in enumerate(train_loader):
-            pdb.set_trace()
             message, message_lengths = batch.text
             label = batch.label
             message = message.long()
@@ -235,23 +234,16 @@ class Training:
                 # Loss
                 loss = self.loss_function(output, label)
                 batch_loss += loss.item()
-                total_loss += loss.item()
                 batch_count += 1
-
-                '''Metrics calculation'''
                 max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
 
-                # Accuracy
-                correct = max_preds.squeeze(1).eq(label)
-                batch_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
-                total_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
-
-                max_preds = max_preds.cpu()
-                label = label.cpu()
-
-                # F1 Score
-                f1_score += metrics.f1_score(label, max_preds, average='micro')
-                total_f1_score += metrics.f1_score(label, max_preds, average='micro')
+                # saving the logits and labels of this batch
+                for i, batch_vector in enumerate(max_preds):
+                    max_preds_cache[idx * batch_size + i] = batch_vector
+                for i, batch_vector in enumerate(output):
+                    logits_cache[idx * batch_size + i] = batch_vector
+                for i, value in enumerate(label):
+                    labels_cache[idx * batch_size + i] = value
 
                 #Backward and optimize
                 loss.backward()
@@ -265,27 +257,39 @@ class Training:
                     batch_loss = 0
                     batch_count = 0
 
-        epoch_accuracy = total_accuracy / len(train_loader)
-        epoch_loss = total_loss / len(train_loader)
-        epoch_f1_score  = total_f1_score / len(train_loader)
+        '''Metrics calculation over the whole set'''
+        # Accuracy
+        correct = max_preds_cache.squeeze(1).eq(labels_cache)
+        epoch_accuracy = (correct.sum() / torch.FloatTensor([labels_cache.shape[0]])).item()
+
+        max_preds_cache = max_preds_cache.cpu()
+        labels_cache = labels_cache.long().cpu()
+
+        # F1 Score
+        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+
+        # Loss
+        loss = self.loss_function(logits_cache.to(self.device), labels_cache.to(self.device))
+        epoch_loss = loss.item()
+
         return epoch_loss, epoch_accuracy, epoch_f1_score
 
 
-    def valid_epoch(self, valid_loader):
+    def valid_epoch(self, valid_loader, batch_size):
         '''Test (validation) model after an epoch and calculate loss on valid dataset'''
         print("Epoch [{}/{}]".format(self.epoch, self.model_info['num_epochs']))
         self.model.eval()
         previous_idx = 0
 
         with torch.no_grad():
-            # initializing the metrics
-            total_loss = 0
+            # initializing the loss list
             batch_loss = 0
-            total_accuracy = 0
             batch_count = 0
-            batch_accuracy = 0
-            total_f1_score = 0
-            f1_score = 0
+
+            # initializing the caches
+            logits_cache = torch.from_numpy(np.zeros((len(valid_loader) * batch_size, 3)))
+            max_preds_cache = torch.from_numpy(np.zeros((len(valid_loader) * batch_size, 1)))
+            labels_cache = torch.from_numpy(np.zeros(len(valid_loader) * batch_size))
 
             for idx, batch in enumerate(valid_loader):
                 message, message_lengths = batch.text
@@ -299,23 +303,16 @@ class Training:
                 # Loss
                 loss = self.loss_function(output, label)
                 batch_loss += loss.item()
-                total_loss += loss.item()
                 batch_count += 1
-
-                '''Metrics calculation'''
                 max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
 
-                # Accuracy
-                correct = max_preds.squeeze(1).eq(label)
-                batch_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
-                total_accuracy += (correct.sum() / torch.FloatTensor([label.shape[0]])).item()
-
-                max_preds = max_preds.cpu()
-                label = label.cpu()
-
-                # F1 Score
-                f1_score += metrics.f1_score(label, max_preds, average='micro')
-                total_f1_score += metrics.f1_score(label, max_preds, average='micro')
+                # saving the logits and labels of this batch
+                for i, batch_vector in enumerate(max_preds):
+                    max_preds_cache[idx * batch_size + i] = batch_vector
+                for i, batch_vector in enumerate(output):
+                    logits_cache[idx * batch_size + i] = batch_vector
+                for i, value in enumerate(label):
+                    labels_cache[idx * batch_size + i] = value
 
                 # Prints loss statistics after number of steps specified.
                 if (idx + 1)%self.params['display_stats_freq'] == 0:
@@ -325,10 +322,22 @@ class Training:
                     batch_loss = 0
                     batch_count = 0
 
+        '''Metrics calculation over the whole set'''
+        # Accuracy
+        correct = max_preds_cache.squeeze(1).eq(labels_cache)
+        epoch_accuracy = (correct.sum() / torch.FloatTensor([labels_cache.shape[0]])).item()
+
+        max_preds_cache = max_preds_cache.cpu()
+        labels_cache = labels_cache.long().cpu()
+
+        # F1 Score
+        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+
+        # Loss
+        loss = self.loss_function(logits_cache.to(self.device), labels_cache.to(self.device))
+        epoch_loss = loss.item()
+
         self.model.train()
-        epoch_accuracy = total_accuracy / len(valid_loader)
-        epoch_loss = total_loss / len(valid_loader)
-        epoch_f1_score  = total_f1_score / len(valid_loader)
         return epoch_loss, epoch_accuracy, epoch_f1_score
 
 

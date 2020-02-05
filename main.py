@@ -31,7 +31,7 @@ def main_train():
     '''Main function for training + validation.'''
 
     # if we are resuming training on a model
-    RESUME = True
+    RESUME = False
 
     # Hyper-parameters
     NUM_EPOCH = 50
@@ -71,7 +71,7 @@ def main_train():
         trainer.setup_model(model=MODEL, optimiser=OPTIMIZER,
                         optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION)
     # Execute Training
-    trainer.execute_training(train_loader=train_iterator, valid_loader=valid_iterator)
+    trainer.execute_training(train_loader=train_iterator, valid_loader=valid_iterator, batch_size=BATCH_SIZE)
 
 
 
@@ -237,7 +237,7 @@ def experiment_deleter():
 
 
 if __name__ == '__main__':
-    # experiment_deleter()
+    experiment_deleter()
     main_train()
     # main_test()
     # main_manual_predict()

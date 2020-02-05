@@ -30,39 +30,44 @@ warnings.filterwarnings('ignore')
 def main_train():
     '''Main function for training + validation.'''
 
-    '''Hyper-parameters'''
+    # if we are resuming training on a model
+    RESUME = False
+
+    # Hyper-parameters
     NUM_EPOCH = 13
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 32
     #max_vocab_size: takes the 25000 most frequent words as the vocab
-    parameters = dict(lr = [5e-4], max_vocab_size = [25000])
-    param_values = [v for v in parameters.values()]
+    MAX_VOCAB_SIZE = 25000
+    lr = 5e-4
 
-    '''Hyper-parameter testing'''
-    for lr, MAX_VOCAB_SIZE in product(*param_values):
+    if RESUME == True:
+        EXPERIMENT_NAME = 'Adam_lr5e-05'
+        params = open_experiment(EXPERIMENT_NAME)
+    else:
         # put the new experiment name here.
-        params = create_experiment("Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
-        cfg_path = params["cfg_path"]
+        params = create_experiment("Adam_lr" + str(lr))
+    cfg_path = params["cfg_path"]
 
-        '''Prepare data'''
-        data_handler = data_provider_V2(cfg_path=cfg_path, batch_size=BATCH_SIZE,
-                                        split_ratio=0.8, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN)
-        train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
-        '''Initialize trainer'''
-        trainer = Training(cfg_path)
+    # Prepare data
+    data_handler = data_provider_V2(cfg_path=cfg_path, batch_size=BATCH_SIZE,
+                                    split_ratio=0.8, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN)
+    train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
+    # Initialize trainer
+    trainer = Training(cfg_path)
 
-        '''Model parameters'''
-        optimiser_params = {'lr': lr}
-        EMBEDDING_DIM = 100
-        HIDDEN_DIM = 256
-        OUTPUT_DIM = 3
-        MODEL = biLSTM(vocab_size=vocab_size, embeddings=pretrained_embeddings, embedding_dim=EMBEDDING_DIM,
-                       hidden_dim=HIDDEN_DIM, output_dim=OUTPUT_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
-        trainer.setup_model(model=MODEL, optimiser=OPTIMIZER,
-                            optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION)
-        '''Execute Training'''
-        trainer.execute_training(train_loader=train_iterator, valid_loader=valid_iterator, num_epochs=NUM_EPOCH)
+    '''Model parameters'''
+    optimiser_params = {'lr': lr}
+    EMBEDDING_DIM = 100
+    HIDDEN_DIM = 256
+    OUTPUT_DIM = 3
+    MODEL = biLSTM(vocab_size=vocab_size, embeddings=pretrained_embeddings, embedding_dim=EMBEDDING_DIM,
+                   hidden_dim=HIDDEN_DIM, output_dim=OUTPUT_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
+    trainer.setup_model(model=MODEL, optimiser=OPTIMIZER,
+                        optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION)
+    # Execute Training
+    trainer.execute_training(train_loader=train_iterator, valid_loader=valid_iterator, num_epochs=NUM_EPOCH)
 
 
 

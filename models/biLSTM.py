@@ -1,6 +1,9 @@
 """
-Bidirectional LSTM with 2 layers + dropout + fully connected
-@author: Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
+Bidirectional LSTM with 2 layers + dropout + fully connected.
+
+@authors:
+Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
+Mehrpad Monajem <mehrpad.monajem@fau.de>
 """
 
 import torch

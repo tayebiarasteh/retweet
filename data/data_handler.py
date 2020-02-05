@@ -1,5 +1,7 @@
 """
-@author: Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
+@authors:
+Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
+Mehrpad Monajem <mehrpad.monajem@fau.de>
 """
 
 import numpy as np

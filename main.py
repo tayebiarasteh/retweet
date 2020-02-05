@@ -166,7 +166,7 @@ def main_reply_predict():
         if idx != 0:
             PHRASE = item[4]
             reply_dataset[idx][0] = predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=PHRASE,
-                                                             tokenizer=nlp, mode=Mode.REPLY_PREDICTION)
+                                                             tokenizer=nlp, mode=Mode.REPLYPREDICTION)
     # Writing the labels to a csv file
     with open(os.path.join(params['postreply_data_path'], params['reply_with_label_file_name']), 'w') as myfile:
         updated_reply_dataset = csv.writer(myfile)
@@ -251,8 +251,8 @@ def experiment_deleter():
 
 if __name__ == '__main__':
     # experiment_deleter()
-    main_train()
+    # main_train()
     # main_test()
-    # main_manual_predict()
+    main_manual_predict()
     # main_reply_predict()
     # main_train_postreply()

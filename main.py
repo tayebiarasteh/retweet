@@ -15,6 +15,7 @@ import spacy
 from configs.serde import *
 from Train_Test_Valid import Training, Prediction
 from data.data_handler import *
+from data.post_reply_downloader import *
 from models.biLSTM import *
 from utils.summarizer import *
 
@@ -34,7 +35,7 @@ def main_train():
     RESUME = False
 
     # Hyper-parameters
-    NUM_EPOCH = 50
+    NUM_EPOCH = 10
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 32
@@ -78,7 +79,7 @@ def main_train():
 def main_test():
     '''Main function for testing'''
     # Configs
-    EXPERIMENT_NAME = 'newAdam_lr0.0005_max_vocab_size25000'
+    EXPERIMENT_NAME = 'new2Adam_lr0.0005_max_vocab_size25000'
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
 
@@ -128,8 +129,35 @@ def main_manual_predict(PHRASE=None):
 
 
 
-def main_downloaded_manual_predict():
-    pass
+def main_tweet_reply_manual_predict(PHRASE=None):
+    '''Manually predicts the reply sentiment that would be taught to receive.'''
+
+    if PHRASE == None:
+        # Enter your phrase below here:
+        PHRASE = "How you doin? :D"
+
+    # Configs
+    start_time = time.time()
+    EXPERIMENT_NAME = 'new2Adam_lr0.0005_max_vocab_size25000'
+    params = open_experiment(EXPERIMENT_NAME)
+    cfg_path = params['cfg_path']
+    # Prepare the network parameters
+    # use the same "max_vocab_size" as in training
+    data_handler_test = data_provider_V2(cfg_path=cfg_path, max_vocab_size=25000, mode=Mode.PREDICTION)
+    labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler_test.data_loader()
+    # Initialize prediction
+    predictor = Prediction(cfg_path)
+    predictor.setup_model(model=biLSTM, vocab_size=vocab_size,
+                          embeddings=pretrained_embeddings, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
+
+    # TODO: load the second model here
+    # Execute Prediction
+    predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=PHRASE, mode=Mode.PREDICTION)
+    # Duration
+    end_time = time.time()
+    test_mins, test_secs = prediction_time(start_time, end_time)
+    print(f'Prediction Time: {test_mins}m {test_secs}s')
+
 
 
 
@@ -141,7 +169,7 @@ def main_reply_predict():
     '''
     # Configs
     start_time = time.time()
-    EXPERIMENT_NAME = 'newAdam_lr0.0005_max_vocab_size25000'
+    EXPERIMENT_NAME = 'new2Adam_lr0.0005_max_vocab_size25000'
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
 
@@ -193,7 +221,7 @@ def main_train_postreply():
     RESUME = False
 
     # Hyper-parameters
-    NUM_EPOCH = 50
+    NUM_EPOCH = 10
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 32
@@ -253,6 +281,6 @@ if __name__ == '__main__':
     # experiment_deleter()
     # main_train()
     # main_test()
-    main_manual_predict()
-    # main_reply_predict()
-    # main_train_postreply()
+    # main_manual_predict()
+    main_reply_predict()
+    main_train_postreply()

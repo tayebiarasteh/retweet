@@ -128,6 +128,11 @@ def main_manual_predict(PHRASE=None):
 
 
 
+def main_downloaded_manual_predict():
+    pass
+
+
+
 def main_reply_predict():
     '''
     Manually predicts the polarity of the given replies,
@@ -240,14 +245,14 @@ def experiment_deleter():
     parameters = dict(lr = [5e-4], max_vocab_size = [25000])
     param_values = [v for v in parameters.values()]
     for lr, MAX_VOCAB_SIZE in product(*param_values):
-        delete_experiment("newAdam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
+        delete_experiment("new2Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
 
 
 
 if __name__ == '__main__':
     # experiment_deleter()
-    # main_train()
+    main_train()
     # main_test()
-    main_manual_predict()
+    # main_manual_predict()
     # main_reply_predict()
     # main_train_postreply()

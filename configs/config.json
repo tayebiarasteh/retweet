@@ -3,7 +3,7 @@
     "seed": 1
   },
   "display_stats_freq": 80,
-  "network_save_freq": 1000,
+  "network_save_freq": 20,
   "postreply_data_path": "/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_postreply",
   "input_data_path": "/home/soroosh/Documents/Repositories/twitter_sentiment/data/dataset_SemEval/message_level/",
   "train_file_name": "train_and_dev_b_2014.txt",
@@ -18,5 +18,6 @@
   "network_output_path": "./data/network_data/",
   "output_data_path": "./data/output_data/",
   "tb_logs_path": "./data/tensor_board_logs/",
+  "checkpoint_name": "checkpoint.tar",
   "trained_model_name": "trained_model.pth"
 }

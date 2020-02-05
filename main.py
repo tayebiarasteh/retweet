@@ -31,10 +31,10 @@ def main_train():
     '''Main function for training + validation.'''
 
     # if we are resuming training on a model
-    RESUME = False
+    RESUME = True
 
     # Hyper-parameters
-    NUM_EPOCH = 13
+    NUM_EPOCH = 50
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 32
@@ -43,11 +43,11 @@ def main_train():
     lr = 5e-4
 
     if RESUME == True:
-        EXPERIMENT_NAME = 'Adam_lr5e-05'
+        EXPERIMENT_NAME = "newAdam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
         params = open_experiment(EXPERIMENT_NAME)
     else:
         # put the new experiment name here.
-        params = create_experiment("Adam_lr" + str(lr))
+        params = create_experiment("newAdam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
     cfg_path = params["cfg_path"]
 
     # Prepare data
@@ -55,19 +55,23 @@ def main_train():
                                     split_ratio=0.8, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN)
     train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
     # Initialize trainer
-    trainer = Training(cfg_path)
+    trainer = Training(cfg_path, num_epochs=NUM_EPOCH, RESUME=RESUME)
 
-    '''Model parameters'''
+    # Model parameters
     optimiser_params = {'lr': lr}
     EMBEDDING_DIM = 100
     HIDDEN_DIM = 256
     OUTPUT_DIM = 3
     MODEL = biLSTM(vocab_size=vocab_size, embeddings=pretrained_embeddings, embedding_dim=EMBEDDING_DIM,
                    hidden_dim=HIDDEN_DIM, output_dim=OUTPUT_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
-    trainer.setup_model(model=MODEL, optimiser=OPTIMIZER,
+    if RESUME == True:
+        trainer.load_checkpoint(model=MODEL, optimiser=OPTIMIZER,
+                        optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION)
+    else:
+        trainer.setup_model(model=MODEL, optimiser=OPTIMIZER,
                         optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION)
     # Execute Training
-    trainer.execute_training(train_loader=train_iterator, valid_loader=valid_iterator, num_epochs=NUM_EPOCH)
+    trainer.execute_training(train_loader=train_iterator, valid_loader=valid_iterator)
 
 
 
@@ -228,14 +232,14 @@ def experiment_deleter():
     parameters = dict(lr = [5e-4], max_vocab_size = [25000])
     param_values = [v for v in parameters.values()]
     for lr, MAX_VOCAB_SIZE in product(*param_values):
-        delete_experiment("POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
+        delete_experiment("newAdam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
 
 
 
 if __name__ == '__main__':
     # experiment_deleter()
-    # main_train()
+    main_train()
     # main_test()
     # main_manual_predict()
     # main_reply_predict()
-    main_train_postreply()
+    # main_train_postreply()

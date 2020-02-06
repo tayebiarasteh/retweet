@@ -19,3 +19,4 @@
 /.ipynb_checkpoints/
 /data/__pycache__/
 /utils/__pycache__/
+/.idea/

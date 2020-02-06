@@ -244,13 +244,13 @@ def summarizer(data_path, input_file_name, output_file_name):
 
 
 def post_reply_downloader(list_of_word, max_num_tweets, mode='download'):
-    path = '/home/soroosh/Documents/Repositories/twitter_sentiment/data/preprocessing_utils/get_old_tweets_3-0.0.10'
+    path = '/home/mehrpad/Desktop/dl_seminar/git_seminar/data/preprocessing_utils/GetOldTweets3-0.0.10'
     max_tweets = max_num_tweets
     list_word = list_of_word
     for word in list_word:
         print('The word is:', word,'- Max number of tweets:', max_tweets)
-        os.system(' python %s/GetOldTweets3.py --querysearch "%s" --lang en --toptweets --maxtweets %s'
-                  ' --output=%s/%s.csv' %(path, word, max_tweets, path, word))
+        os.system('python %s/GetOldTweets3.py --querysearch "%s" --lang en --toptweets --maxtweets %s'
+                      ' --output=%s/%s.csv' %(path, word, max_tweets, path, word))
     if mode == 'test':
         data = pd.read_csv('%s/%s.csv' % (path, list_word[0]))
         return data
@@ -258,7 +258,7 @@ def post_reply_downloader(list_of_word, max_num_tweets, mode='download'):
 
 
 if __name__=='__main__':
-    CONFIG_PATH = '/home/soroosh/Documents/Repositories/twitter_sentiment/configs/config.json'
+    CONFIG_PATH = '/home/mehrpad/Desktop/dl_seminar/git_seminar/configs/config.json'
     data_handler = data_provider_PostReply(cfg_path=CONFIG_PATH, batch_size=1, split_ratio=0.8, max_vocab_size=25000)
     train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
     # pdb.set_trace()

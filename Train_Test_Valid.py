@@ -1,4 +1,6 @@
 """
+Training and Prediction classes
+
 @author: Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
 """
 
@@ -414,6 +416,7 @@ class Prediction:
 
         # Loads model from model_file_name and default network_output_path
         self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+        # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch60_" + model_file_name))
 
 
     def predict(self, test_loader, batch_size):
@@ -467,7 +470,8 @@ class Prediction:
         print('----------------------------------------------------------------------\n')
 
 
-    def manual_predict(self, labels, vocab_idx, phrase, min_len = 4, tokenizer=spacy.load('en'), mode=None):
+    def manual_predict(self, labels, vocab_idx, phrase, min_len = 4,
+                       tokenizer=spacy.load('en'), mode=None, prediction_mode='Manualpart1'):
         '''
         Manually predicts the polarity of the given sentence.
         Possible polarities: 1.neutral, 2.positive, 3.negative
@@ -489,7 +493,10 @@ class Prediction:
 
         print('\n\t', '"' + phrase + '"')
         print('-----------------------------------------')
-        print(f'\t This is a {labels[max_preds.item()]} phrase!')
+        if prediction_mode == 'Manualpart1':
+            print(f'\t This is a {labels[max_preds.item()]} phrase!')
+        elif prediction_mode == 'Manualpart2':
+            print(f'\t This phrase is likely to get {labels[max_preds.item()]} replies!')
         print('-----------------------------------------')
 
 
@@ -504,5 +511,3 @@ class Mode(Enum):
     TEST = 2
     PREDICTION = 3
     REPLYPREDICTION = 4
-
-

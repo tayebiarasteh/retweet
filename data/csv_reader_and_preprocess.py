@@ -2,7 +2,8 @@
 Read all csv files with post_reply_downloader.py file and concat them.
 Also it drops the column that is not necessary for the task.
 
-@author: Mehrpad Monajem <mehrpad.monajem@fau.de>
+@author:
+Mehrpad Monajem <mehrpad.monajem@fau.de>
 """
 
 import pandas as pd

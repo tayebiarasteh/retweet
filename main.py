@@ -145,43 +145,13 @@ def main_manual_predict(PHRASE=None, prediction_mode='Manualpart1'):
 
 
 
-def main_tweet_reply_manual_predict(PHRASE=None):
-    '''Manually predicts the reply sentiment that would be taught to receive.'''
-
-    if PHRASE == None:
-        # Enter your phrase below here:
-        PHRASE = "How you doin? :D"
-
-    # Configs
-    start_time = time.time()
-    EXPERIMENT_NAME = 'Adam_lr5e-05_max_vocab_size25000'
-    params = open_experiment(EXPERIMENT_NAME)
-    cfg_path = params['cfg_path']
-    # Prepare the network parameters
-    # use the same "max_vocab_size" as in training
-    data_handler_test = data_provider_V2(cfg_path=cfg_path, max_vocab_size=25000, mode=Mode.PREDICTION)
-    labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler_test.data_loader()
-    # Initialize prediction
-    predictor = Prediction(cfg_path)
-    predictor.setup_model(model=biLSTM, vocab_size=vocab_size,
-                          embeddings=pretrained_embeddings, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
-
-    # TODO: load the second model here
-    # Execute Prediction
-    predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=PHRASE, mode=Mode.PREDICTION)
-    # Duration
-    end_time = time.time()
-    test_mins, test_secs = prediction_time(start_time, end_time)
-    print(f'Prediction Time: {test_mins}m {test_secs}s')
-
-
-
-
 def main_reply_predict():
     '''
     Manually predicts the polarity of the given replies,
-    which will be regarded as the labels for the corresponding tweets.
-    Note: first you need to create a csv file which you want to save the labels in.
+    which will be regarded as the labels for the corresponding tweets
+    and creates a labeled dataset of only tweets and corresponding labels.
+    Note: first you need to create a csv file which you want to save
+    the labels in ("data_post_reply_withlabel.csv").
     '''
     # Configs
     start_time = time.time()

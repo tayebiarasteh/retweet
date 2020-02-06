@@ -1,4 +1,4 @@
-# Sentiment Analysis of the potential Replies that a given Tweet may get
+# Sentiment Analysis of Tweets and their Potential Replies
 
 ### By S. Tayebi Arasteh, M. Monajem, and S. Sitaula
 

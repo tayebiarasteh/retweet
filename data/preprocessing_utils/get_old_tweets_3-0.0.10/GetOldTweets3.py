@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+'''
+By this file you can download tweets and replies related to each tread. It will
+save the result in a csv file. Up to now due to scorching API limitation for replies. It
+is not fast enough. For 100,000 tweets and replies it needs 4 days.
+
+@Modified by: Mehrpad Monajem <mehrpad.monajem@fau.de>
+'''
+
 """To use this script you can pass the following attributes:
        querysearch: a query text to be matched
           username: a username or a list of usernames (comma or space separated)
@@ -200,7 +208,7 @@ def main(argv):
         def receiveBuffer(tweets):
             nonlocal cnt
             for t in tweets:
-                if (t.replies) > 0:
+                if (t.replies) > 3:
                     replies = get_replies(t)
                     if len(replies) > 0:
                         for reply in replies:

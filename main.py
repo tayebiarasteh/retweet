@@ -113,9 +113,9 @@ def main_manual_predict(PHRASE=None, prediction_mode='Manualpart1'):
     # Configs
     start_time = time.time()
     if prediction_mode == 'Manualpart1':
-        EXPERIMENT_NAME = 'new2Adam_lr0.0005_max_vocab_size25000'
+        EXPERIMENT_NAME = 'Adam_lr5e-05_max_vocab_size25000'
     elif prediction_mode == 'Manualpart2':
-        EXPERIMENT_NAME = 'POSTREPLY_Adam_lr0.0005_max_vocab_size25000'
+        EXPERIMENT_NAME = 'POSTREPLY_Adam_lr0.0002_max_vocab_size25000'
 
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']

@@ -179,12 +179,12 @@ class Training:
                     torch.save(self.model.state_dict(), self.params['network_output_path'] + '/' +
                                self.params['trained_model_name'])
 
-            # Saving every 20 epochs
+            # Saving every 10 epochs
             if (self.epoch) % self.params['network_save_freq'] == 0:
                 torch.save(self.model.state_dict(), self.params['network_output_path'] + '/' +
                            'epoch{}_'.format(self.epoch) + self.params['trained_model_name'])
 
-            # Save a checkpoint
+            # Save a checkpoint every epoch
             torch.save({'epoch': self.epoch,
                 'model_state_dict': self.model.state_dict(),
                 'optimizer_state_dict': self.optimiser.state_dict(),

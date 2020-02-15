@@ -44,19 +44,56 @@ $ python -m spacy download en
 
 Approach to the challange
 ------
-This project can be divided into three consecutive parts to reach our goal.
 
-1. **Sentiment Analysis of the labelled tweets from [SemEval 2015 Task 10, Subtask B](http://alt.qcri.org/semeval2015/task10/) dataset.**
+This project can be divided into two consecutive parts to reach our goal.
+1. Creating a Sentiment Classifying tool for tweets
+2. Sentiment Predictor for Tweet-Replies
 
-2. **Dataset Creation for Post Reply Datasets:**
-This classifier is employed to the replies of a huge number of tweets to find the sentiment of each the reply.
-Each tweet will then have a list of sentiments as many as the number of replies.
-The respective tweet is then given a label based on a maximum number of occurence of a particular sentiment i.e the argmax value of the classified sentiments.
-This label shows the sentiment of the replies that a tweet  is most likely to get. 
-3. **Sentiment Predictor for Tweet Replies:**
-Use the labelled dataset created from the second part to train another model which will predict the sentiment for Tweet-Replies.
+![](demos/nutshell.jpg)
 
-
-Proposed architecture
+Part 1: Sentiment Analysis of the labeled tweets
 ------
-The architecture used in this software is a variant of the Bi-Directional Long-Short Term Memory units (BiLSTM).
+- Supervised deep learning method.
+- Message-level Sentiment Analysis of tweets, based on the Subtask B of Task 10 of the SemEval 2015 challenge.
+- Preliminary goal: To beat the state-of-the-art of the corresponding task of the SemEval.
+- Final goal: To tackle the unsupervised nature of the part 2 of the project as supervised.
+ 
+#### Model Architecture
+A modified version of Bi-directional Long-Short Term Memory Units (BiLSTM).
+#### Training Parameters
+
+| Name        | Value           |
+| :-------------: |:-------------:| 
+| Number of trainable parameters    | 4,811,883
+| Training duration | 57 minutes and 08 seconds on Nvidia GeForce 940MX
+| Number of epochs | 60 
+| Embedding | GloVe with 100 dimensions pre-trained on 6 billion data
+| Loss function    | Cross Entropy Loss   
+| Optimizer        | Adam with a learning rate of 5e-5 with a decay of 1e-5
+| Hidden and cell dimensions of the LSTM  | 256    
+
+#### Testing Results on the gold test data of SemEval 2014 combined with 2015
+
+| Name        | Value           |
+| :-------------: |:-------------:| 
+| Accuracy    | 72.17%
+| F1-score | 0.697 (the [state-of-the-art](https://www.aclweb.org/anthology/S17-2094/) is 0.685)
+
+Part 2: Sentiment Analysis of the Unlabeled Tweet-Replies
+------
+- Originally Unsupervised problem.
+- Idea: To leverage the model in the part 1, to tackle the unsupervised nature of the problem.
+ 
+#### Strategy
+
+1. Extract tweets from Twitter with their corresponding replies.
+2. If a tweet has multiple replies, regard each reply as a separate data and repeat the
+tweet.
+3. First ignore the tweets and predict the sentiment of each reply using the model from the
+part 1.
+4. For the replies corresponding to the same tweet, choose the label which has the
+maximum occurance and assign it as the tweet‘s label and then ignore the replies.
+5. Now we have a training set of some tweets with their labels, SUPERVISED!
+6. Train another model with this data.
+7. Now the final model is ready. Given only tweets as the input, this model predicts the
+sentiment of the potential reply that tweet is likely to get!

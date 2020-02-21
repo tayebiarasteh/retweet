@@ -11,7 +11,7 @@ import warnings
 import shutil
 
 
-CONFIG_PATH = '/home/soroosh/Documents/Repositories/twitter_sentiment/configs/config.json'
+CONFIG_PATH = "./configs/config.json"
 
 
 def read_config(cfg_path):

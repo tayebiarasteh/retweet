@@ -20,3 +20,5 @@
 /data/__pycache__/
 /utils/__pycache__/
 /.idea/
+/data/datasets/postreply/data_post_reply_withlabel.csv
+/data/datasets/postreply/data_post_with_max_replies_label.csv

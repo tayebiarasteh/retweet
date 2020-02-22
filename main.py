@@ -56,7 +56,7 @@ def main_train():
     # Prepare data
     data_handler = data_provider_V2(cfg_path=cfg_path, batch_size=BATCH_SIZE,
                                     split_ratio=SPLIT_RATIO, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN)
-    train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
+    train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights = data_handler.data_loader()
 
     print(f'\nSummary:\n----------------------------------------------------')
     print(f'Total # of Training tweets: {BATCH_SIZE * len(train_iterator):,}')
@@ -72,10 +72,10 @@ def main_train():
                    hidden_dim=HIDDEN_DIM, output_dim=OUTPUT_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
     if RESUME == True:
         trainer.load_checkpoint(model=MODEL, optimiser=OPTIMIZER,
-                        optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION)
+                        optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION, weight=weights)
     else:
         trainer.setup_model(model=MODEL, optimiser=OPTIMIZER,
-                        optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION)
+                        optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION, weight=weights)
     # Execute Training
     trainer.execute_training(train_loader=train_iterator, valid_loader=valid_iterator, batch_size=BATCH_SIZE)
 
@@ -242,7 +242,7 @@ def main_train_postreply():
     # Prepare data
     data_handler = data_provider_PostReply(cfg_path=cfg_path, batch_size=BATCH_SIZE,
                                     split_ratio=SPLIT_RATIO, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN)
-    train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
+    train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights = data_handler.data_loader()
 
     print(f'\nSummary:\n----------------------------------------------------')
     print(f'Total # of Training tweets: {BATCH_SIZE * len(train_iterator):,}')
@@ -258,10 +258,10 @@ def main_train_postreply():
                    hidden_dim=HIDDEN_DIM, output_dim=OUTPUT_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
     if RESUME == True:
         trainer.load_checkpoint(model=MODEL, optimiser=OPTIMIZER,
-                        optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION)
+                        optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION, weight=weights)
     else:
         trainer.setup_model(model=MODEL, optimiser=OPTIMIZER,
-                        optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION)
+                        optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION, weight=weights)
     # Execute Training
     trainer.execute_training(train_loader=train_iterator, valid_loader=valid_iterator, batch_size=BATCH_SIZE)
 
@@ -278,14 +278,14 @@ def experiment_deleter():
     parameters = dict(lr = [5e-5], max_vocab_size = [100000])
     param_values = [v for v in parameters.values()]
     for lr, MAX_VOCAB_SIZE in product(*param_values):
-        delete_experiment("Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
+        delete_experiment("POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
 
 
 
 if __name__ == '__main__':
-    # experiment_deleter()
-    main_train()
+    experiment_deleter()
+    # main_train()
     # main_test()
     # main_manual_predict(prediction_mode='Manualpart1')
     # main_reply_predict()
-    # main_train_postreply()
+    main_train_postreply()

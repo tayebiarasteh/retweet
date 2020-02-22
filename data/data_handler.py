@@ -110,12 +110,42 @@ class data_provider_V2():
                 train_data, valid_data, test_data), batch_size=self.batch_size,
                 sort_within_batch=True, sort_key=lambda x: len(x.text))
 
+        # finding the weights of each label
+        data_for_weight = pd.read_csv(os.path.join(self.dataset_path, self.train_file_name))
+        pos_counter = 0
+        neg_counter = 0
+        neut_counter = 0
+        for i in range(len(data_for_weight['label'])):
+            if (data_for_weight['label'][i] == 'positive'):
+                pos_counter += 1
+            if (data_for_weight['label'][i] == 'negative'):
+                neg_counter += 1
+            if (data_for_weight['label'][i] == 'neutral'):
+                neut_counter += 1
+        overall = neut_counter + pos_counter + neg_counter
+        neut_weight = overall/neut_counter
+        neg_weight = overall/neg_counter
+        pos_weight = overall/pos_counter
+        if labels == ['neutral', 'negative', 'positive']:
+            weights = torch.Tensor([neut_weight, neg_weight, pos_weight])
+        elif labels == ['neutral', 'positive', 'negative']:
+            weights = torch.Tensor([neut_weight, pos_weight, neg_weight])
+        elif labels == ['negative', 'neutral', 'positive']:
+            weights = torch.Tensor([neg_weight, neut_weight, pos_weight])
+        elif labels == ['negative', 'positive', 'neutral']:
+            weights = torch.Tensor([neg_weight, pos_weight, neut_weight])
+        elif labels == ['positive', 'negative', 'neutral']:
+            weights = torch.Tensor([pos_weight, neg_weight, neut_weight])
+        elif labels == ['positive', 'neutral', 'negative']:
+            weights = torch.Tensor([pos_weight, neut_weight, neg_weight])
+
+
         if self.mode == Mode.TEST:
             return test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
         elif self.mode == Mode.PREDICTION:
             return labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
         else:
-            return train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
+            return train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights
 
 
 class data_provider_PostReply():
@@ -146,7 +176,7 @@ class data_provider_PostReply():
         self.split_ratio = split_ratio
         self.max_vocab_size = max_vocab_size
         self.dataset_path = params['postreply_data_path']
-        self.train_file_name = params['reply_with_max_label_file_name']
+        self.train_file_name = params['final_data_post_reply_file_name']
         self.data_format = params['reply_data_format']
         self.pretrained_embedding = params['pretrained_embedding']
         self.tokenizer = params['tokenizer']
@@ -201,12 +231,42 @@ class data_provider_PostReply():
 
         test_iterator = None
 
+        # finding the weights of each label
+        data_for_weight = pd.read_csv(os.path.join(self.dataset_path, self.train_file_name))
+        pos_counter = 0
+        neg_counter = 0
+        neut_counter = 0
+        for i in range(len(data_for_weight['label'])):
+            if (data_for_weight['label'][i] == 'positive'):
+                pos_counter += 1
+            if (data_for_weight['label'][i] == 'negative'):
+                neg_counter += 1
+            if (data_for_weight['label'][i] == 'neutral'):
+                neut_counter += 1
+        overall = neut_counter + pos_counter + neg_counter
+        neut_weight = overall/neut_counter
+        neg_weight = overall/neg_counter
+        pos_weight = overall/pos_counter
+        if labels == ['neutral', 'negative', 'positive']:
+            weights = torch.Tensor([neut_weight, neg_weight, pos_weight])
+        elif labels == ['neutral', 'positive', 'negative']:
+            weights = torch.Tensor([neut_weight, pos_weight, neg_weight])
+        elif labels == ['negative', 'neutral', 'positive']:
+            weights = torch.Tensor([neg_weight, neut_weight, pos_weight])
+        elif labels == ['negative', 'positive', 'neutral']:
+            weights = torch.Tensor([neg_weight, pos_weight, neut_weight])
+        elif labels == ['positive', 'negative', 'neutral']:
+            weights = torch.Tensor([pos_weight, neg_weight, neut_weight])
+        elif labels == ['positive', 'neutral', 'negative']:
+            weights = torch.Tensor([pos_weight, neut_weight, neg_weight])
+
         if self.mode == Mode.TEST:
             return test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
         elif self.mode == Mode.PREDICTION:
             return labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
         else:
-            return train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
+            return train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights
+
 
 
 def summarizer(data_path, input_file_name, output_file_name):
@@ -218,9 +278,10 @@ def summarizer(data_path, input_file_name, output_file_name):
 
     for tweet in it:
         id = tweet
-        label_pos = 0
+        label_pos = 0   # total number of positive labels for each tweet
         label_neg = 0
-        label_nat = 0
+        label_neut = 0
+
         label = data_new.iloc[tweet][0]
         tweet_text = data_new.iloc[tweet][1]
 
@@ -229,7 +290,7 @@ def summarizer(data_path, input_file_name, output_file_name):
         elif label == 'negative':
             label_neg += 1
         elif label == 'neutral':
-            label_nat += 1
+            label_neut += 1
 
         while True:
             tweet = next(it)
@@ -239,24 +300,24 @@ def summarizer(data_path, input_file_name, output_file_name):
                 elif data_new.iloc[tweet][0] == 'negative':
                     label_neg += 1
                 elif data_new.iloc[tweet][0] == 'neutral':
-                    label_nat += 1
+                    label_neut += 1
             else:
                 break
             if tweet + 1 >= len(data_new):
                 break
-        var = {label_pos: "positive", label_neg: "negative", label_nat: "neutral"}
+        var = {label_pos: "positive", label_neg: "negative", label_neut: "neutral"}
 
         # our proposed algorithm
-        overall = label_pos + label_neg + label_nat
-        if (label_nat/(overall + epsilon)) > 0.8:
-            label_final = var.get(label_nat)
+        overall = label_pos + label_neg + label_neut
+        if (label_neut/(overall + epsilon)) > 0.8:
+            label_final = var.get(label_neut)
         else:
             if (label_pos/(label_neg + epsilon)) > 3:
                 label_final = var.get(label_pos)
             elif (label_neg/(label_pos + epsilon)) > 3:
                 label_final = var.get(label_neg)
             else:
-                label_final = var.get(label_nat)
+                label_final = var.get(label_neut)
 
         df = pd.DataFrame([[label_final, tweet_text]], columns=['label', 'tweet'])
         data_final = data_final.append(df)

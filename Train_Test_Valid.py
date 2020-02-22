@@ -62,7 +62,7 @@ class Training:
             self.device = torch.device('cpu')
 
 
-    def setup_model(self, model, optimiser, optimiser_params, loss_function):
+    def setup_model(self, model, optimiser, optimiser_params, loss_function, weight):
         '''
         :param model: an object of our network
         :param optimiser: an object of our optimizer, e.g. torch.optim.SGD
@@ -77,7 +77,7 @@ class Training:
 
         self.model = model.to(self.device)
         self.optimiser = optimiser(self.model.parameters(), **optimiser_params)
-        self.loss_function = loss_function()
+        self.loss_function = loss_function(weight=weight.to(self.device))
 
         if 'retrain' in self.model_info and self.model_info['retrain']==True:
             self.load_pretrained_model()
@@ -91,7 +91,7 @@ class Training:
         write_config(self.params, self.cfg_path,sort_keys=True)
 
 
-    def load_checkpoint(self, model, optimiser, optimiser_params, loss_function):
+    def load_checkpoint(self, model, optimiser, optimiser_params, loss_function, weight):
 
         checkpoint = torch.load(self.params['network_output_path'] + '/' + self.params['checkpoint_name'])
         self.device = None
@@ -99,7 +99,7 @@ class Training:
         self.setup_cuda()
         self.model = model.to(self.device)
         self.optimiser = optimiser(self.model.parameters(), **optimiser_params)
-        self.loss_function = loss_function()
+        self.loss_function = loss_function(weight=weight)
 
         self.model.load_state_dict(checkpoint['model_state_dict'])
         self.optimiser.load_state_dict(checkpoint['optimizer_state_dict'])
@@ -273,6 +273,7 @@ class Training:
         epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
         epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
         labels_cache = labels_cache.long()
+        logits_cache = logits_cache.float()
 
         # Loss
         loss = self.loss_function(logits_cache.to(self.device), labels_cache.to(self.device))
@@ -340,6 +341,7 @@ class Training:
         epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
         epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
         labels_cache = labels_cache.long()
+        logits_cache = logits_cache.float()
 
         # Loss
         loss = self.loss_function(logits_cache.to(self.device), labels_cache.to(self.device))

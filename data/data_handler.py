@@ -111,7 +111,8 @@ class data_provider_V2():
                 sort_within_batch=True, sort_key=lambda x: len(x.text))
 
         # finding the weights of each label
-        data_for_weight = pd.read_csv(os.path.join(self.dataset_path, self.train_file_name))
+        data_for_weight = pd.read_csv(os.path.join(self.dataset_path, self.train_file_name), sep='\t',
+                                      names=['id1', 'id2', 'label', 'tweet'])
         pos_counter = 0
         neg_counter = 0
         neut_counter = 0
@@ -138,7 +139,6 @@ class data_provider_V2():
             weights = torch.Tensor([pos_weight, neg_weight, neut_weight])
         elif labels == ['positive', 'neutral', 'negative']:
             weights = torch.Tensor([pos_weight, neut_weight, neg_weight])
-
 
         if self.mode == Mode.TEST:
             return test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings

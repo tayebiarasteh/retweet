@@ -10,7 +10,7 @@
   "test_file_name": "test_data.txt",
   "reply_file_name": "data_post_reply.csv",
   "reply_with_label_file_name": "data_post_reply_withlabel.csv",
-  "reply_with_max_label_file_name": "data_post_with_max_replies_label.csv",
+  "final_data_post_reply_file_name": "final_data_post_reply.csv",
   "data_format": "tsv",
   "reply_data_format": "csv",
   "pretrained_embedding": "glove.twitter.27B.200d",

@@ -12,8 +12,10 @@ from Train_Test_Valid import Mode
 from configs.serde import read_config
 import os
 import pandas as pd
+from configs.serde import *
 import pdb
 
+epsilon = 1e-15
 
 
 class data_provider_V2():
@@ -211,9 +213,10 @@ def summarizer(data_path, input_file_name, output_file_name):
     data = pd.read_csv(os.path.join(data_path, input_file_name))
     data_new = data.drop(['id', 'user', 'reply'], axis=1)
     data_final = pd.DataFrame(columns=['label', 'tweet'])
-    it = iter(range(0, len(data_new)))
-    for tweet in it:
 
+    it = iter(range(0, len(data_new)))
+
+    for tweet in it:
         id = tweet
         label_pos = 0
         label_neg = 0
@@ -242,7 +245,18 @@ def summarizer(data_path, input_file_name, output_file_name):
             if tweet + 1 >= len(data_new):
                 break
         var = {label_pos: "positive", label_neg: "negative", label_nat: "neutral"}
-        label_final = var.get(max(var))
+
+        # our proposed algorithm
+        overall = label_pos + label_neg + label_nat
+        if (label_nat/(overall + epsilon)) > 0.8:
+            label_final = var.get(label_nat)
+        else:
+            if (label_pos/(label_neg + epsilon)) > 3:
+                label_final = var.get(label_pos)
+            elif (label_neg/(label_pos + epsilon)) > 3:
+                label_final = var.get(label_neg)
+            else:
+                label_final = var.get(label_nat)
 
         df = pd.DataFrame([[label_final, tweet_text]], columns=['label', 'tweet'])
         data_final = data_final.append(df)

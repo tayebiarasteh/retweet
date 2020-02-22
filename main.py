@@ -202,7 +202,7 @@ def main_reply_predict():
     # Removing the repetitions
     summarizer(data_path=params['postreply_data_path'],
                input_file_name=params['reply_with_label_file_name'],
-               output_file_name=params['reply_with_max_label_file_name'])
+               output_file_name=params['final_data_post_reply_file_name'])
     # Duration
     end_time = time.time()
     test_mins, test_secs = prediction_time(start_time, end_time)

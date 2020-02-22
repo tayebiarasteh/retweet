@@ -269,9 +269,9 @@ class Training:
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
-        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='micro')
-        epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='micro')
-        epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='micro')
+        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
+        epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
         labels_cache = labels_cache.long()
 
         # Loss
@@ -336,9 +336,9 @@ class Training:
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
-        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='micro')
-        epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='micro')
-        epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='micro')
+        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
+        epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
         labels_cache = labels_cache.long()
 
         # Loss
@@ -426,7 +426,7 @@ class Prediction:
 
         # Loads model from model_file_name and default network_output_path
         # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
-        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch30_" + model_file_name))
+        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch10_" + model_file_name))
 
 
     def predict(self, test_loader, batch_size):
@@ -468,9 +468,9 @@ class Prediction:
         labels_cache = labels_cache.cpu()
 
         # F1 Score, Recall, Precision
-        final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='micro')
-        final_precision = metrics.precision_score(labels_cache, max_preds_cache, average='micro')
-        final_recall = metrics.recall_score(labels_cache, max_preds_cache, average='micro')
+        final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        final_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
+        final_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
 
         end_time = time.time()
         test_mins, test_secs = self.epoch_time(start_time, end_time)
@@ -478,12 +478,12 @@ class Prediction:
         # Print the final accuracy and F1 score
         print('\n----------------------------------------------------------------------')
         print(f'Testing for the SemEval 2014 and 2015 gold data | Testing Time: {test_mins}m {test_secs}s')
-        print(f'\tTesting Acc: {final_accuracy * 100:.2f}% | Testing F1: {final_f1_score:.3f}'
-              f'Testing Recall: {final_recall:.3f}% | Testing Precision: {final_precision:.3f}')
+        print(f'\tTesting Acc: {final_accuracy * 100:.2f}% | Testing F1: {final_f1_score:.3f} | '
+              f'Testing Recall: {final_recall:.3f} | Testing Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')
 
 
-    def manual_predict(self, labels, vocab_idx, phrase, min_len = 4,
+    def manual_predict(self, labels, vocab_idx, phrase, min_len=4,
                        tokenizer=spacy.load('en'), mode=None, prediction_mode='Manualpart1'):
         '''
         Manually predicts the polarity of the given sentence.

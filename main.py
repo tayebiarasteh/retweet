@@ -83,7 +83,7 @@ def main_train():
 
 def main_test():
     '''Main function for testing'''
-    EXPERIMENT_NAME = 'Adam_lr5e-05_max_vocab_size25000'
+    EXPERIMENT_NAME = 'Adam_lr5e-05_max_vocab_size100000'
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
 
@@ -91,7 +91,7 @@ def main_test():
     BATCH_SIZE = 32
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 512
-    MAX_VOCAB_SIZE = 25000  # use the same "max_vocab_size" as in training
+    MAX_VOCAB_SIZE = 100000  # use the same "max_vocab_size" as in training
 
     # Prepare data
     data_handler_test = data_provider_V2(cfg_path=cfg_path, batch_size=BATCH_SIZE,
@@ -169,7 +169,7 @@ def main_reply_predict():
     # Hyper-parameters
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 512
-    MAX_VOCAB_SIZE = 25000  # use the same "max_vocab_size" as in training
+    MAX_VOCAB_SIZE = 100000  # use the same "max_vocab_size" as in training
 
     # Prepare the network parameters
     data_handler_test = data_provider_V2(cfg_path=cfg_path, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.PREDICTION)
@@ -224,12 +224,12 @@ def main_train_postreply():
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 32
     MAX_VOCAB_SIZE = 100000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
-    lr = 5e-6
+    lr = 5e-5
     optimiser_params = {'lr': lr}
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 512
     OUTPUT_DIM = 3
-    SPLIT_RATIO = 0.8 # ratio of the train set, 1 means 100% training, 0% valid data
+    SPLIT_RATIO = 0.8 # ratio of the train set, 1.0 means 100% training, 0% valid data
     EXPERIMENT_NAME = "POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
 
     if RESUME == True:
@@ -283,7 +283,7 @@ def experiment_deleter():
 
 
 if __name__ == '__main__':
-    experiment_deleter()
+    # experiment_deleter()
     main_train()
     # main_test()
     # main_manual_predict(prediction_mode='Manualpart1')

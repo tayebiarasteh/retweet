@@ -19,7 +19,6 @@ import pdb
 class data_provider_V2():
     '''
     Packed padded sequences
-    Pre-trained embedding: glove.6B.100d
     Tokenizer: spacy
     '''
     def __init__(self, cfg_path, batch_size=1, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, seed=1):
@@ -74,7 +73,10 @@ class data_provider_V2():
             skip_header=False)
 
         # validation data
-        train_data, valid_data = train_data.split(random_state=random.seed(self.seed), split_ratio=self.split_ratio)
+        if self.split_ratio == 1:
+            valid_data = None
+        else:
+            train_data, valid_data = train_data.split(random_state=random.seed(self.seed), split_ratio=self.split_ratio)
 
         # create the vocabulary only on the training set!!!
         # vectors: instead of having our word embeddings initialized randomly, they are initialized with these pre-trained vectors.
@@ -95,11 +97,17 @@ class data_provider_V2():
         # What do we do with words that appear in examples but we have cut from the vocabulary?
         # We replace them with a special unknown or <unk> token.
 
-
         # for packed padded sequences all of the tensors within a batch need to be sorted by their lengths
-        train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits((
-            train_data, valid_data, test_data), batch_size=self.batch_size,
-            sort_within_batch=True, sort_key=lambda x: len(x.text))
+        if self.split_ratio == 1:
+            valid_iterator = None
+            train_iterator, test_iterator = data.BucketIterator.splits((
+                train_data, test_data), batch_size=self.batch_size,
+                sort_within_batch=True, sort_key=lambda x: len(x.text))
+        else:
+            train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits((
+                train_data, valid_data, test_data), batch_size=self.batch_size,
+                sort_within_batch=True, sort_key=lambda x: len(x.text))
+
         if self.mode == Mode.TEST:
             return test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
         elif self.mode == Mode.PREDICTION:
@@ -111,7 +119,6 @@ class data_provider_V2():
 class data_provider_PostReply():
     '''
     Packed padded sequences
-    Pre-trained embedding: glove.6B.100d
     Tokenizer: spacy
     '''
     def __init__(self, cfg_path, batch_size=1, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, seed=1):
@@ -243,8 +250,9 @@ def summarizer(data_path, input_file_name, output_file_name):
     data_final.to_csv(os.path.join(data_path, output_file_name), index=False)
 
 
+
 def post_reply_downloader(list_of_word, max_num_tweets, mode='download'):
-    path = '/home/soroosh/Documents/Repositories/twitter_sentiment/data/preprocessing_utils/get_old_tweets_3-0.0.10'
+    path = './preprocessing_utils/get_old_tweets_3-0.0.10'
     max_tweets = max_num_tweets
     list_word = list_of_word
     for word in list_word:
@@ -258,7 +266,7 @@ def post_reply_downloader(list_of_word, max_num_tweets, mode='download'):
 
 
 if __name__=='__main__':
-    CONFIG_PATH = '/home/soroosh/Documents/Repositories/twitter_sentiment/configs/config.json'
+    CONFIG_PATH = '../configs/config.json'
     data_handler = data_provider_PostReply(cfg_path=CONFIG_PATH, batch_size=1, split_ratio=0.8, max_vocab_size=25000)
     train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
     # pdb.set_trace()

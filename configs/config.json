@@ -13,7 +13,7 @@
   "reply_with_max_label_file_name": "data_post_with_max_replies_label.csv",
   "data_format": "tsv",
   "reply_data_format": "csv",
-  "pretrained_embedding": "glove.6B.100d",
+  "pretrained_embedding": "glove.twitter.27B.200d",
   "tokenizer": "spacy",
   "network_output_path": "./data/network_data/",
   "output_data_path": "./data/output_data/",

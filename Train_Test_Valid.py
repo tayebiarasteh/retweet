@@ -69,7 +69,8 @@ class Training:
         :param optimiser_params: is a dictionary containing parameters for the optimiser, e.g. {'lr':7e-3}
         '''
         # number of parameters of the model
-        print(f'\nThe model has {sum(p.numel() for p in model.parameters() if p.requires_grad):,} trainable parameters!\n')
+        print(f'Total # of model\'s trainable parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}')
+        print('----------------------------------------------------\n')
 
         #Tensor Board Graph
         self.add_tensorboard_graph(model)
@@ -145,11 +146,11 @@ class Training:
             start_time = time.time()
 
             print('Training (intermediate metrics):')
-            train_loss, train_acc, train_F1 = self.train_epoch(train_loader, batch_size)
+            train_loss, train_acc, train_F1, train_recall, train_precision = self.train_epoch(train_loader, batch_size)
 
             if valid_loader:
                 print('\nValidation (intermediate metrics):')
-                valid_loss, valid_acc, valid_F1 = self.valid_epoch(valid_loader, batch_size)
+                valid_loss, valid_acc, valid_F1, valid_recall, valid_precision = self.valid_epoch(valid_loader, batch_size)
 
             end_time = time.time()
             epoch_mins, epoch_secs = self.epoch_time(start_time, end_time)
@@ -157,9 +158,10 @@ class Training:
 
             # Writes to the tensorboard after number of steps specified.
             if valid_loader:
-                self.calculate_tb_stats(train_loss, train_F1, valid_loss, valid_F1)
+                self.calculate_tb_stats(train_loss, train_F1, train_recall, train_precision, train_acc,
+                                        valid_loss, valid_F1, valid_recall, valid_precision, valid_acc)
             else:
-                self.calculate_tb_stats(train_loss, train_F1)
+                self.calculate_tb_stats(train_loss, train_F1, train_recall, train_precision, train_acc)
 
             # Saves information about training to config file
             self.model_info['num_steps'] = self.epoch
@@ -267,15 +269,16 @@ class Training:
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
-        # F1 Score
-        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='micro')
+        epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='micro')
+        epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='micro')
         labels_cache = labels_cache.long()
 
         # Loss
         loss = self.loss_function(logits_cache.to(self.device), labels_cache.to(self.device))
         epoch_loss = loss.item()
 
-        return epoch_loss, epoch_accuracy, epoch_f1_score
+        return epoch_loss, epoch_accuracy, epoch_f1_score, epoch_precision, epoch_recall
 
 
     def valid_epoch(self, valid_loader, batch_size):
@@ -333,8 +336,9 @@ class Training:
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
-        # F1 Score
-        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='micro')
+        epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='micro')
+        epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='micro')
         labels_cache = labels_cache.long()
 
         # Loss
@@ -342,23 +346,29 @@ class Training:
         epoch_loss = loss.item()
 
         self.model.train()
-        return epoch_loss, epoch_accuracy, epoch_f1_score
+        return epoch_loss, epoch_accuracy, epoch_f1_score, epoch_precision, epoch_recall
 
 
-    def calculate_tb_stats(self, train_loss, train_F1, valid_loss=None, valid_F1=None):
-        '''Adds the statistics of metrics to the tensorboard'''
+    def calculate_tb_stats(self, train_loss, train_F1, train_recall, train_precision, train_accuracy,
+                           valid_loss=None, valid_F1=None, valid_recall=None, valid_precision=None, valid_accuracy=None):
 
         # Adds the metrics to TensorBoard
         self.writer.add_scalar('Training' + '_Loss', train_loss, self.epoch)
         self.writer.add_scalar('Training' + '_F1', train_F1, self.epoch)
+        self.writer.add_scalar('Training' + '_Recall', train_recall, self.epoch)
+        self.writer.add_scalar('Training' + '_Precision', train_precision, self.epoch)
+        self.writer.add_scalar('Training' + '_Accuracy', train_accuracy, self.epoch)
         if valid_loss:
             self.writer.add_scalar('Validation' + '_Loss', valid_loss, self.epoch)
             self.writer.add_scalar('Validation' + '_F1', valid_F1, self.epoch)
+            self.writer.add_scalar('Validation' + '_Recall', valid_recall, self.epoch)
+            self.writer.add_scalar('Validation' + '_Precision', valid_precision, self.epoch)
+            self.writer.add_scalar('Validation' + '_Accuracy', valid_accuracy, self.epoch)
 
-        # Adds all the network's trainable parameters to TensorBoard
-        for name, param in self.model.named_parameters():
-            self.writer.add_histogram(name, param, self.epoch)
-            self.writer.add_histogram(f'{name}.grad', param.grad, self.epoch)
+        # # Adds all the network's trainable parameters to TensorBoard
+        # for name, param in self.model.named_parameters():
+        #     self.writer.add_histogram(name, param, self.epoch)
+        #     self.writer.add_histogram(f'{name}.grad', param.grad, self.epoch)
 
 
     def load_pretrained_model(self):
@@ -405,18 +415,18 @@ class Prediction:
         return elapsed_mins, elapsed_secs
 
 
-    def setup_model(self, model, vocab_size, embeddings, pad_idx, unk_idx, model_file_name=None):
+    def setup_model(self, model, vocab_size, embeddings, embedding_dim, hidden_dim, pad_idx, unk_idx, model_file_name=None):
         '''
         Setup the model by defining the model, load the model from the pth file saved during training.
         '''
         if model_file_name == None:
             model_file_name = self.params['trained_model_name']
-        self.model_p = model(vocab_size=vocab_size, embeddings=embeddings,
-                             pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
+        self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
+                             hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
 
         # Loads model from model_file_name and default network_output_path
-        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
-        # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch60_" + model_file_name))
+        # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch30_" + model_file_name))
 
 
     def predict(self, test_loader, batch_size):
@@ -457,8 +467,10 @@ class Prediction:
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
-        # F1 Score
-        final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        # F1 Score, Recall, Precision
+        final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='micro')
+        final_precision = metrics.precision_score(labels_cache, max_preds_cache, average='micro')
+        final_recall = metrics.recall_score(labels_cache, max_preds_cache, average='micro')
 
         end_time = time.time()
         test_mins, test_secs = self.epoch_time(start_time, end_time)
@@ -466,7 +478,8 @@ class Prediction:
         # Print the final accuracy and F1 score
         print('\n----------------------------------------------------------------------')
         print(f'Testing for the SemEval 2014 and 2015 gold data | Testing Time: {test_mins}m {test_secs}s')
-        print(f'\tTesting Acc: {final_accuracy * 100:.2f}% | Testing F1: {final_f1_score:.3f}')
+        print(f'\tTesting Acc: {final_accuracy * 100:.2f}% | Testing F1: {final_f1_score:.3f}'
+              f'Testing Recall: {final_recall:.3f}% | Testing Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')
 
 

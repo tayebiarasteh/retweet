@@ -1,6 +1,6 @@
 # Sentiment Analysis of Tweets and their Potential Replies
 
-### By S. Tayebi Arasteh, M. Monajem, and S. Sitaula
+### By Soroosh Tayebi Arasteh & Mehrpad Monajem
 
 This is the final project of the `Seminar Deep Learning` course (WS1920) jointly offered by the [Pattern Recognition Lab (LME)](https://lme.tf.fau.de/) of the *Computer Science Department*, and 
 the [Chair of Computational Corpus Linguistics](https://www.linguistik.phil.fau.de/) of the *Department of German Language and Literature* at University of Erlangen-Nuremberg (FAU).
@@ -76,8 +76,8 @@ A modified version of Bi-directional Long-Short Term Memory Units (BiLSTM).
 
 | Name        | Value           |
 | :-------------: |:-------------:| 
-| Accuracy    | 72.17%
-| F1-score | 0.697 (the [state-of-the-art](https://www.aclweb.org/anthology/S17-2094/) is 0.685)
+| Accuracy    | 73.57%
+| F1-score | 0.721 (the [state-of-the-art](https://www.aclweb.org/anthology/S17-2094/) is 0.685)
 
 Part 2: Sentiment Analysis of the Unlabeled Tweet-Replies
 ------

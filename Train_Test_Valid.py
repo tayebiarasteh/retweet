@@ -42,16 +42,13 @@ class Training:
             self.epoch = 0
             self.num_epochs = num_epochs
             self.best_loss = float('inf')
-
             if 'trained_time' in self.model_info:
                 self.raise_training_complete_exception()
-
             self.setup_cuda()
             self.writer = SummaryWriter(log_dir=os.path.join(self.params['tb_logs_path']))
 
 
     def setup_cuda(self, cuda_device_id=0):
-        '''Setup the CUDA device'''
         if torch.cuda.is_available():
             torch.backends.cudnn.fastest = True
             torch.cuda.set_device(cuda_device_id)
@@ -63,12 +60,7 @@ class Training:
 
 
     def setup_model(self, model, optimiser, optimiser_params, loss_function, weight):
-        '''
-        :param model: an object of our network
-        :param optimiser: an object of our optimizer, e.g. torch.optim.SGD
-        :param optimiser_params: is a dictionary containing parameters for the optimiser, e.g. {'lr':7e-3}
-        '''
-        # number of parameters of the model
+
         print(f'Total # of model\'s trainable parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}')
         print('----------------------------------------------------\n')
 
@@ -83,7 +75,6 @@ class Training:
             self.load_pretrained_model()
 
         # Saves the model, optimiser,loss function name for writing to config file
-        # self.model_info['model_name'] = model.__name__
         self.model_info['optimiser'] = optimiser.__name__
         self.model_info['loss_function'] = loss_function.__name__
         self.model_info['optimiser_params'] = optimiser_params
@@ -135,7 +126,6 @@ class Training:
             if 'trained_time' in self.model_info:
                 self.raise_training_complete_exception
 
-            # CODE FOR CONFIG FILE TO RECORD MODEL PARAMETERS
             self.model_info = self.params['Network']
             self.model_info['num_epochs'] = self.num_epochs or self.model_info['num_epochs']
 
@@ -163,13 +153,7 @@ class Training:
             else:
                 self.calculate_tb_stats(train_loss, train_F1, train_recall, train_precision, train_acc)
 
-            # Saves information about training to config file
-            self.model_info['num_steps'] = self.epoch
-            self.model_info['trained_time'] = "{:%B %d, %Y, %H:%M:%S}".format(datetime.datetime.now())
-            self.params['Network'] = self.model_info
-            write_config(self.params, self.cfg_path, sort_keys=True)
-
-            '''Saving the model'''
+            # Saving the model
             if valid_loader:
                 if valid_loss < self.best_loss:
                     self.best_loss = valid_loss
@@ -181,18 +165,8 @@ class Training:
                     torch.save(self.model.state_dict(), self.params['network_output_path'] + '/' +
                                self.params['trained_model_name'])
 
-            # Saving every 10 epochs
-            if (self.epoch) % self.params['network_save_freq'] == 0:
-                torch.save(self.model.state_dict(), self.params['network_output_path'] + '/' +
-                           'epoch{}_'.format(self.epoch) + self.params['trained_model_name'])
-
-            # Save a checkpoint every epoch
-            torch.save({'epoch': self.epoch,
-                'model_state_dict': self.model.state_dict(),
-                'optimizer_state_dict': self.optimiser.state_dict(),
-                'loss': self.loss_function, 'num_epoch': self.num_epochs,
-                'model_info': self.model_info, 'best_loss': self.best_loss},
-                self.params['network_output_path'] + '/' + self.params['checkpoint_name'])
+            # saving the model based on epoch, checkpoint
+            self.savings()
 
             # Print accuracy, F1, and loss after each epoch
             print('\n---------------------------------------------------------------')
@@ -229,7 +203,6 @@ class Training:
             message = message.to(self.device)
             label = label.to(self.device)
 
-            #Forward pass.
             self.optimiser.zero_grad()
 
             with torch.set_grad_enabled(True):
@@ -249,7 +222,6 @@ class Training:
                 for i, value in enumerate(label):
                     labels_cache[idx * batch_size + i] = value
 
-                #Backward and optimize
                 loss.backward()
                 self.optimiser.step()
 
@@ -351,6 +323,27 @@ class Training:
         return epoch_loss, epoch_accuracy, epoch_f1_score, epoch_precision, epoch_recall
 
 
+    def savings(self):
+        # Saves information about training to config file
+        self.model_info['num_steps'] = self.epoch
+        self.model_info['trained_time'] = "{:%B %d, %Y, %H:%M:%S}".format(datetime.datetime.now())
+        self.params['Network'] = self.model_info
+        write_config(self.params, self.cfg_path, sort_keys=True)
+
+        # Saving every 5 epochs
+        if (self.epoch) % self.params['network_save_freq'] == 0:
+            torch.save(self.model.state_dict(), self.params['network_output_path'] + '/' +
+                       'epoch{}_'.format(self.epoch) + self.params['trained_model_name'])
+
+        # Save a checkpoint every epoch
+        torch.save({'epoch': self.epoch,
+                    'model_state_dict': self.model.state_dict(),
+                    'optimizer_state_dict': self.optimiser.state_dict(),
+                    'loss': self.loss_function, 'num_epoch': self.num_epochs,
+                    'model_info': self.model_info, 'best_loss': self.best_loss},
+                   self.params['network_output_path'] + '/' + self.params['checkpoint_name'])
+
+
     def calculate_tb_stats(self, train_loss, train_F1, train_recall, train_precision, train_accuracy,
                            valid_loss=None, valid_F1=None, valid_recall=None, valid_precision=None, valid_accuracy=None):
 
@@ -366,11 +359,6 @@ class Training:
             self.writer.add_scalar('Validation' + '_Recall', valid_recall, self.epoch)
             self.writer.add_scalar('Validation' + '_Precision', valid_precision, self.epoch)
             self.writer.add_scalar('Validation' + '_Accuracy', valid_accuracy, self.epoch)
-
-        # # Adds all the network's trainable parameters to TensorBoard
-        # for name, param in self.model.named_parameters():
-        #     self.writer.add_histogram(name, param, self.epoch)
-        #     self.writer.add_histogram(f'{name}.grad', param.grad, self.epoch)
 
 
     def load_pretrained_model(self):
@@ -392,16 +380,12 @@ class Prediction:
     This class represents prediction (testing) process similar to the Training class.
     '''
     def __init__(self, cfg_path):
-        '''
-        :cfg_path (string): path of the experiment config file
-        '''
         self.params = read_config(cfg_path)
         self.cfg_path = cfg_path
         self.setup_cuda()
 
 
     def setup_cuda(self, cuda_device_id=0):
-        '''Setup the CUDA device'''
         if torch.cuda.is_available():
             torch.backends.cudnn.fastest = True
             torch.cuda.set_device(cuda_device_id)
@@ -418,9 +402,6 @@ class Prediction:
 
 
     def setup_model(self, model, vocab_size, embeddings, embedding_dim, hidden_dim, pad_idx, unk_idx, model_file_name=None):
-        '''
-        Setup the model by defining the model, load the model from the pth file saved during training.
-        '''
         if model_file_name == None:
             model_file_name = self.params['trained_model_name']
         self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
@@ -462,14 +443,12 @@ class Prediction:
                     labels_cache[idx * batch_size + i] = value
 
         '''Metrics calculation over the whole set'''
-        # Accuracy
         correct = max_preds_cache.squeeze(1).eq(labels_cache)
         final_accuracy = (correct.sum() / torch.FloatTensor([labels_cache.shape[0]])).item()
 
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
-        # F1 Score, Recall, Precision
         final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
         final_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
         final_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
@@ -491,7 +470,6 @@ class Prediction:
         Manually predicts the polarity of the given sentence.
         Possible polarities: 1.neutral, 2.positive, 3.negative
         '''
-        # Reads params to check if any params have been changed by user
         self.params = read_config(self.cfg_path)
         self.model_p.eval()
 

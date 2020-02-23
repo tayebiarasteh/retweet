@@ -2,8 +2,8 @@
   "Network": {
     "seed": 1
   },
-  "display_stats_freq": 80,
-  "network_save_freq": 10,
+  "display_stats_freq": 200,
+  "network_save_freq": 5,
   "postreply_data_path": "./data/datasets/postreply",
   "input_data_path": "./data/datasets/semeval_message_level/",
   "train_file_name": "training_data.txt",

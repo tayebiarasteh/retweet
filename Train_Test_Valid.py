@@ -27,7 +27,7 @@ class Training:
     '''
     This class represents training process.
     '''
-    def __init__(self, cfg_path, num_epochs=10, RESUME=False, torch_seed=None):
+    def __init__(self, cfg_path, num_epochs=10, RESUME=False, model_mode='RNN', torch_seed=None):
         '''
         :cfg_path (string): path of the experiment config file
         :torch_seed (int): Seed used for random generators in PyTorch functions
@@ -35,6 +35,7 @@ class Training:
         self.params = read_config(cfg_path)
         self.cfg_path = cfg_path
         self.RESUME = RESUME
+        self.model_mode = model_mode
 
         if RESUME == False:
             self.model_info = self.params['Network']
@@ -65,7 +66,7 @@ class Training:
         print('----------------------------------------------------\n')
 
         #Tensor Board Graph
-        self.add_tensorboard_graph(model)
+        # self.add_tensorboard_graph(model)
 
         self.model = model.to(self.device)
         self.optimiser = optimiser(self.model.parameters(), **optimiser_params)
@@ -90,7 +91,7 @@ class Training:
         self.setup_cuda()
         self.model = model.to(self.device)
         self.optimiser = optimiser(self.model.parameters(), **optimiser_params)
-        self.loss_function = loss_function(weight=weight)
+        self.loss_function = loss_function(weight=weight.to(self.device))
 
         self.model.load_state_dict(checkpoint['model_state_dict'])
         self.optimiser.load_state_dict(checkpoint['optimizer_state_dict'])
@@ -196,7 +197,10 @@ class Training:
         labels_cache = torch.from_numpy(np.zeros(len(train_loader) * batch_size))
 
         for idx, batch in enumerate(train_loader):
-            message, message_lengths = batch.text
+            if self.model_mode == 'RNN':
+                message, message_lengths = batch.text
+            if self.model_mode == 'CNN':
+                message = batch.text
             label = batch.label
             message = message.long()
             label = label.long()
@@ -206,7 +210,10 @@ class Training:
             self.optimiser.zero_grad()
 
             with torch.set_grad_enabled(True):
-                output = self.model(message, message_lengths).squeeze(1)
+                if self.model_mode == 'RNN':
+                    output = self.model(message, message_lengths).squeeze(1)
+                if self.model_mode == 'CNN':
+                    output = self.model(message).squeeze(1)
 
                 # Loss
                 loss = self.loss_function(output, label)
@@ -271,13 +278,19 @@ class Training:
             labels_cache = torch.from_numpy(np.zeros(len(valid_loader) * batch_size))
 
             for idx, batch in enumerate(valid_loader):
-                message, message_lengths = batch.text
+                if self.model_mode == 'RNN':
+                    message, message_lengths = batch.text
+                if self.model_mode == 'CNN':
+                    message = batch.text
                 label = batch.label
                 message = message.long()
                 label = label.long()
                 message = message.to(self.device)
                 label = label.to(self.device)
-                output = self.model(message, message_lengths).squeeze(1)
+                if self.model_mode == 'RNN':
+                    output = self.model(message, message_lengths).squeeze(1)
+                if self.model_mode == 'CNN':
+                    output = self.model(message).squeeze(1)
 
                 # Loss
                 loss = self.loss_function(output, label)
@@ -379,10 +392,11 @@ class Prediction:
     '''
     This class represents prediction (testing) process similar to the Training class.
     '''
-    def __init__(self, cfg_path):
+    def __init__(self, cfg_path, model_mode='RNN'):
         self.params = read_config(cfg_path)
         self.cfg_path = cfg_path
         self.setup_cuda()
+        self.model_mode = model_mode
 
 
     def setup_cuda(self, cuda_device_id=0):
@@ -406,10 +420,9 @@ class Prediction:
             model_file_name = self.params['trained_model_name']
         self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
                              hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
-
         # Loads model from model_file_name and default network_output_path
-        # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
-        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch10_" + model_file_name))
+        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+        # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch10_" + model_file_name))
 
 
     def predict(self, test_loader, batch_size):
@@ -425,13 +438,19 @@ class Prediction:
             labels_cache = torch.from_numpy(np.zeros(len(test_loader) * batch_size))
 
             for idx, batch in enumerate(test_loader):
-                message, message_lengths = batch.text
+                if self.model_mode == 'RNN':
+                    message, message_lengths = batch.text
+                if self.model_mode == 'CNN':
+                    message = batch.text
                 label = batch.label
                 message = message.long()
                 label = label.long()
                 message = message.to(self.device)
                 label = label.to(self.device)
-                output = self.model_p(message, message_lengths).squeeze(1)
+                if self.model_mode == 'RNN':
+                    output = self.model(message, message_lengths).squeeze(1)
+                if self.model_mode == 'CNN':
+                    output = self.model(message).squeeze(1)
                 max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
 
                 # saving the logits and labels of this batch
@@ -459,8 +478,8 @@ class Prediction:
         # Print the final accuracy and F1 score
         print('\n----------------------------------------------------------------------')
         print(f'Testing for the SemEval 2014 and 2015 gold data | Testing Time: {test_mins}m {test_secs}s')
-        print(f'\tTesting Acc: {final_accuracy * 100:.2f}% | Testing F1: {final_f1_score:.3f} | '
-              f'Testing Recall: {final_recall:.3f} | Testing Precision: {final_precision:.3f}')
+        print(f'\tAcc: {final_accuracy * 100:.2f}% | F1 score: {final_f1_score:.3f} | '
+              f'Recall: {final_recall:.3f} | Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')
 
 

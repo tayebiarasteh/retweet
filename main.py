@@ -16,6 +16,7 @@ from configs.serde import *
 from Train_Test_Valid import Training, Prediction, Mode
 from data.data_handler import *
 from models.biLSTM import *
+from models.CNN import *
 
 #System Modules
 from itertools import product
@@ -30,32 +31,33 @@ def main_train():
     '''Main function for training + validation.'''
 
     # if we are resuming training on a model
-    RESUME = False
+    RESUME = True
 
     # Hyper-parameters
     NUM_EPOCH = 100
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 32
-    MAX_VOCAB_SIZE = 100000 #max_vocab_size: takes the 50,000 most frequent words as the vocab
-    lr = 5e-5
-    optimiser_params = {'lr': lr}
+    MAX_VOCAB_SIZE = 100000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
+    lr = 3e-5
+    optimiser_params = {'lr': lr, 'weight_decay': 1e-5}
     EMBEDDING_DIM = 200
-    HIDDEN_DIM = 512
+    HIDDEN_DIM = 512  # for the LSTM model:
     OUTPUT_DIM = 3
-    SPLIT_RATIO = 0.8 # ratio of the train set, 1.0 means 100% training, 0% valid data
+    conv_out_ch = 200  # for the CNN model:
+    filter_sizes = [3, 4, 5]  # for the CNN model:
+    SPLIT_RATIO = 0.9 # ratio of the train set, 1.0 means 100% training, 0% valid data
     EXPERIMENT_NAME = "Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
 
     if RESUME == True:
         params = open_experiment(EXPERIMENT_NAME)
     else:
-        # put the new experiment name here.
         params = create_experiment(EXPERIMENT_NAME)
     cfg_path = params["cfg_path"]
 
     # Prepare data
     data_handler = data_provider_V2(cfg_path=cfg_path, batch_size=BATCH_SIZE,
-                                    split_ratio=SPLIT_RATIO, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN)
+                                    split_ratio=SPLIT_RATIO, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN, model_mode='RNN')
     train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights = data_handler.data_loader()
 
     print(f'\nSummary:\n----------------------------------------------------')
@@ -66,10 +68,12 @@ def main_train():
         print(f'Total # of Valid. tweets:   {BATCH_SIZE * len(valid_iterator):,}')
 
     # Initialize trainer
-    trainer = Training(cfg_path, num_epochs=NUM_EPOCH, RESUME=RESUME)
+    trainer = Training(cfg_path, num_epochs=NUM_EPOCH, RESUME=RESUME, model_mode='RNN')
 
     MODEL = biLSTM(vocab_size=vocab_size, embeddings=pretrained_embeddings, embedding_dim=EMBEDDING_DIM,
                    hidden_dim=HIDDEN_DIM, output_dim=OUTPUT_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
+    # MODEL = CNN1d(vocab_size=vocab_size, embeddings=pretrained_embeddings, embedding_dim=EMBEDDING_DIM,
+    #                conv_out_ch=conv_out_ch, filter_sizes=filter_sizes, output_dim=OUTPUT_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
     if RESUME == True:
         trainer.load_checkpoint(model=MODEL, optimiser=OPTIMIZER,
                         optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION, weight=weights)
@@ -83,7 +87,7 @@ def main_train():
 
 def main_test():
     '''Main function for testing'''
-    EXPERIMENT_NAME = 'Adam_lr5e-05_max_vocab_size100000'
+    EXPERIMENT_NAME = 'Adam_lr3e-05_max_vocab_size100000'
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
 
@@ -92,13 +96,14 @@ def main_test():
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 512
     MAX_VOCAB_SIZE = 100000  # use the same "max_vocab_size" as in training
+    SPLIT_RATIO = 0.9 # use the same as in training.
 
     # Prepare data
-    data_handler_test = data_provider_V2(cfg_path=cfg_path, batch_size=BATCH_SIZE,
-                                         max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TEST)
+    data_handler_test = data_provider_V2(cfg_path=cfg_path, batch_size=BATCH_SIZE, split_ratio=SPLIT_RATIO,
+                                         max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TEST, model_mode='CNN')
     test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler_test.data_loader()
     # Initialize predictor
-    predictor = Prediction(cfg_path)
+    predictor = Prediction(cfg_path, model_mode='RNN')
     predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
                           embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
     # Execute Testing
@@ -132,7 +137,7 @@ def main_manual_predict(PHRASE=None, prediction_mode='Manualpart1'):
     # use the same "max_vocab_size" as in training
     if prediction_mode == 'Manualpart1':
         data_handler_test = data_provider_V2(cfg_path=cfg_path,
-                                             max_vocab_size=25000, mode=Mode.PREDICTION)
+                                             max_vocab_size=25000, mode=Mode.PREDICTION, model_mode='RNN')
     elif prediction_mode == 'Manualpart2':
         data_handler_test = data_provider_PostReply(cfg_path=cfg_path,
                                                     split_ratio=0.8, max_vocab_size=25000, mode=Mode.PREDICTION)
@@ -140,7 +145,7 @@ def main_manual_predict(PHRASE=None, prediction_mode='Manualpart1'):
     labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler_test.data_loader()
 
     # Initialize prediction
-    predictor = Prediction(cfg_path)
+    predictor = Prediction(cfg_path, model_mode='RNN')
     predictor.setup_model(model=biLSTM, vocab_size=vocab_size,
                           embeddings=pretrained_embeddings, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
     # Execute Prediction
@@ -172,11 +177,11 @@ def main_reply_predict():
     MAX_VOCAB_SIZE = 100000  # use the same "max_vocab_size" as in training
 
     # Prepare the network parameters
-    data_handler_test = data_provider_V2(cfg_path=cfg_path, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.PREDICTION)
+    data_handler_test = data_provider_V2(cfg_path=cfg_path, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.PREDICTION, model_mode='RNN')
     labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler_test.data_loader()
 
     # Initialize prediction
-    predictor = Prediction(cfg_path)
+    predictor = Prediction(cfg_path, model_mode='RNN')
     predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
                           embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
     reply_dataset = []
@@ -224,24 +229,23 @@ def main_train_postreply():
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 32
     MAX_VOCAB_SIZE = 100000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
-    lr = 5e-5
-    optimiser_params = {'lr': lr}
+    lr = 9e-5
+    optimiser_params = {'lr': lr, 'weight_decay': 1e-5}
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 512
     OUTPUT_DIM = 3
-    SPLIT_RATIO = 0.8 # ratio of the train set, 1.0 means 100% training, 0% valid data
+    SPLIT_RATIO = 0.9 # ratio of the train set, 1.0 means 100% training, 0% valid data
     EXPERIMENT_NAME = "POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
 
     if RESUME == True:
         params = open_experiment(EXPERIMENT_NAME)
     else:
-        # put the new experiment name here.
         params = create_experiment(EXPERIMENT_NAME)
     cfg_path = params["cfg_path"]
 
     # Prepare data
     data_handler = data_provider_PostReply(cfg_path=cfg_path, batch_size=BATCH_SIZE,
-                                    split_ratio=SPLIT_RATIO, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN)
+                                    split_ratio=SPLIT_RATIO, max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN, model_mode='RNN')
     train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights = data_handler.data_loader()
 
     print(f'\nSummary:\n----------------------------------------------------')
@@ -252,7 +256,7 @@ def main_train_postreply():
         print(f'Total # of Valid. tweets:   {BATCH_SIZE * len(valid_iterator):,}')
 
     # Initialize trainer
-    trainer = Training(cfg_path, num_epochs=NUM_EPOCH, RESUME=RESUME)
+    trainer = Training(cfg_path, num_epochs=NUM_EPOCH, RESUME=RESUME, model_mode='RNN')
 
     MODEL = biLSTM(vocab_size=vocab_size, embeddings=pretrained_embeddings, embedding_dim=EMBEDDING_DIM,
                    hidden_dim=HIDDEN_DIM, output_dim=OUTPUT_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
@@ -275,17 +279,17 @@ def prediction_time(start_time, end_time):
 
 def experiment_deleter():
     '''To delete an experiment and reuse the same experiment name'''
-    parameters = dict(lr = [5e-5], max_vocab_size = [100000])
+    parameters = dict(lr = [9e-5], max_vocab_size = [100000])
     param_values = [v for v in parameters.values()]
     for lr, MAX_VOCAB_SIZE in product(*param_values):
-        delete_experiment("POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
+        delete_experiment("CNN_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
 
 
 
 if __name__ == '__main__':
-    experiment_deleter()
-    # main_train()
+    # experiment_deleter()
+    main_train()
     # main_test()
     # main_manual_predict(prediction_mode='Manualpart1')
     # main_reply_predict()
-    main_train_postreply()
+    # main_train_postreply()

@@ -23,7 +23,7 @@ class data_provider_V2():
     Packed padded sequences
     Tokenizer: spacy
     '''
-    def __init__(self, cfg_path, batch_size=1, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, seed=1):
+    def __init__(self, cfg_path, batch_size=1, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, model_mode='RNN', seed=1):
         '''
         Args:
             cfg_path (string):
@@ -52,6 +52,7 @@ class data_provider_V2():
         self.pretrained_embedding = params['pretrained_embedding']
         self.tokenizer = params['tokenizer']
         self.batch_size = batch_size
+        self.model_mode = model_mode
 
 
     def data_loader(self):
@@ -61,8 +62,11 @@ class data_provider_V2():
             Note: padding is done by adding <pad> (not zero!)
         :tokenize: the "tokenization" (the act of splitting the string into discrete "tokens") should be done using the spaCy tokenizer.
         '''
-        '''Packed padded sequences'''
-        TEXT = data.Field(tokenize=self.tokenizer, include_lengths=True)  # For saving the length of sentences
+        if self.model_mode == 'RNN':
+            #Packed padded sequences
+            TEXT = data.Field(tokenize=self.tokenizer, include_lengths=True)  # For saving the length of sentences
+        if self.model_mode == 'CNN':
+            TEXT = data.Field(tokenize=self.tokenizer, batch_first=True)  # batch dimension is the firs dimension here.
         LABEL = data.LabelField()
 
         fields = [('id', None), ('user_id', None),  ('label', LABEL), ('text', TEXT)]
@@ -153,7 +157,7 @@ class data_provider_PostReply():
     Packed padded sequences
     Tokenizer: spacy
     '''
-    def __init__(self, cfg_path, batch_size=1, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, seed=1):
+    def __init__(self, cfg_path, batch_size=1, split_ratio=0.8, max_vocab_size=25000, mode=Mode.TRAIN, model_mode='RNN', seed=1):
         '''
         Args:
             cfg_path (string):
@@ -181,6 +185,7 @@ class data_provider_PostReply():
         self.pretrained_embedding = params['pretrained_embedding']
         self.tokenizer = params['tokenizer']
         self.batch_size = batch_size
+        self.model_mode = model_mode
 
 
     def data_loader(self):
@@ -190,8 +195,11 @@ class data_provider_PostReply():
             Note: padding is done by adding <pad> (not zero!)
         :tokenize: the "tokenization" (the act of splitting the string into discrete "tokens") should be done using the spaCy tokenizer.
         '''
-        '''Packed padded sequences'''
-        TEXT = data.Field(tokenize=self.tokenizer, include_lengths=True)  # For saving the length of sentences
+        if self.model_mode == 'RNN':
+            #Packed padded sequences
+            TEXT = data.Field(tokenize=self.tokenizer, include_lengths=True)  # For saving the length of sentences
+        if self.model_mode == 'CNN':
+            TEXT = data.Field(tokenize=self.tokenizer, batch_first=True)  # batch dimension is the firs dimension here.
         LABEL = data.LabelField()
 
         fields = [('label', LABEL), ('text', TEXT)]

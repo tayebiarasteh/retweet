@@ -55,8 +55,6 @@ from os import environ as e
 import tweepy
 consumer_key = "ECfRSUkmqzSWTRghRCuCjPGQw"
 consumer_secret = "6I7DC2MOd6b3g4LjruTtQhvQnRmCSj40xKCAKod899yAC6fQkp"
-access_token = "703516786-EBl2gs1GyvZ2YN23oL3ctDbLmB0rQqLrCl8B39oK"
-access_token_secret = "TYiSD1x3tWQ8cKxcigEUdTCAlW6Psma3A20KSHkywK65v"
 # Creating the authentication object
 auth = tweepy.AppAuthHandler(consumer_key, consumer_secret)
 # Setting your access token and secret

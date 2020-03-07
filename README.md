@@ -1,6 +1,6 @@
 # Sentiment Analysis of Tweets and their Potential Replies
 
-### By Soroosh Tayebi Arasteh & Mehrpad Monajem
+### By S.T. Arasteh, et al.
 
 This is the final project of the `Seminar Deep Learning` course (WS1920) jointly offered by the [Pattern Recognition Lab (LME)](https://lme.tf.fau.de/) of the *Computer Science Department*, and 
 the [Chair of Computational Corpus Linguistics](https://www.linguistik.phil.fau.de/) of the *Department of German Language and Literature* at University of Erlangen-Nuremberg (FAU).

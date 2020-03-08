@@ -1,5 +1,5 @@
 """
-Bidirectional LSTM with 2 layers + dropout + fully connected.
+dropout + Bidirectional LSTM with 2 layers + dropout + fully connected.
 
 @authors:
 Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>

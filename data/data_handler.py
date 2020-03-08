@@ -181,6 +181,7 @@ class data_provider_PostReply():
         self.max_vocab_size = max_vocab_size
         self.dataset_path = params['postreply_data_path']
         self.train_file_name = params['final_data_post_reply_file_name']
+        self.test_file_name = params['final_test_post_reply_file_name']
         self.data_format = params['reply_data_format']
         self.pretrained_embedding = params['pretrained_embedding']
         self.tokenizer = params['tokenizer']
@@ -203,14 +204,27 @@ class data_provider_PostReply():
         LABEL = data.LabelField()
 
         fields = [('label', LABEL), ('text', TEXT)]
-        train_data = data.TabularDataset(
-            path=os.path.join(self.dataset_path, self.train_file_name),
+
+        # train_data = data.TabularDataset(
+        #     path=os.path.join(self.dataset_path, self.train_file_name),
+        #     format=self.data_format,
+        #     fields=fields,
+        #     skip_header=True)
+
+        train_data, test_data = data.TabularDataset.splits(
+            path=self.dataset_path,
+            train=self.train_file_name,
+            test=self.test_file_name,
             format=self.data_format,
             fields=fields,
             skip_header=True)
 
+
         # validation data
-        train_data, valid_data = train_data.split(random_state=random.seed(self.seed), split_ratio=self.split_ratio)
+        if self.split_ratio == 1:
+            valid_data = None
+        else:
+            train_data, valid_data = train_data.split(random_state=random.seed(self.seed), split_ratio=self.split_ratio)
 
         # create the vocabulary only on the training set!!!
         # vectors: instead of having our word embeddings initialized randomly, they are initialized with these pre-trained vectors.
@@ -233,11 +247,21 @@ class data_provider_PostReply():
 
 
         # for packed padded sequences all of the tensors within a batch need to be sorted by their lengths
-        train_iterator, valid_iterator = data.BucketIterator.splits((
-            train_data, valid_data), batch_size=self.batch_size,
-            sort_within_batch=True, sort_key=lambda x: len(x.text))
+        # train_iterator, valid_iterator = data.BucketIterator.splits((
+        #     train_data, valid_data), batch_size=self.batch_size,
+        #     sort_within_batch=True, sort_key=lambda x: len(x.text))
 
-        test_iterator = None
+        if self.split_ratio == 1:
+            valid_iterator = None
+            train_iterator, test_iterator = data.BucketIterator.splits((
+                train_data, test_data), batch_size=self.batch_size,
+                sort_within_batch=True, sort_key=lambda x: len(x.text))
+        else:
+            train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits((
+                train_data, valid_data, test_data), batch_size=self.batch_size,
+                sort_within_batch=True, sort_key=lambda x: len(x.text))
+
+        # test_iterator = None
 
         # finding the weights of each label
         data_for_weight = pd.read_csv(os.path.join(self.dataset_path, self.train_file_name))
@@ -331,6 +355,41 @@ def summarizer(data_path, input_file_name, output_file_name):
         data_final = data_final.append(df)
 
     data_final.to_csv(os.path.join(data_path, output_file_name), index=False)
+
+
+
+def reply_convertor():
+    '''
+    converting the individual test tweets with their replies to txt format in order to be easier to read manually
+    outputs:
+        :_org: is a file only contains the replies of a tweet
+        :_to_be_filled: is a file with only one row and 2 columns, one is the tweet, the other is
+         named CHANGE. You should replace this CHANGE with your final label and then save.
+         Note: please remove the _org file after you replaced the CHANGE.
+    '''
+    path = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/postreply/test_gold"
+    output_path = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/postreply/test_gold_out"
+    file_list = [f for f in os.listdir(path) if f.endswith('.csv')]
+
+    for idx, file in enumerate(file_list):
+        data = pd.read_csv(os.path.join(path, file))
+        data['reply'].to_csv(os.path.join(output_path, str(idx) + '_org.txt'), sep='\t')
+        new_data = pd.DataFrame([['CHANGE', data['tweet'][0]]], columns=['label', 'tweet'])
+        new_data.to_csv(os.path.join(output_path, str(idx) + '_to_be_filled.txt'), sep='\t', index=False)
+
+
+def manual_label_concat():
+    '''
+    concatenates the individual files from reply_convertor()
+    '''
+    path = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/postreply/test_gold_out"
+    file_list = [f for f in os.listdir(path) if f.endswith('.txt')]
+
+    data_final = pd.DataFrame(columns=['label', 'tweet'])
+    for file in file_list:
+        data = pd.read_csv(os.path.join(path, file), sep='\t')
+        data_final = data_final.append(data)
+    data_final.to_csv(os.path.join(path, 'final_test_post_reply.csv'), index=False)
 
 
 

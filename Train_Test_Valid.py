@@ -70,7 +70,8 @@ class Training:
 
         self.model = model.to(self.device)
         self.optimiser = optimiser(self.model.parameters(), **optimiser_params)
-        self.loss_function = loss_function(weight=weight.to(self.device))
+        self.loss_function = loss_function()
+        # self.loss_function = loss_function(weight=weight.to(self.device))
 
         if 'retrain' in self.model_info and self.model_info['retrain']==True:
             self.load_pretrained_model()
@@ -422,7 +423,7 @@ class Prediction:
                              hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
         # Loads model from model_file_name and default network_output_path
         self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
-        # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch10_" + model_file_name))
+        # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch40_" + model_file_name))
 
 
     def predict(self, test_loader, batch_size):
@@ -448,9 +449,9 @@ class Prediction:
                 message = message.to(self.device)
                 label = label.to(self.device)
                 if self.model_mode == 'RNN':
-                    output = self.model(message, message_lengths).squeeze(1)
+                    output = self.model_p(message, message_lengths).squeeze(1)
                 if self.model_mode == 'CNN':
-                    output = self.model(message).squeeze(1)
+                    output = self.model_p(message).squeeze(1)
                 max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
 
                 # saving the logits and labels of this batch
@@ -475,9 +476,9 @@ class Prediction:
         end_time = time.time()
         test_mins, test_secs = self.epoch_time(start_time, end_time)
 
-        # Print the final accuracy and F1 score
+        # Print the final evaluation metrics
         print('\n----------------------------------------------------------------------')
-        print(f'Testing for the SemEval 2014 and 2015 gold data | Testing Time: {test_mins}m {test_secs}s')
+        print(f'Testing | Testing Time: {test_mins}m {test_secs}s')
         print(f'\tAcc: {final_accuracy * 100:.2f}% | F1 score: {final_f1_score:.3f} | '
               f'Recall: {final_recall:.3f} | Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')

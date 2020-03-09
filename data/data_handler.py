@@ -303,13 +303,14 @@ class data_provider_PostReply():
 
 def summarizer(data_path, input_file_name, output_file_name):
     data = pd.read_csv(os.path.join(data_path, input_file_name))
-    data_new = data.drop(['id', 'user', 'reply'], axis=1)
-    data_final = pd.DataFrame(columns=['label', 'tweet'])
+    data_new = data.drop(['user', 'reply'], axis=1)
+    data_final = pd.DataFrame(columns=['label', 'id', 'tweet'])
 
     it = iter(range(0, len(data_new)))
 
     for tweet in it:
-        id = tweet
+
+        #tweet: index
         label_pos = 0   # total number of positive labels for each tweet
         label_neg = 0
         label_neut = 0
@@ -351,7 +352,7 @@ def summarizer(data_path, input_file_name, output_file_name):
             else:
                 label_final = var.get(label_neut)
 
-        df = pd.DataFrame([[label_final, tweet_text]], columns=['label', 'tweet'])
+        df = pd.DataFrame([[label_final, data_new['id'][tweet], tweet_text]], columns=['label', 'id', 'tweet'])
         data_final = data_final.append(df)
 
     data_final.to_csv(os.path.join(data_path, output_file_name), index=False)
@@ -374,7 +375,7 @@ def reply_convertor():
     for idx, file in enumerate(file_list):
         data = pd.read_csv(os.path.join(path, file))
         data['reply'].to_csv(os.path.join(output_path, str(idx) + '_org.txt'), sep='\t')
-        new_data = pd.DataFrame([['CHANGE', data['tweet'][0]]], columns=['label', 'tweet'])
+        new_data = pd.DataFrame([['CHANGE', data['id'][0], data['tweet'][0]]], columns=['label', 'id', 'tweet'])
         new_data.to_csv(os.path.join(output_path, str(idx) + '_to_be_filled.txt'), sep='\t', index=False)
 
 
@@ -385,7 +386,7 @@ def manual_label_concat():
     path = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/postreply/test_gold_out"
     file_list = [f for f in os.listdir(path) if f.endswith('.txt')]
 
-    data_final = pd.DataFrame(columns=['label', 'tweet'])
+    data_final = pd.DataFrame(columns=['label', 'id', 'tweet'])
     for file in file_list:
         data = pd.read_csv(os.path.join(path, file), sep='\t')
         data_final = data_final.append(data)
@@ -408,8 +409,12 @@ def post_reply_downloader(list_of_word, max_num_tweets, mode='download'):
 
 
 if __name__=='__main__':
-    CONFIG_PATH = '../configs/config.json'
-    data_handler = data_provider_PostReply(cfg_path=CONFIG_PATH, batch_size=1, split_ratio=0.8, max_vocab_size=25000)
-    train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
+    # CONFIG_PATH = '../configs/config.json'
+    # data_handler = data_provider_PostReply(cfg_path=CONFIG_PATH, batch_size=1, split_ratio=0.8, max_vocab_size=25000)
+    # train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
+    summarizer(data_path="./datasets/postreply",
+               input_file_name="data_post_reply_withlabel.csv",
+               output_file_name="final_data_post_reply.csv")
+
     # pdb.set_trace()
     # a=2

@@ -187,6 +187,10 @@ class data_provider_PostReply():
         self.tokenizer = params['tokenizer']
         self.batch_size = batch_size
         self.model_mode = model_mode
+        test_data = pd.read_csv(os.path.join(self.dataset_path, self.test_file_name))
+        if len(test_data.columns) == 3:
+            test_data = test_data.drop(['id'], axis=1)
+            test_data.to_csv(os.path.join(self.dataset_path, self.test_file_name), index=False)
 
 
     def data_loader(self):
@@ -205,12 +209,6 @@ class data_provider_PostReply():
 
         fields = [('label', LABEL), ('text', TEXT)]
 
-        # train_data = data.TabularDataset(
-        #     path=os.path.join(self.dataset_path, self.train_file_name),
-        #     format=self.data_format,
-        #     fields=fields,
-        #     skip_header=True)
-
         train_data, test_data = data.TabularDataset.splits(
             path=self.dataset_path,
             train=self.train_file_name,
@@ -218,7 +216,6 @@ class data_provider_PostReply():
             format=self.data_format,
             fields=fields,
             skip_header=True)
-
 
         # validation data
         if self.split_ratio == 1:
@@ -247,10 +244,6 @@ class data_provider_PostReply():
 
 
         # for packed padded sequences all of the tensors within a batch need to be sorted by their lengths
-        # train_iterator, valid_iterator = data.BucketIterator.splits((
-        #     train_data, valid_data), batch_size=self.batch_size,
-        #     sort_within_batch=True, sort_key=lambda x: len(x.text))
-
         if self.split_ratio == 1:
             valid_iterator = None
             train_iterator, test_iterator = data.BucketIterator.splits((
@@ -260,8 +253,6 @@ class data_provider_PostReply():
             train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits((
                 train_data, valid_data, test_data), batch_size=self.batch_size,
                 sort_within_batch=True, sort_key=lambda x: len(x.text))
-
-        # test_iterator = None
 
         # finding the weights of each label
         data_for_weight = pd.read_csv(os.path.join(self.dataset_path, self.train_file_name))

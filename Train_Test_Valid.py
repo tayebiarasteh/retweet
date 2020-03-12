@@ -65,13 +65,10 @@ class Training:
         print(f'Total # of model\'s trainable parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}')
         print('----------------------------------------------------\n')
 
-        #Tensor Board Graph
-        # self.add_tensorboard_graph(model)
-
         self.model = model.to(self.device)
         self.optimiser = optimiser(self.model.parameters(), **optimiser_params)
-        self.loss_function = loss_function()
-        # self.loss_function = loss_function(weight=weight.to(self.device))
+        # self.loss_function = loss_function()
+        self.loss_function = loss_function(weight=weight.to(self.device))
 
         if 'retrain' in self.model_info and self.model_info['retrain']==True:
             self.load_pretrained_model()
@@ -422,8 +419,8 @@ class Prediction:
         self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
                              hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
         # Loads model from model_file_name and default network_output_path
-        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
-        # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch40_" + model_file_name))
+        # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch20_" + model_file_name))
 
 
     def predict(self, test_loader, batch_size):
@@ -469,9 +466,9 @@ class Prediction:
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
-        final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
-        final_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
-        final_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
+        final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='micro')
+        final_precision = metrics.precision_score(labels_cache, max_preds_cache, average='micro')
+        final_recall = metrics.recall_score(labels_cache, max_preds_cache, average='micro')
 
         end_time = time.time()
         test_mins, test_secs = self.epoch_time(start_time, end_time)

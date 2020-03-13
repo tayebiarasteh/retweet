@@ -9,12 +9,16 @@ import os
 import pandas as pd
 from configs.serde import *
 import pdb
+import time
+from main import prediction_time
 
 epsilon = 1e-15
 
 
 
 def summarizer(data_path, input_file_name, output_file_name):
+    start_time = time.time()
+
     data = pd.read_csv(os.path.join(data_path, input_file_name))
     data_new = data.drop(['user', 'reply'], axis=1)
     data_final = pd.DataFrame(columns=['label', 'id', 'tweet'])
@@ -55,7 +59,7 @@ def summarizer(data_path, input_file_name, output_file_name):
 
         # our proposed algorithm
         overall = label_pos + label_neg + label_neut
-        if (label_neut/(overall + epsilon)) > 0.8:
+        if (label_neut/(overall + epsilon)) > 0.9:
             label_final = var.get(label_neut)
         else:
             if (label_pos/(label_neg + epsilon)) > 2:
@@ -69,6 +73,10 @@ def summarizer(data_path, input_file_name, output_file_name):
         data_final = data_final.append(df)
 
     data_final.to_csv(os.path.join(data_path, output_file_name), index=False)
+    # Duration
+    end_time = time.time()
+    test_mins, test_secs = prediction_time(start_time, end_time)
+    print(f'Total Summarizer Time: {test_mins}m {test_secs}s')
 
 
 

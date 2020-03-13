@@ -178,7 +178,7 @@ class data_provider_PostReply():
         self.split_ratio = split_ratio
         self.max_vocab_size = max_vocab_size
         self.dataset_path = params['postreply_data_path']
-        self.train_file_name = params['final_data_post_reply_file_name']
+        self.train_file_name = params['training_post_reply_file_name']
         self.test_file_name = params['final_test_post_reply_file_name']
         self.data_format = params['reply_data_format']
         self.pretrained_embedding = params['pretrained_embedding']
@@ -267,7 +267,6 @@ class data_provider_PostReply():
         neut_weight = overall/neut_counter
         neg_weight = overall/neg_counter
         pos_weight = overall/pos_counter
-        print(labels)
         if labels == ['neutral', 'negative', 'positive']:
             weights = torch.Tensor([neut_weight, neg_weight, pos_weight])
         elif labels == ['neutral', 'positive', 'negative']:

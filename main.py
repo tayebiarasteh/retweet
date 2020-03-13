@@ -165,24 +165,31 @@ def main_manual_predict(PHRASE=None, prediction_mode='Manualpart1'):
 
 
 
-def main_reply_predict():
+def main_reply_predict(DATA_MODE = 'getoldtweet'):
     '''
     Manually predicts the polarity of the given replies,
     which will be regarded as the labels for the corresponding tweets
     and creates a labeled dataset of only tweets and corresponding labels.
-    Note: first you need to create a csv file which you want to save
-    the labels in ("data_post_reply_withlabel.csv").
+    :DATA_MODE: 'getoldtweet' or 'philipp'
     '''
     start_time = time.time()
-    EXPERIMENT_NAME = 'Adam_lr9e-05_max_vocab_size50000'
+    EXPERIMENT_NAME = 'Adam_lr0.0001_max_vocab_size50000'
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
-
     # Hyper-parameters
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 256
     MAX_VOCAB_SIZE = 50000  # use the same "max_vocab_size" as in training
     MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
+
+    if DATA_MODE == 'getoldtweet':
+        original_data = params['reply_file_name']
+        predicted_data = params['reply_with_label_file_name']
+        final_data = params['final_data_post_reply_file_name']
+    if DATA_MODE == 'philipp':
+        original_data = params['philipp_data']
+        predicted_data = params['philipp_with_label_file_name']
+        final_data = params['philipp_final_post_reply_file_name']
 
     # Prepare the network parameters
     data_handler_test = data_provider_V2(cfg_path=cfg_path, max_vocab_size=MAX_VOCAB_SIZE,
@@ -190,33 +197,23 @@ def main_reply_predict():
     labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, classes = data_handler_test.data_loader()
 
     # Initialize prediction
-    predictor = Prediction(cfg_path, model_mode=MODEL_MODE)
+    predictor = Prediction(cfg_path, model_mode=MODEL_MODE, classes=classes)
     predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
                           embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
-    reply_dataset = []
-    with open(os.path.join(params['postreply_data_path'], params['reply_file_name'])) as csv_file:
-        data = csv.reader(csv_file)
-        for row in data:
-            reply_dataset.append(row)
-    reply_dataset[0][0] = 'label'
 
+    data = pd.read_csv(os.path.join(params['postreply_data_path'], original_data))
+    data = data.reindex(columns=['label', 'tweet', 'id', 'user', 'reply'])
     # Execute Prediction
     nlp = spacy.load('en')
-    for idx, item in enumerate(reply_dataset):
-        if idx != 0:
-            PHRASE = item[4]
-            reply_dataset[idx][0] = predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=PHRASE,
+    for idx, item in enumerate(data['reply']):
+        data['label'][idx] = predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=item,
                                                              tokenizer=nlp, mode=Mode.REPLYPREDICTION)
-    # Writing the labels to a csv file
-    with open(os.path.join(params['postreply_data_path'], params['reply_with_label_file_name']), 'w') as myfile:
-        updated_reply_dataset = csv.writer(myfile)
-        for row in reply_dataset:
-            updated_reply_dataset.writerow(row)
+    data.to_csv(os.path.join(params['postreply_data_path'], predicted_data), index=False)
 
     # Removing the repetitions
-    summarizer(data_path=params['postreply_data_path'],
-               input_file_name=params['reply_with_label_file_name'],
-               output_file_name=params['final_data_post_reply_file_name'])
+    summarizer(data_path=original_data,
+               input_file_name=predicted_data,
+               output_file_name=final_data)
     # Duration
     end_time = time.time()
     test_mins, test_secs = prediction_time(start_time, end_time)
@@ -334,8 +331,8 @@ def experiment_deleter():
 if __name__ == '__main__':
     # experiment_deleter()
     # main_train()
-    main_test()
+    # main_test()
     # main_manual_predict(prediction_mode='Manualpart2')
-    # main_reply_predict()
+    main_reply_predict('philipp')
     # main_train_postreply()
     # main_test_postreply()

@@ -10,6 +10,8 @@ from enum import Enum
 import datetime
 import time
 import spacy
+import matplotlib.pyplot as plt
+import itertools
 
 # Deep Learning Modules
 from tensorboardX import SummaryWriter
@@ -246,9 +248,14 @@ class Training:
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
+        # average=None gives individual scores for each class
+        # here we only care about the average of positive class and negative class
         epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
         epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
         epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
+        # epoch_f1_score = (epoch_f1_score[1] + epoch_f1_score[2]) / 2
+        # epoch_precision = (epoch_precision[1] + epoch_precision[2]) / 2
+        # epoch_recall = (epoch_recall[1] + epoch_recall[2]) / 2
         labels_cache = labels_cache.long()
         logits_cache = logits_cache.float()
 
@@ -323,6 +330,9 @@ class Training:
         epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
         epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
         epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
+        # epoch_f1_score = (epoch_f1_score[1] + epoch_f1_score[2]) / 2
+        # epoch_precision = (epoch_precision[1] + epoch_precision[2]) / 2
+        # epoch_recall = (epoch_recall[1] + epoch_recall[2]) / 2
         labels_cache = labels_cache.long()
         logits_cache = logits_cache.float()
 
@@ -390,12 +400,12 @@ class Prediction:
     '''
     This class represents prediction (testing) process similar to the Training class.
     '''
-    def __init__(self, cfg_path, model_mode='RNN'):
+    def __init__(self, cfg_path, classes, model_mode='RNN'):
         self.params = read_config(cfg_path)
         self.cfg_path = cfg_path
         self.setup_cuda()
         self.model_mode = model_mode
-
+        self.classes = classes
 
     def setup_cuda(self, cuda_device_id=0):
         if torch.cuda.is_available():
@@ -460,15 +470,21 @@ class Prediction:
                     labels_cache[idx * batch_size + i] = value
 
         '''Metrics calculation over the whole set'''
-        correct = max_preds_cache.squeeze(1).eq(labels_cache)
-        final_accuracy = (correct.sum() / torch.FloatTensor([labels_cache.shape[0]])).item()
-
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
-        final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='micro')
-        final_precision = metrics.precision_score(labels_cache, max_preds_cache, average='micro')
-        final_recall = metrics.recall_score(labels_cache, max_preds_cache, average='micro')
+        # average=None gives individual scores for each class
+        # here we only care about the average of positive class and negative class
+        final_accuracy = metrics.accuracy_score(labels_cache, max_preds_cache)
+        final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average=None)
+        final_precision = metrics.precision_score(labels_cache, max_preds_cache, average=None)
+        final_recall = metrics.recall_score(labels_cache, max_preds_cache, average=None)
+
+        final_f1_score = (final_f1_score[1] + final_f1_score[2]) / 2
+        final_precision = (final_precision[1] + final_precision[2]) / 2
+        final_recall = (final_recall[1] + final_recall[2]) / 2
+
+        confusion_matrix = metrics.confusion_matrix(labels_cache, max_preds_cache, labels=[0,1,2])
 
         end_time = time.time()
         test_mins, test_secs = self.epoch_time(start_time, end_time)
@@ -479,6 +495,56 @@ class Prediction:
         print(f'\tAcc: {final_accuracy * 100:.2f}% | F1 score: {final_f1_score:.3f} | '
               f'Recall: {final_recall:.3f} | Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')
+        self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
+                              title='Confusion matrix, without normalization')
+
+
+    def plot_confusion_matrix(self, cm, target_names,
+                              title='Confusion matrix', cmap=None, normalize=False):
+        """
+        given a sklearn confusion matrix (cm), make a nice plot
+        ---------
+        cm:           confusion matrix from sklearn.metrics.confusion_matrix
+        target_names: given classification classes such as [0, 1, 2]
+                      the class names, for example: ['high', 'medium', 'low']
+        cmap:         the gradient of the values displayed from matplotlib.pyplot.cm
+                      plt.get_cmap('jet') or plt.cm.Blues
+        normalize:    If False, plot the raw numbers
+                      If True, plot the proportions
+        """
+        accuracy = np.trace(cm) / np.sum(cm).astype('float')
+        misclass = 1 - accuracy
+
+        if cmap is None:
+            cmap = plt.get_cmap('Blues')
+
+        plt.figure(figsize=(8, 6))
+        plt.imshow(cm, interpolation='nearest', cmap=cmap)
+        plt.title(title)
+        plt.colorbar()
+
+        if target_names is not None:
+            tick_marks = np.arange(len(target_names))
+            plt.xticks(tick_marks, target_names, rotation=45)
+            plt.yticks(tick_marks, target_names)
+
+        if normalize:
+            cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+
+        thresh = cm.max() / 1.5 if normalize else cm.max() / 2
+        for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+            if normalize:
+                plt.text(j, i, "{:0.4f}".format(cm[i, j]),
+                         horizontalalignment="center",
+                         color="white" if cm[i, j] > thresh else "black")
+            else:
+                plt.text(j, i, "{:,}".format(cm[i, j]),
+                         horizontalalignment="center",
+                         color="white" if cm[i, j] > thresh else "black")
+        plt.tight_layout()
+        plt.ylabel('True label')
+        plt.xlabel('Predicted label\naccuracy={:0.2f}%; misclass={:0.2f}%'.format(accuracy*100, misclass*100))
+        plt.show()
 
 
     def manual_predict(self, labels, vocab_idx, phrase, min_len=4,

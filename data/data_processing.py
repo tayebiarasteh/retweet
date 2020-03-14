@@ -10,7 +10,7 @@ import pandas as pd
 from configs.serde import *
 import pdb
 import time
-from main import prediction_time
+from main import *
 
 epsilon = 1e-15
 
@@ -131,8 +131,8 @@ def post_reply_downloader(list_of_word, max_num_tweets, mode='download'):
 
 if __name__=='__main__':
     summarizer(data_path="./datasets/postreply",
-               input_file_name="data_post_reply_withlabel.csv",
-               output_file_name="final_data_post_reply.csv")
+               input_file_name="philipp_withlabel.csv",
+               output_file_name="philipp_final.csv")
 
     # pdb.set_trace()
     # a=2

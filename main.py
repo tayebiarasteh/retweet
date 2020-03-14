@@ -206,12 +206,14 @@ def main_reply_predict(DATA_MODE = 'getoldtweet'):
     # Execute Prediction
     nlp = spacy.load('en')
     for idx, item in enumerate(data['reply']):
-        data['label'][idx] = predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=item,
+        print(idx)
+        PHRASE = str(item)
+        data['label'][idx] = predictor.manual_predict(labels=labels, vocab_idx=vocab_idx, phrase=PHRASE,
                                                              tokenizer=nlp, mode=Mode.REPLYPREDICTION)
     data.to_csv(os.path.join(params['postreply_data_path'], predicted_data), index=False)
 
     # Removing the repetitions
-    summarizer(data_path=original_data,
+    summarizer(data_path=params['postreply_data_path'],
                input_file_name=predicted_data,
                output_file_name=final_data)
     # Duration
@@ -234,16 +236,16 @@ def main_train_postreply():
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 256
-    MAX_VOCAB_SIZE = 100000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
-    lr = 5e-3
-    optimiser_params = {'lr': lr, 'weight_decay': 1e-5}
-    EMBEDDING_DIM = 100
-    HIDDEN_DIM = 200
+    MAX_VOCAB_SIZE = 50000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
+    lr = 9e-4
+    optimiser_params = {'lr': lr, 'weight_decay': 1e-4}
+    EMBEDDING_DIM = 200
+    HIDDEN_DIM = 256
     OUTPUT_DIM = 3
     MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
     conv_out_ch = 200  # for the CNN model:
     filter_sizes = [3, 4, 5]  # for the CNN model:
-    SPLIT_RATIO = 0.8 # ratio of the train set, 1.0 means 100% training, 0% valid data
+    SPLIT_RATIO = 0.9 # ratio of the train set, 1.0 means 100% training, 0% valid data
     EXPERIMENT_NAME = "POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
 
     if RESUME == True:
@@ -255,7 +257,7 @@ def main_train_postreply():
     # Prepare data
     data_handler = data_provider_PostReply(cfg_path=cfg_path, batch_size=BATCH_SIZE, split_ratio=SPLIT_RATIO,
                                            max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN, model_mode=MODEL_MODE)
-    train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights = data_handler.data_loader()
+    train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights, classes = data_handler.data_loader()
 
     print(f'\nSummary:\n----------------------------------------------------')
     print(f'Total # of Training tweets: {BATCH_SIZE * len(train_iterator):,}')
@@ -288,24 +290,24 @@ def main_test_postreply():
     '''Main function for testing of the second part of the project
     Sentiment analysis of the Post-Replies.
     '''
-    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr0.005_max_vocab_size100000'
+    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr0.005_max_vocab_size50000'
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
 
     # Hyper-parameters
     BATCH_SIZE = 256
-    EMBEDDING_DIM = 100
-    HIDDEN_DIM = 200
-    MAX_VOCAB_SIZE = 100000  # use the same "max_vocab_size" as in training
-    SPLIT_RATIO = 0.8 # use the same as in training.
+    EMBEDDING_DIM = 200
+    HIDDEN_DIM = 256
+    MAX_VOCAB_SIZE = 50000  # use the same "max_vocab_size" as in training
+    SPLIT_RATIO = 0.9 # use the same as in training.
     MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
 
     # Prepare data
     data_handler_test = data_provider_PostReply(cfg_path=cfg_path, batch_size=BATCH_SIZE, split_ratio=SPLIT_RATIO,
                                          max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TEST, model_mode=MODEL_MODE)
-    test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler_test.data_loader()
+    test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, classes = data_handler_test.data_loader()
     # Initialize predictor
-    predictor = Prediction(cfg_path, model_mode=MODEL_MODE)
+    predictor = Prediction(cfg_path, model_mode=MODEL_MODE, classes=classes)
     predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
                           embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
     predictor.predict(test_iterator, batch_size=BATCH_SIZE)
@@ -321,18 +323,18 @@ def prediction_time(start_time, end_time):
 
 def experiment_deleter():
     '''To delete an experiment and reuse the same experiment name'''
-    parameters = dict(lr = [9e-5], max_vocab_size = [100000])
+    parameters = dict(lr = [9e-4], max_vocab_size = [50000])
     param_values = [v for v in parameters.values()]
     for lr, MAX_VOCAB_SIZE in product(*param_values):
-        delete_experiment("CNN_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
+        delete_experiment("POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
 
 
 
 if __name__ == '__main__':
-    # experiment_deleter()
+    experiment_deleter()
     # main_train()
     # main_test()
     # main_manual_predict(prediction_mode='Manualpart2')
-    main_reply_predict('philipp')
-    # main_train_postreply()
+    # main_reply_predict('philipp')
+    main_train_postreply()
     # main_test_postreply()

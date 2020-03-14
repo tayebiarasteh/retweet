@@ -185,10 +185,10 @@ class data_provider_PostReply():
         self.tokenizer = params['tokenizer']
         self.batch_size = batch_size
         self.model_mode = model_mode
-        test_data = pd.read_csv(os.path.join(self.dataset_path, self.test_file_name))
-        if len(test_data.columns) == 3:
-            test_data = test_data.drop(['id'], axis=1)
-            test_data.to_csv(os.path.join(self.dataset_path, self.test_file_name), index=False)
+        # test_data = pd.read_csv(os.path.join(self.dataset_path, self.test_file_name))
+        # if len(test_data.columns) == 3:
+        #     test_data = test_data.drop(['id'], axis=1)
+        #     test_data.to_csv(os.path.join(self.dataset_path, self.test_file_name), index=False)
 
 
     def data_loader(self):
@@ -205,7 +205,7 @@ class data_provider_PostReply():
             TEXT = data.Field(tokenize=self.tokenizer, batch_first=True)  # batch dimension is the firs dimension here.
         LABEL = data.LabelField()
 
-        fields = [('label', LABEL), ('text', TEXT)]
+        fields = [('label', LABEL), ('id', None), ('text', TEXT)]
 
         train_data, test_data = data.TabularDataset.splits(
             path=self.dataset_path,
@@ -224,7 +224,10 @@ class data_provider_PostReply():
         # create the vocabulary only on the training set!!!
         # vectors: instead of having our word embeddings initialized randomly, they are initialized with these pre-trained vectors.
         # initialize words in your vocabulary but not in your pre-trained embeddings to Gaussian
-        TEXT.build_vocab(train_data, max_size=self.max_vocab_size)
+        TEXT.build_vocab(train_data, max_size=self.max_vocab_size,
+                         vectors=self.pretrained_embedding, unk_init=torch.Tensor.normal_)
+        # TEXT.build_vocab(train_data, max_size=self.max_vocab_size)
+
         LABEL.build_vocab(train_data)
 
         labels = LABEL.vocab.itos
@@ -281,11 +284,11 @@ class data_provider_PostReply():
             weights = torch.Tensor([pos_weight, neut_weight, neg_weight])
 
         if self.mode == Mode.TEST:
-            return test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
+            return test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, labels
         elif self.mode == Mode.PREDICTION:
-            return labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings
+            return labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, labels
         else:
-            return train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights
+            return train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights, labels
 
 
 

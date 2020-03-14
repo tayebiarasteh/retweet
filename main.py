@@ -236,11 +236,11 @@ def main_train_postreply():
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 256
-    MAX_VOCAB_SIZE = 50000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
-    lr = 9e-4
-    optimiser_params = {'lr': lr, 'weight_decay': 1e-4}
+    MAX_VOCAB_SIZE = 750000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
+    lr = 9e-5
+    optimiser_params = {'lr': lr, 'weight_decay': 1e-5}
     EMBEDDING_DIM = 200
-    HIDDEN_DIM = 256
+    HIDDEN_DIM = 300
     OUTPUT_DIM = 3
     MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
     conv_out_ch = 200  # for the CNN model:
@@ -290,15 +290,15 @@ def main_test_postreply():
     '''Main function for testing of the second part of the project
     Sentiment analysis of the Post-Replies.
     '''
-    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr0.005_max_vocab_size50000'
+    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr9e-05_max_vocab_size100000'
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
 
     # Hyper-parameters
     BATCH_SIZE = 256
     EMBEDDING_DIM = 200
-    HIDDEN_DIM = 256
-    MAX_VOCAB_SIZE = 50000  # use the same "max_vocab_size" as in training
+    HIDDEN_DIM = 300
+    MAX_VOCAB_SIZE = 750000  # use the same "max_vocab_size" as in training
     SPLIT_RATIO = 0.9 # use the same as in training.
     MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
 
@@ -331,7 +331,7 @@ def experiment_deleter():
 
 
 if __name__ == '__main__':
-    experiment_deleter()
+    # experiment_deleter()
     # main_train()
     # main_test()
     # main_manual_predict(prediction_mode='Manualpart2')

@@ -150,6 +150,7 @@ class data_provider_V2():
             return train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights, labels
 
 
+
 class data_provider_PostReply():
     '''
     Packed padded sequences
@@ -185,10 +186,6 @@ class data_provider_PostReply():
         self.tokenizer = params['tokenizer']
         self.batch_size = batch_size
         self.model_mode = model_mode
-        # test_data = pd.read_csv(os.path.join(self.dataset_path, self.test_file_name))
-        # if len(test_data.columns) == 3:
-        #     test_data = test_data.drop(['id'], axis=1)
-        #     test_data.to_csv(os.path.join(self.dataset_path, self.test_file_name), index=False)
 
 
     def data_loader(self):
@@ -294,8 +291,7 @@ class data_provider_PostReply():
 
 
 if __name__=='__main__':
-    # CONFIG_PATH = '../configs/config.json'
-    # data_handler = data_provider_PostReply(cfg_path=CONFIG_PATH, batch_size=1, split_ratio=0.8, max_vocab_size=25000)
-    # train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings = data_handler.data_loader()
+    CONFIG_PATH = '../configs/config.json'
+    data_handler = data_provider_PostReply(cfg_path=CONFIG_PATH, batch_size=1, split_ratio=0.8, max_vocab_size=25000)
+    train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, classes = data_handler.data_loader()
     # pdb.set_trace()
-    a=2

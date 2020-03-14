@@ -1,4 +1,6 @@
 """
+Functions for data pre-processing, downloading.
+
 @authors:
 Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
 Mehrpad Monajem <mehrpad.monajem@fau.de>
@@ -17,6 +19,12 @@ epsilon = 1e-15
 
 
 def summarizer(data_path, input_file_name, output_file_name):
+    '''
+    Chooses a final label for each tweet from the list of reply-labels it gets
+    :param data_path: directory where the data located
+    :param input_file_name: name of the input file (data_post_reply_withlabel.csv)
+    :param output_file_name: name of the input file (final_data_post_reply.csv)
+    '''
     start_time = time.time()
 
     data = pd.read_csv(os.path.join(data_path, input_file_name))
@@ -71,13 +79,12 @@ def summarizer(data_path, input_file_name, output_file_name):
 
         df = pd.DataFrame([[label_final, data_new['id'][tweet], tweet_text]], columns=['label', 'id', 'tweet'])
         data_final = data_final.append(df)
-
+    data_final = data_final.sample(frac=1)
     data_final.to_csv(os.path.join(data_path, output_file_name), index=False)
     # Duration
     end_time = time.time()
     test_mins, test_secs = prediction_time(start_time, end_time)
     print(f'Total Summarizer Time: {test_mins}m {test_secs}s')
-
 
 
 def reply_convertor():
@@ -111,11 +118,43 @@ def manual_label_concat():
     for file in file_list:
         data = pd.read_csv(os.path.join(path, file), sep='\t')
         data_final = data_final.append(data)
+    data_final = data_final.sample(frac=1)
     data_final.to_csv(os.path.join(path, 'final_test_post_reply.csv'), index=False)
+
+
+def tweet_correlator():
+    '''
+    Checks whether two manual annotators have the same opinion on each tweet and saves only when they aggree.
+    '''
+    path_hamid = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/" \
+                 "datasets/postreply/Gold set/Group_1/Labeled_g1/Hamid_Group1_968/final_test_post_reply.csv"
+    path_mahshad = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/" \
+                   "datasets/postreply/Gold set/Group_1/Labeled_g1/Mahshad_Group1_968/final_test_post_reply.csv"
+    data = pd.read_csv(path_hamid)
+    data2 = pd.read_csv(path_mahshad)
+    final_data = pd.DataFrame(columns=['label', 'id', 'tweet'])
+
+    for idx, ID in enumerate(data['id']):
+        for idx2, ID2 in enumerate(data2['id']):
+            if ID == ID2:
+                if data['label'][idx] == data2['label'][idx2]:
+                    df = pd.DataFrame([[data2['label'][idx2], data2['id'][idx2], data2['tweet'][idx2]]],
+                                      columns=['label', 'id', 'tweet'])
+                    final_data = final_data.append(df)
+                    final_data= final_data.sample(frac=1)
+    final_data.to_csv("/home/soroosh/Documents/Repositories/twitter_sentiment/"
+                      "data/datasets/postreply/Gold set/Group_1/Labeled_g1/"
+                      "Correlated_Group1_968/final_test_post_reply.csv", index=False)
 
 
 
 def post_reply_downloader(list_of_word, max_num_tweets, mode='download'):
+    '''
+    Manual tweet and reply downloader from Twitter
+    :param list_of_word: list of keywords to search for
+    :param max_num_tweets:
+    :param mode: 'download' or 'test'
+    '''
     path = './preprocessing_utils/get_old_tweets_3-0.0.10'
     max_tweets = max_num_tweets
     list_word = list_of_word

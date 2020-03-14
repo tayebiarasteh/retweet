@@ -18,6 +18,7 @@ from tensorboardX import SummaryWriter
 import torch
 import torch.nn as nn
 from sklearn import metrics
+import torch.nn.functional as F
 
 # User Defined Modules
 from configs.serde import *
@@ -241,21 +242,22 @@ class Training:
                     batch_count = 0
 
         '''Metrics calculation over the whole set'''
-        # Accuracy
-        correct = max_preds_cache.squeeze(1).eq(labels_cache)
-        epoch_accuracy = (correct.sum() / torch.FloatTensor([labels_cache.shape[0]])).item()
-
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
         # average=None gives individual scores for each class
         # here we only care about the average of positive class and negative class
-        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
-        epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
-        epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
-        # epoch_f1_score = (epoch_f1_score[1] + epoch_f1_score[2]) / 2
-        # epoch_precision = (epoch_precision[1] + epoch_precision[2]) / 2
-        # epoch_recall = (epoch_recall[1] + epoch_recall[2]) / 2
+        epoch_accuracy = metrics.accuracy_score(labels_cache, max_preds_cache)
+        # epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        # epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
+        # epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
+
+        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average=None)
+        epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average=None)
+        epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average=None)
+        epoch_f1_score = (epoch_f1_score[1] + epoch_f1_score[2]) / 2
+        epoch_precision = (epoch_precision[1] + epoch_precision[2]) / 2
+        epoch_recall = (epoch_recall[1] + epoch_recall[2]) / 2
         labels_cache = labels_cache.long()
         logits_cache = logits_cache.float()
 
@@ -320,19 +322,20 @@ class Training:
                     batch_count = 0
 
         '''Metrics calculation over the whole set'''
-        # Accuracy
-        correct = max_preds_cache.squeeze(1).eq(labels_cache)
-        epoch_accuracy = (correct.sum() / torch.FloatTensor([labels_cache.shape[0]])).item()
-
         max_preds_cache = max_preds_cache.cpu()
         labels_cache = labels_cache.cpu()
 
-        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
-        epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
-        epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
-        # epoch_f1_score = (epoch_f1_score[1] + epoch_f1_score[2]) / 2
-        # epoch_precision = (epoch_precision[1] + epoch_precision[2]) / 2
-        # epoch_recall = (epoch_recall[1] + epoch_recall[2]) / 2
+        epoch_accuracy = metrics.accuracy_score(labels_cache, max_preds_cache)
+        # epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        # epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
+        # epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
+
+        epoch_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average=None)
+        epoch_precision = metrics.precision_score(labels_cache, max_preds_cache, average=None)
+        epoch_recall = metrics.recall_score(labels_cache, max_preds_cache, average=None)
+        epoch_f1_score = (epoch_f1_score[1] + epoch_f1_score[2]) / 2
+        epoch_precision = (epoch_precision[1] + epoch_precision[2]) / 2
+        epoch_recall = (epoch_recall[1] + epoch_recall[2]) / 2
         labels_cache = labels_cache.long()
         logits_cache = logits_cache.float()
 
@@ -423,14 +426,15 @@ class Prediction:
         return elapsed_mins, elapsed_secs
 
 
-    def setup_model(self, model, vocab_size, embeddings, embedding_dim, hidden_dim, pad_idx, unk_idx, model_file_name=None):
+    def setup_model(self, model, vocab_size, embeddings, embedding_dim,
+                    hidden_dim, pad_idx, unk_idx, model_file_name=None):
         if model_file_name == None:
             model_file_name = self.params['trained_model_name']
         self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
                              hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
         # Loads model from model_file_name and default network_output_path
         # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
-        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch20_" + model_file_name))
+        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch15_" + model_file_name))
 
 
     def predict(self, test_loader, batch_size):
@@ -476,14 +480,16 @@ class Prediction:
         # average=None gives individual scores for each class
         # here we only care about the average of positive class and negative class
         final_accuracy = metrics.accuracy_score(labels_cache, max_preds_cache)
+        # final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        # final_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
+        # final_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
+
         final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average=None)
         final_precision = metrics.precision_score(labels_cache, max_preds_cache, average=None)
         final_recall = metrics.recall_score(labels_cache, max_preds_cache, average=None)
-
         final_f1_score = (final_f1_score[1] + final_f1_score[2]) / 2
         final_precision = (final_precision[1] + final_precision[2]) / 2
         final_recall = (final_recall[1] + final_recall[2]) / 2
-
         confusion_matrix = metrics.confusion_matrix(labels_cache, max_preds_cache, labels=[0,1,2])
 
         end_time = time.time()

@@ -427,14 +427,14 @@ class Prediction:
 
 
     def setup_model(self, model, vocab_size, embeddings, embedding_dim,
-                    hidden_dim, pad_idx, unk_idx, model_file_name=None):
+                    hidden_dim, pad_idx, unk_idx, model_file_name=None, epoch=14):
         if model_file_name == None:
             model_file_name = self.params['trained_model_name']
         self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
                              hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
         # Loads model from model_file_name and default network_output_path
         # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
-        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch15_" + model_file_name))
+        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch" + str(epoch) + "_" + model_file_name))
 
 
     def predict(self, test_loader, batch_size):
@@ -501,9 +501,10 @@ class Prediction:
         print(f'\tAcc: {final_accuracy * 100:.2f}% | F1 score: {final_f1_score:.3f} | '
               f'Recall: {final_recall:.3f} | Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')
-        self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
-                              title='Confusion matrix, without normalization')
-
+        # print(confusion_matrix)
+        # self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
+        #                       title='Confusion matrix, without normalization')
+        return final_accuracy, final_f1_score
 
     def plot_confusion_matrix(self, cm, target_names,
                               title='Confusion matrix', cmap=None, normalize=False):

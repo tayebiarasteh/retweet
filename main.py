@@ -229,14 +229,14 @@ def main_train_postreply():
     Sentiment analysis of the Post-Replies.
     '''
     # if we are resuming training on a model
-    RESUME = False
+    RESUME = True
 
     # Hyper-parameters
     NUM_EPOCH = 100
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 256
-    MAX_VOCAB_SIZE = 750000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
+    MAX_VOCAB_SIZE = 500000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
     lr = 9e-5
     optimiser_params = {'lr': lr, 'weight_decay': 1e-5}
     EMBEDDING_DIM = 200
@@ -290,7 +290,7 @@ def main_test_postreply():
     '''Main function for testing of the second part of the project
     Sentiment analysis of the Post-Replies.
     '''
-    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr9e-05_max_vocab_size100000'
+    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr9e-05_max_vocab_size500000'
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
 
@@ -298,7 +298,7 @@ def main_test_postreply():
     BATCH_SIZE = 256
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 300
-    MAX_VOCAB_SIZE = 750000  # use the same "max_vocab_size" as in training
+    MAX_VOCAB_SIZE = 500000  # use the same "max_vocab_size" as in training
     SPLIT_RATIO = 0.9 # use the same as in training.
     MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
 
@@ -312,6 +312,40 @@ def main_test_postreply():
                           embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
     predictor.predict(test_iterator, batch_size=BATCH_SIZE)
 
+
+
+def test_every_epoch():
+    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr9e-05_max_vocab_size500000'
+    params = open_experiment(EXPERIMENT_NAME)
+    cfg_path = params['cfg_path']
+
+    # Hyper-parameters
+    BATCH_SIZE = 256
+    EMBEDDING_DIM = 200
+    HIDDEN_DIM = 300
+    MAX_VOCAB_SIZE = 500000  # use the same "max_vocab_size" as in training
+    SPLIT_RATIO = 0.9 # use the same as in training.
+    MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
+
+    # Prepare data
+    data_handler_test = data_provider_PostReply(cfg_path=cfg_path, batch_size=BATCH_SIZE, split_ratio=SPLIT_RATIO,
+                                         max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TEST, model_mode=MODEL_MODE)
+    test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, classes = data_handler_test.data_loader()
+    # Initialize predictor
+    predictor = Prediction(cfg_path, model_mode=MODEL_MODE, classes=classes)
+
+    test_acc = pd.DataFrame(columns=['epoch', 'accuracy'])
+    test_F1 = pd.DataFrame(columns=['epoch', 'F1'])
+    for epoch in range(46):
+        print('epoch:', epoch+1)
+        predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
+                              embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX, epoch=epoch+1)
+        acc, F1 = predictor.predict(test_iterator, batch_size=BATCH_SIZE)
+
+        test_acc = test_acc.append(pd.DataFrame([[epoch+1, acc]], columns=['epoch', 'accuracy']))
+        test_F1 = test_F1.append(pd.DataFrame([[epoch+1, F1]], columns=['epoch', 'F1']))
+        test_F1.to_csv(os.path.join(params['output_data_path'], 'test_F1.csv'), index=False)
+        test_acc.to_csv(os.path.join(params['output_data_path'], 'test_acc.csv'), index=False)
 
 
 
@@ -336,5 +370,6 @@ if __name__ == '__main__':
     # main_test()
     # main_manual_predict(prediction_mode='Manualpart2')
     # main_reply_predict('philipp')
-    main_train_postreply()
+    # main_train_postreply()
     # main_test_postreply()
+    test_every_epoch()

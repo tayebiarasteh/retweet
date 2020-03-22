@@ -67,12 +67,12 @@ def summarizer(data_path, input_file_name, output_file_name):
 
         # our proposed algorithm
         overall = label_pos + label_neg + label_neut
-        if (label_neut/(overall + epsilon)) > 0.9:
+        if (label_neut/(overall + epsilon)) > 0.85:
             label_final = var.get(label_neut)
         else:
-            if (label_pos/(label_neg + epsilon)) > 2:
+            if (label_pos/(label_neg + epsilon)) > 2.5:
                 label_final = var.get(label_pos)
-            elif (label_neg/(label_pos + epsilon)) > 2:
+            elif (label_neg/(label_pos + epsilon)) > 3:
                 label_final = var.get(label_neg)
             else:
                 label_final = var.get(label_neut)
@@ -117,7 +117,8 @@ def manual_label_concat():
     data_final = pd.DataFrame(columns=['label', 'id', 'tweet'])
     for file in file_list:
         data = pd.read_csv(os.path.join(path, file), sep='\t')
-        data_final = data_final.append(data)
+        if data.columns[0] == 'label' and data.columns[1] == 'id' and data.columns[2] == 'tweet':
+            data_final = data_final.append(data)
     data_final = data_final.sample(frac=1)
     data_final.to_csv(os.path.join(path, 'final_test_post_reply.csv'), index=False)
 
@@ -145,6 +146,37 @@ def tweet_correlator():
     final_data.to_csv("/home/soroosh/Documents/Repositories/twitter_sentiment/"
                       "data/datasets/postreply/Gold set/Group_1/Labeled_g1/"
                       "Correlated_Group1_968/final_test_post_reply.csv", index=False)
+
+
+
+def counting_pie_chart():
+    '''
+    For the visualization of the distribution of the classes in the train and test sets
+    '''
+    training = '/home/soroosh/Documents/Repositories/twitter_sentiment/' \
+               'data/datasets/postreply/training_data_post_reply.csv'
+    test = '/home/soroosh/Documents/Repositories/twitter_sentiment/' \
+           'data/datasets/postreply/final_test_post_reply.csv'
+
+    data = pd.read_csv(training)
+    positive_count = (data['label'] == 'positive').sum()
+    negative_count = (data['label'] == 'negative').sum()
+    neutral_count = (data['label'] == 'neutral').sum()
+    total = negative_count + positive_count + neutral_count
+    print('train set')
+    print('positive:', positive_count/total)
+    print('negative:', negative_count/total)
+    print('neutral:', neutral_count/total)
+
+    data = pd.read_csv(test)
+    positive_count = (data['label'] == 'positive').sum()
+    negative_count = (data['label'] == 'negative').sum()
+    neutral_count = (data['label'] == 'neutral').sum()
+    total = negative_count + positive_count + neutral_count
+    print('\ntest set')
+    print('positive:', positive_count/total)
+    print('negative:', negative_count/total)
+    print('neutral:', neutral_count/total)
 
 
 

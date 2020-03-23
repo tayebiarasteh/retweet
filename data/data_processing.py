@@ -67,12 +67,12 @@ def summarizer(data_path, input_file_name, output_file_name):
 
         # our proposed algorithm
         overall = label_pos + label_neg + label_neut
-        if (label_neut/(overall + epsilon)) > 0.85:
+        if (label_neut/(overall + epsilon)) > 0.9:
             label_final = var.get(label_neut)
         else:
-            if (label_pos/(label_neg + epsilon)) > 2.5:
+            if (label_pos/(label_neg + epsilon)) > 1.5:
                 label_final = var.get(label_pos)
-            elif (label_neg/(label_pos + epsilon)) > 3:
+            elif (label_neg/(label_pos + epsilon)) > 2:
                 label_final = var.get(label_neg)
             else:
                 label_final = var.get(label_neut)
@@ -111,7 +111,7 @@ def manual_label_concat():
     '''
     concatenates the individual files from reply_convertor()
     '''
-    path = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/postreply/test_gold_out"
+    path = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/postreply/Gold set/Group_2_3177/Labeled_g2/Group 2 (till 3177)"
     file_list = [f for f in os.listdir(path) if f.endswith('.txt')]
 
     data_final = pd.DataFrame(columns=['label', 'id', 'tweet'])
@@ -147,6 +147,17 @@ def tweet_correlator():
                       "data/datasets/postreply/Gold set/Group_1/Labeled_g1/"
                       "Correlated_Group1_968/final_test_post_reply.csv", index=False)
 
+
+def philipp_getoldtweet_concat():
+    getold = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/postreply/final_data_post_reply.csv"
+    philipp = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/postreply/philipp_final.csv"
+    output = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/postreply/training_data_post_reply.csv"
+
+    data = pd.read_csv(getold)
+    data2 = pd.read_csv(philipp)
+    data = data.append(data2)
+    data = data.sample(frac=1)
+    data.to_csv(output, index=False)
 
 
 def counting_pie_chart():
@@ -201,10 +212,9 @@ def post_reply_downloader(list_of_word, max_num_tweets, mode='download'):
 
 
 if __name__=='__main__':
-    summarizer(data_path="./datasets/postreply",
-               input_file_name="philipp_withlabel.csv",
-               output_file_name="philipp_final.csv")
-
-    # pdb.set_trace()
-    # a=2
-
+    # summarizer("./datasets/postreply", "philipp_withlabel.csv", "philipp_final.csv")
+    # summarizer("./datasets/postreply", "data_post_reply_withlabel.csv", "final_data_post_reply.csv")
+    # philipp_getoldtweet_concat()
+    # counting_pie_chart()
+    # reply_convertor()
+    manual_label_concat()

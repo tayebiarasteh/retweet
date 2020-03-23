@@ -229,20 +229,20 @@ def main_train_postreply():
     Sentiment analysis of the Post-Replies.
     '''
     # if we are resuming training on a model
-    RESUME = True
+    RESUME = False
 
     # Hyper-parameters
     NUM_EPOCH = 100
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 256
-    MAX_VOCAB_SIZE = 500000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
+    MAX_VOCAB_SIZE = 750000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
     lr = 9e-5
-    optimiser_params = {'lr': lr, 'weight_decay': 1e-5}
+    optimiser_params = {'lr': lr, 'weight_decay': 1e-4}
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 300
     OUTPUT_DIM = 3
-    MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
+    MODEL_MODE = "RNN" # "RNN" or "CNN"
     conv_out_ch = 200  # for the CNN model:
     filter_sizes = [3, 4, 5]  # for the CNN model:
     SPLIT_RATIO = 0.9 # ratio of the train set, 1.0 means 100% training, 0% valid data
@@ -259,20 +259,22 @@ def main_train_postreply():
                                            max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TRAIN, model_mode=MODEL_MODE)
     train_iterator, valid_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, weights, classes = data_handler.data_loader()
 
-    print(f'\nSummary:\n----------------------------------------------------')
-    print(f'Total # of Training tweets: {BATCH_SIZE * len(train_iterator):,}')
     if SPLIT_RATIO == 1:
-        print(f'Total # of Valid. tweets:   {0}')
+        total_valid_tweets = 0
     else:
-        print(f'Total # of Valid. tweets:   {BATCH_SIZE * len(valid_iterator):,}')
+        total_valid_tweets = BATCH_SIZE * len(valid_iterator)
+    total_train_tweets = BATCH_SIZE * len(train_iterator)
+    print(f'\nSummary:\n----------------------------------------------------')
+    print(f'Total # of Training tweets: {total_train_tweets:,}')
+    print(f'Total # of Valid. tweets:   {total_valid_tweets:,}')
 
     # Initialize trainer
     trainer = Training(cfg_path, num_epochs=NUM_EPOCH, RESUME=RESUME, model_mode=MODEL_MODE)
 
-    if MODEL_MODE == 'RNN':
+    if MODEL_MODE == "RNN":
         MODEL = biLSTM(vocab_size=vocab_size, embeddings=pretrained_embeddings, embedding_dim=EMBEDDING_DIM,
                        hidden_dim=HIDDEN_DIM, output_dim=OUTPUT_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
-    elif MODEL_MODE == 'CNN':
+    elif MODEL_MODE == "CNN":
         MODEL = CNN1d(vocab_size=vocab_size, embeddings=pretrained_embeddings, embedding_dim=EMBEDDING_DIM,
                        conv_out_ch=conv_out_ch, filter_sizes=filter_sizes, output_dim=OUTPUT_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
 
@@ -282,6 +284,21 @@ def main_train_postreply():
     else:
         trainer.setup_model(model=MODEL, optimiser=OPTIMIZER,
                         optimiser_params=optimiser_params, loss_function=LOSS_FUNCTION, weight=weights)
+        # writes the params to config file
+        params = read_config(cfg_path)
+        params['Network']['vocab_size'] = vocab_size
+        params['Network']['PAD_IDX'] = PAD_IDX
+        params['Network']['UNK_IDX'] = UNK_IDX
+        params['Network']['classes'] = classes
+        params['Network']['SPLIT_RATIO'] = SPLIT_RATIO
+        params['Network']['MAX_VOCAB_SIZE'] = MAX_VOCAB_SIZE
+        params['Network']['HIDDEN_DIM'] = HIDDEN_DIM
+        params['Network']['EMBEDDING_DIM'] = EMBEDDING_DIM
+        params['Network']['MODEL_MODE'] = MODEL_MODE
+        params['total_train_tweets'] = total_train_tweets
+        params['total_valid_tweets'] = total_valid_tweets
+        write_config(params, cfg_path, sort_keys=True)
+
     trainer.execute_training(train_loader=train_iterator, valid_loader=valid_iterator, batch_size=BATCH_SIZE)
 
 
@@ -290,22 +307,25 @@ def main_test_postreply():
     '''Main function for testing of the second part of the project
     Sentiment analysis of the Post-Replies.
     '''
-    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr9e-05_max_vocab_size500000'
+    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr9e-05_max_vocab_size750000'
+    BATCH_SIZE = 256
+
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
-
-    # Hyper-parameters
-    BATCH_SIZE = 256
-    EMBEDDING_DIM = 200
-    HIDDEN_DIM = 300
-    MAX_VOCAB_SIZE = 500000  # use the same "max_vocab_size" as in training
-    SPLIT_RATIO = 0.9 # use the same as in training.
-    MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
+    vocab_size = params['Network']['vocab_size']
+    PAD_IDX = params['Network']['PAD_IDX']
+    UNK_IDX = params['Network']['UNK_IDX']
+    classes = params['Network']['classes']
+    MAX_VOCAB_SIZE = params['Network']['MAX_VOCAB_SIZE']
+    SPLIT_RATIO = params['Network']['SPLIT_RATIO']
+    EMBEDDING_DIM = params['Network']['EMBEDDING_DIM']
+    HIDDEN_DIM = params['Network']['HIDDEN_DIM']
+    MODEL_MODE = params['Network']['MODEL_MODE']
 
     # Prepare data
     data_handler_test = data_provider_PostReply(cfg_path=cfg_path, batch_size=BATCH_SIZE, split_ratio=SPLIT_RATIO,
                                          max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TEST, model_mode=MODEL_MODE)
-    test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, classes = data_handler_test.data_loader()
+    test_iterator, pretrained_embeddings = data_handler_test.data_loader()
     # Initialize predictor
     predictor = Prediction(cfg_path, model_mode=MODEL_MODE, classes=classes)
     predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
@@ -323,7 +343,7 @@ def test_every_epoch():
     BATCH_SIZE = 256
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 300
-    MAX_VOCAB_SIZE = 500000  # use the same "max_vocab_size" as in training
+    MAX_VOCAB_SIZE = 750000  # use the same "max_vocab_size" as in training
     SPLIT_RATIO = 0.9 # use the same as in training.
     MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
 
@@ -370,6 +390,6 @@ if __name__ == '__main__':
     # main_test()
     # main_manual_predict(prediction_mode='Manualpart2')
     # main_reply_predict('philipp')
-    # main_train_postreply()
+    main_train_postreply()
     # main_test_postreply()
-    test_every_epoch()
+    # test_every_epoch()

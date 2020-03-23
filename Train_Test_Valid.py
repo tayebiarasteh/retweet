@@ -65,7 +65,8 @@ class Training:
 
     def setup_model(self, model, optimiser, optimiser_params, loss_function, weight):
 
-        print(f'Total # of model\'s trainable parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}')
+        total_param_num = sum(p.numel() for p in model.parameters() if p.requires_grad)
+        print(f'Total # of model\'s trainable parameters: {total_param_num:,}')
         print('----------------------------------------------------\n')
 
         self.model = model.to(self.device)
@@ -77,6 +78,7 @@ class Training:
             self.load_pretrained_model()
 
         # Saves the model, optimiser,loss function name for writing to config file
+        self.model_info['total_param_num'] = total_param_num
         self.model_info['optimiser'] = optimiser.__name__
         self.model_info['loss_function'] = loss_function.__name__
         self.model_info['optimiser_params'] = optimiser_params
@@ -198,9 +200,9 @@ class Training:
         labels_cache = torch.from_numpy(np.zeros(len(train_loader) * batch_size))
 
         for idx, batch in enumerate(train_loader):
-            if self.model_mode == 'RNN':
+            if self.model_mode == "RNN":
                 message, message_lengths = batch.text
-            if self.model_mode == 'CNN':
+            if self.model_mode == "CNN":
                 message = batch.text
             label = batch.label
             message = message.long()
@@ -211,9 +213,9 @@ class Training:
             self.optimiser.zero_grad()
 
             with torch.set_grad_enabled(True):
-                if self.model_mode == 'RNN':
+                if self.model_mode == "RNN":
                     output = self.model(message, message_lengths).squeeze(1)
-                if self.model_mode == 'CNN':
+                if self.model_mode == "CNN":
                     output = self.model(message).squeeze(1)
 
                 # Loss
@@ -285,18 +287,18 @@ class Training:
             labels_cache = torch.from_numpy(np.zeros(len(valid_loader) * batch_size))
 
             for idx, batch in enumerate(valid_loader):
-                if self.model_mode == 'RNN':
+                if self.model_mode == "RNN":
                     message, message_lengths = batch.text
-                if self.model_mode == 'CNN':
+                if self.model_mode == "CNN":
                     message = batch.text
                 label = batch.label
                 message = message.long()
                 label = label.long()
                 message = message.to(self.device)
                 label = label.to(self.device)
-                if self.model_mode == 'RNN':
+                if self.model_mode == "RNN":
                     output = self.model(message, message_lengths).squeeze(1)
-                if self.model_mode == 'CNN':
+                if self.model_mode == "CNN":
                     output = self.model(message).squeeze(1)
 
                 # Loss
@@ -450,18 +452,18 @@ class Prediction:
             labels_cache = torch.from_numpy(np.zeros(len(test_loader) * batch_size))
 
             for idx, batch in enumerate(test_loader):
-                if self.model_mode == 'RNN':
+                if self.model_mode == "RNN":
                     message, message_lengths = batch.text
-                if self.model_mode == 'CNN':
+                if self.model_mode == "CNN":
                     message = batch.text
                 label = batch.label
                 message = message.long()
                 label = label.long()
                 message = message.to(self.device)
                 label = label.to(self.device)
-                if self.model_mode == 'RNN':
+                if self.model_mode == "RNN":
                     output = self.model_p(message, message_lengths).squeeze(1)
-                if self.model_mode == 'CNN':
+                if self.model_mode == "CNN":
                     output = self.model_p(message).squeeze(1)
                 max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
 

@@ -229,7 +229,7 @@ def main_train_postreply():
     Sentiment analysis of the Post-Replies.
     '''
     # if we are resuming training on a model
-    RESUME = False
+    RESUME = True
 
     # Hyper-parameters
     NUM_EPOCH = 100
@@ -321,11 +321,12 @@ def main_test_postreply():
     EMBEDDING_DIM = params['Network']['EMBEDDING_DIM']
     HIDDEN_DIM = params['Network']['HIDDEN_DIM']
     MODEL_MODE = params['Network']['MODEL_MODE']
+    pretrained_embeddings = torch.zeros((vocab_size, EMBEDDING_DIM))
 
     # Prepare data
     data_handler_test = data_provider_PostReply(cfg_path=cfg_path, batch_size=BATCH_SIZE, split_ratio=SPLIT_RATIO,
                                          max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TEST, model_mode=MODEL_MODE)
-    test_iterator, pretrained_embeddings = data_handler_test.data_loader()
+    test_iterator = data_handler_test.data_loader()
     # Initialize predictor
     predictor = Prediction(cfg_path, model_mode=MODEL_MODE, classes=classes)
     predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
@@ -335,28 +336,32 @@ def main_test_postreply():
 
 
 def test_every_epoch():
-    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr9e-05_max_vocab_size500000'
+    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr9e-05_max_vocab_size750000'
+    BATCH_SIZE = 256
+
     params = open_experiment(EXPERIMENT_NAME)
     cfg_path = params['cfg_path']
-
-    # Hyper-parameters
-    BATCH_SIZE = 256
-    EMBEDDING_DIM = 200
-    HIDDEN_DIM = 300
-    MAX_VOCAB_SIZE = 750000  # use the same "max_vocab_size" as in training
-    SPLIT_RATIO = 0.9 # use the same as in training.
-    MODEL_MODE = 'RNN' # 'RNN' or 'CNN'
+    vocab_size = params['Network']['vocab_size']
+    PAD_IDX = params['Network']['PAD_IDX']
+    UNK_IDX = params['Network']['UNK_IDX']
+    classes = params['Network']['classes']
+    MAX_VOCAB_SIZE = params['Network']['MAX_VOCAB_SIZE']
+    SPLIT_RATIO = params['Network']['SPLIT_RATIO']
+    EMBEDDING_DIM = params['Network']['EMBEDDING_DIM']
+    HIDDEN_DIM = params['Network']['HIDDEN_DIM']
+    MODEL_MODE = params['Network']['MODEL_MODE']
+    pretrained_embeddings = torch.zeros((vocab_size, EMBEDDING_DIM))
 
     # Prepare data
     data_handler_test = data_provider_PostReply(cfg_path=cfg_path, batch_size=BATCH_SIZE, split_ratio=SPLIT_RATIO,
                                          max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TEST, model_mode=MODEL_MODE)
-    test_iterator, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, classes = data_handler_test.data_loader()
+    test_iterator = data_handler_test.data_loader()
     # Initialize predictor
     predictor = Prediction(cfg_path, model_mode=MODEL_MODE, classes=classes)
 
     test_acc = pd.DataFrame(columns=['epoch', 'accuracy'])
     test_F1 = pd.DataFrame(columns=['epoch', 'F1'])
-    for epoch in range(46):
+    for epoch in range(32):
         print('epoch:', epoch+1)
         predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
                               embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX, epoch=epoch+1)

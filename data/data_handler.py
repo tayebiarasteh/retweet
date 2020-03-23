@@ -281,7 +281,7 @@ class data_provider_PostReply():
             weights = torch.Tensor([pos_weight, neut_weight, neg_weight])
 
         if self.mode == Mode.TEST:
-            return test_iterator, pretrained_embeddings
+            return test_iterator
         elif self.mode == Mode.PREDICTION:
             return labels, vocab_idx, vocab_size, PAD_IDX, UNK_IDX, pretrained_embeddings, labels
         else:

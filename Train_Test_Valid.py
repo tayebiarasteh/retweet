@@ -123,6 +123,8 @@ class Training:
         '''
         Executes training by running training and validation at each epoch
         '''
+        self.params = read_config(self.cfg_path)
+
         total_start_time = time.time()
 
         if self.RESUME == False:
@@ -436,6 +438,7 @@ class Prediction:
                              hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
         # Loads model from model_file_name and default network_output_path
         # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+
         self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch" + str(epoch) + "_" + model_file_name))
 
 
@@ -503,7 +506,7 @@ class Prediction:
         print(f'\tAcc: {final_accuracy * 100:.2f}% | F1 score: {final_f1_score:.3f} | '
               f'Recall: {final_recall:.3f} | Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')
-        # print(confusion_matrix)
+        print(confusion_matrix)
         # self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
         #                       title='Confusion matrix, without normalization')
         return final_accuracy, final_f1_score

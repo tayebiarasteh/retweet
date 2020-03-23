@@ -118,7 +118,8 @@ def manual_label_concat():
     for file in file_list:
         data = pd.read_csv(os.path.join(path, file), sep='\t')
         if data.columns[0] == 'label' and data.columns[1] == 'id' and data.columns[2] == 'tweet':
-            data_final = data_final.append(data)
+            if data['label'][0] == 'neutral' or data['label'][0] == 'positive' or data['label'][0] == 'negative':
+                data_final = data_final.append(data)
     data_final = data_final.sample(frac=1)
     data_final.to_csv(os.path.join(path, 'final_test_post_reply.csv'), index=False)
 

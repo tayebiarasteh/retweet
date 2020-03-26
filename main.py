@@ -246,7 +246,7 @@ def main_train_postreply():
     conv_out_ch = 200  # for the CNN model:
     filter_sizes = [3, 4, 5]  # for the CNN model:
     SPLIT_RATIO = 0.9 # ratio of the train set, 1.0 means 100% training, 0% valid data
-    EXPERIMENT_NAME = "POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
+    EXPERIMENT_NAME = "3POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
 
     if RESUME == True:
         params = open_experiment(EXPERIMENT_NAME)
@@ -307,7 +307,7 @@ def main_test_postreply():
     '''Main function for testing of the second part of the project
     Sentiment analysis of the Post-Replies.
     '''
-    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr9e-05_max_vocab_size750000'
+    EXPERIMENT_NAME = '2POSTREPLY_Adam_lr9e-05_max_vocab_size750000'
     BATCH_SIZE = 256
 
     params = open_experiment(EXPERIMENT_NAME)
@@ -336,7 +336,7 @@ def main_test_postreply():
 
 
 def test_every_epoch():
-    EXPERIMENT_NAME = 'POSTREPLY_Adam_lr9e-05_max_vocab_size750000'
+    EXPERIMENT_NAME = '3POSTREPLY_Adam_lr9e-05_max_vocab_size750000'
     BATCH_SIZE = 256
 
     params = open_experiment(EXPERIMENT_NAME)
@@ -361,14 +361,15 @@ def test_every_epoch():
 
     test_acc = pd.DataFrame(columns=['epoch', 'accuracy'])
     test_F1 = pd.DataFrame(columns=['epoch', 'F1'])
-    for epoch in range(32):
-        print('epoch:', epoch+1)
+    for epoch in range(29):
+        EPOCH = epoch + 1
+        print('epoch:', EPOCH)
         predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
-                              embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX, epoch=epoch+1)
+                              embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX, epoch=EPOCH)
         acc, F1 = predictor.predict(test_iterator, batch_size=BATCH_SIZE)
 
-        test_acc = test_acc.append(pd.DataFrame([[epoch+1, acc]], columns=['epoch', 'accuracy']))
-        test_F1 = test_F1.append(pd.DataFrame([[epoch+1, F1]], columns=['epoch', 'F1']))
+        test_acc = test_acc.append(pd.DataFrame([[EPOCH, acc]], columns=['epoch', 'accuracy']))
+        test_F1 = test_F1.append(pd.DataFrame([[EPOCH, F1]], columns=['epoch', 'F1']))
         test_F1.to_csv(os.path.join(params['output_data_path'], 'test_F1.csv'), index=False)
         test_acc.to_csv(os.path.join(params['output_data_path'], 'test_acc.csv'), index=False)
 

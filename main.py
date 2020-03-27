@@ -232,7 +232,7 @@ def main_train_postreply():
     RESUME = True
 
     # Hyper-parameters
-    NUM_EPOCH = 100
+    NUM_EPOCH = 150
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 256
@@ -307,7 +307,7 @@ def main_test_postreply():
     '''Main function for testing of the second part of the project
     Sentiment analysis of the Post-Replies.
     '''
-    EXPERIMENT_NAME = '2POSTREPLY_Adam_lr9e-05_max_vocab_size750000'
+    EXPERIMENT_NAME = '3POSTREPLY_Adam_lr9e-05_max_vocab_size750000'
     BATCH_SIZE = 256
 
     params = open_experiment(EXPERIMENT_NAME)
@@ -361,7 +361,7 @@ def test_every_epoch():
 
     test_acc = pd.DataFrame(columns=['epoch', 'accuracy'])
     test_F1 = pd.DataFrame(columns=['epoch', 'F1'])
-    for epoch in range(29):
+    for epoch in range(150):
         EPOCH = epoch + 1
         print('epoch:', EPOCH)
         predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
@@ -396,6 +396,6 @@ if __name__ == '__main__':
     # main_test()
     # main_manual_predict(prediction_mode='Manualpart2')
     # main_reply_predict('philipp')
-    main_train_postreply()
-    # main_test_postreply()
+    # main_train_postreply()
+    main_test_postreply()
     # test_every_epoch()

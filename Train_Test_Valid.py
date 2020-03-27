@@ -39,6 +39,7 @@ class Training:
         self.cfg_path = cfg_path
         self.RESUME = RESUME
         self.model_mode = model_mode
+        self.num_epochs = num_epochs
 
         if RESUME == False:
             self.model_info = self.params['Network']
@@ -99,7 +100,6 @@ class Training:
         self.model.load_state_dict(checkpoint['model_state_dict'])
         self.optimiser.load_state_dict(checkpoint['optimizer_state_dict'])
         self.epoch = checkpoint['epoch']
-        self.num_epochs = checkpoint['num_epoch']
         self.loss_function = checkpoint['loss']
         self.best_loss = checkpoint['best_loss']
         self.writer = SummaryWriter(log_dir=os.path.join(self.params['tb_logs_path']), purge_step=self.epoch + 1)
@@ -133,7 +133,7 @@ class Training:
                 self.raise_training_complete_exception
 
             self.model_info = self.params['Network']
-            self.model_info['num_epochs'] = self.num_epochs or self.model_info['num_epochs']
+            self.model_info['num_epoch'] = self.num_epochs or self.model_info['num_epoch']
 
         print('Starting time:' + str(datetime.datetime.now()) +'\n')
 
@@ -188,7 +188,7 @@ class Training:
         '''
         Train using one single iteration of all messages (epoch) in dataset
         '''
-        print("Epoch [{}/{}]".format(self.epoch, self.model_info['num_epochs']))
+        print("Epoch [{}/{}]".format(self.epoch, self.model_info['num_epoch']))
         self.model.train()
         previous_idx = 0
 
@@ -274,7 +274,7 @@ class Training:
 
     def valid_epoch(self, valid_loader, batch_size):
         '''Test (validation) model after an epoch and calculate loss on valid dataset'''
-        print("Epoch [{}/{}]".format(self.epoch, self.model_info['num_epochs']))
+        print("Epoch [{}/{}]".format(self.epoch, self.model_info['num_epoch']))
         self.model.eval()
         previous_idx = 0
 
@@ -431,7 +431,7 @@ class Prediction:
 
 
     def setup_model(self, model, vocab_size, embeddings, embedding_dim,
-                    hidden_dim, pad_idx, unk_idx, model_file_name=None, epoch=14):
+                    hidden_dim, pad_idx, unk_idx, model_file_name=None, epoch=77):
         if model_file_name == None:
             model_file_name = self.params['trained_model_name']
         self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
@@ -507,8 +507,8 @@ class Prediction:
               f'Recall: {final_recall:.3f} | Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')
         print(confusion_matrix)
-        # self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
-        #                       title='Confusion matrix, without normalization')
+        self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
+                              title='Confusion matrix, without normalization')
         return final_accuracy, final_f1_score
 
     def plot_confusion_matrix(self, cm, target_names,

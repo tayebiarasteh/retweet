@@ -1,12 +1,15 @@
-# Sentiment Analysis of Tweets and their Potential Replies
+# How Will Your Tweet Be Received? Predicting theSentiment Polarity of Tweet Replies
 
-### By S.T. Arasteh, et al.
+### By [Soroosh Tayebi Arasteh](https://github.com/starasteh), et al.
+
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+[![](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/starasteh/retweet/pulls)
+
 
 This is the final project of the `Seminar Deep Learning` course (WS1920) jointly offered by the [Pattern Recognition Lab (LME)](https://lme.tf.fau.de/) of the *Computer Science Department*, and 
 the [Chair of Computational Corpus Linguistics](https://www.linguistik.phil.fau.de/) of the *Department of German Language and Literature* at University of Erlangen-Nuremberg (FAU).
 
-
-The main function running the training, testing and validation process is `main.py`.
 
 Introduction
 ------
@@ -41,59 +44,15 @@ $ activate SentimentAnalysis
 $ python -m spacy download en
 ```
 
+Code structure
+---
+1. Everything can be ran from *./main.py*. 
+* Set the hyper-parameters and model parameters here.
+* *main_train()*, *main_test()*, and *main_manual_predict()* run codes related to Standard Tweet Sentiment Polarity Classification.
+* The data preprocessing parameters and directories can be modified from *./configs/config.json*. Note that, you have to stick to the names specified in the *./configs/config.json* and name your data accordingly.
+* Also, you should first choose an `experiment` name (if you are starting a new experiment) for training, in which all the evaluation and loss value statistics, tensorboard events, and model & checkpoints will be stored. Furthermore, a `config.json` file will be created for each experiment storing all the information needed.
+* For testing, just load the experiment which its model you need.
 
-Approach to the challange
-------
-
-This project can be divided into two consecutive parts to reach our goal.
-1. Creating a Sentiment Classifying tool for tweets
-2. Sentiment Predictor for Tweet-Replies
-
-![](demos/nutshell.jpg)
-
-Part 1: Sentiment Analysis of the labeled tweets
-------
-- Supervised deep learning method.
-- Message-level Sentiment Analysis of tweets, based on the Subtask B of Task 10 of the SemEval 2015 challenge.
-- Preliminary goal: To beat the state-of-the-art of the corresponding task of the SemEval.
-- Final goal: To tackle the unsupervised nature of the part 2 of the project as supervised.
- 
-#### Model Architecture
-A modified version of Bi-directional Long-Short Term Memory Units (BiLSTM).
-#### Training Parameters
-
-| Name        | Value           |
-| :-------------: |:-------------:| 
-| Number of trainable parameters    | 4,811,883
-| Training duration | 57 minutes and 08 seconds on Nvidia GeForce 940MX
-| Number of epochs | 60 
-| Embedding | GloVe with 100 dimensions pre-trained on 6 billion data
-| Loss function    | Cross Entropy Loss   
-| Optimizer        | Adam with a learning rate of 5e-5 with a decay of 1e-5
-| Hidden and cell dimensions of the LSTM  | 256    
-
-#### Testing Results on the gold test data of SemEval 2014 combined with 2015
-
-| Name        | Value           |
-| :-------------: |:-------------:| 
-| Accuracy    | 73.57%
-| F1-score | 0.721 (the [state-of-the-art](https://www.aclweb.org/anthology/S17-2094/) is 0.685)
-
-Part 2: Sentiment Analysis of the Unlabeled Tweet-Replies
-------
-- Originally Unsupervised problem.
-- Idea: To leverage the model in the part 1, to tackle the unsupervised nature of the problem.
- 
-#### Strategy
-
-1. Extract tweets from Twitter with their corresponding replies.
-2. If a tweet has multiple replies, regard each reply as a separate data and repeat the
-tweet.
-3. First ignore the tweets and predict the sentiment of each reply using the model from the
-part 1.
-4. For the replies corresponding to the same tweet, choose the label which has the
-maximum occurance and assign it as the tweet‘s label and then ignore the replies.
-5. Now we have a training set of some tweets with their labels, SUPERVISED!
-6. Train another model with this data.
-7. Now the final model is ready. Given only tweets as the input, this model predicts the
-sentiment of the potential reply that tweet is likely to get!
+2. The rest of the files:
+* *./models/* directory contains all the model architectures and losses.
+* *./Train_Test_Valid.py* contains the training, validation, and the inference processes.

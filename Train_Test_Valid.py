@@ -22,6 +22,8 @@ import torch.nn.functional as F
 
 # User Defined Modules
 from configs.serde import *
+from models.biLSTM import *
+from models.CNN import *
 import pdb
 os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 
@@ -407,8 +409,11 @@ class Prediction:
     '''
     This class represents prediction (testing) process similar to the Training class.
     '''
-    def __init__(self, cfg_path, classes, model_mode='RNN'):
+    def __init__(self, cfg_path, classes, model_mode='RNN', cfg_path_RNN=None, cfg_path_CNN=None):
         self.params = read_config(cfg_path)
+        if cfg_path_CNN:
+            self.params_RNN = read_config(cfg_path_RNN)
+            self.params_CNN = read_config(cfg_path_CNN)
         self.cfg_path = cfg_path
         self.setup_cuda()
         self.model_mode = model_mode
@@ -431,19 +436,35 @@ class Prediction:
 
 
     def setup_model(self, model, vocab_size, embeddings, embedding_dim,
-                    hidden_dim, pad_idx, unk_idx, model_file_name=None, epoch=43,
-                    conv_out_ch=200, filter_sizes=[3,4,5], MODEL_MODE="RNN"):
+                    hidden_dim, pad_idx, unk_idx, model_file_name=None, epoch=19,
+                    conv_out_ch=200, filter_sizes=[3,4,5], model_c =CNN1d, model_r=biLSTM):
         if model_file_name == None:
             model_file_name = self.params['trained_model_name']
-        if MODEL_MODE == "RNN":
+        if self.model_mode == "RNN":
             self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
                                  hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
-        elif MODEL_MODE == "CNN":
+        elif self.model_mode == "CNN":
             self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
                                  conv_out_ch=conv_out_ch, filter_sizes=filter_sizes, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
+        elif self.model_mode == "ensemble":
+            model_file_name_c = self.params_CNN['trained_model_name']
+            model_file_name_r = self.params_RNN['trained_model_name']
+            self.model_cnn = model_c(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
+                                 conv_out_ch=conv_out_ch, filter_sizes=filter_sizes, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
+            self.model_rnn = model_r(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
+                                 hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
+
         # Loads model from model_file_name and default network_output_path
-        # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
-        self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch" + str(epoch) + "_" + model_file_name))
+        if self.model_mode == "ensemble":
+            # self.model_cnn.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+            self.model_cnn.load_state_dict(
+                torch.load(self.params_CNN['network_output_path'] + "/epoch" + str(19) + "_" + model_file_name_c))
+            # self.model_rnn.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+            self.model_rnn.load_state_dict(
+                torch.load(self.params_RNN['network_output_path'] + "/epoch" + str(43) + "_" + model_file_name_r))
+        else:
+            # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+            self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch" + str(epoch) + "_" + model_file_name))
 
 
     def predict(self, test_loader, batch_size):
@@ -511,9 +532,89 @@ class Prediction:
               f'Recall: {final_recall:.3f} | Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')
         print(confusion_matrix)
+        self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
+                              title='Confusion matrix, without normalization')
+        return final_accuracy, final_f1_score
+
+
+    def predict_ensemble(self, test_iterator_RNN, test_iterator_CNN, batch_size):
+        "prediction with ensembling CNN and RNN outputs by normal averaging"
+
+        # Reads params to check if any params have been changed by user
+        self.params = read_config(self.cfg_path)
+        self.model_cnn.eval()
+        self.model_rnn.eval()
+
+        start_time = time.time()
+        with torch.no_grad():
+            # initializing the caches
+            logits_cache = torch.from_numpy(np.zeros((len(test_iterator_RNN) * batch_size, 3)))
+            max_preds_cache = torch.from_numpy(np.zeros((len(test_iterator_RNN) * batch_size, 1)))
+            labels_cache = torch.from_numpy(np.zeros(len(test_iterator_RNN) * batch_size))
+
+            for idx, (batch_RNN, batch_CNN) in enumerate(zip(test_iterator_RNN, test_iterator_CNN)):
+
+                # RNN part
+                message, message_lengths = batch_RNN.text
+                label = batch_RNN.label
+                message = message.long()
+                label = label.long()
+                message = message.to(self.device)
+                label = label.to(self.device)
+                output_RNN = self.model_rnn(message, message_lengths).squeeze(1)
+
+                #CNN part
+                message = batch_CNN.text
+                label = batch_CNN.label
+                message = message.long()
+                label = label.long()
+                message = message.to(self.device)
+                label = label.to(self.device)
+                output_CNN = self.model_cnn(message).squeeze(1)
+
+                output = (output_CNN + output_RNN) / 2
+                max_preds = output.argmax(dim=1, keepdim=True)  # get the index of the max probability
+                # saving the logits and labels of this batch
+                for i, batch_vector in enumerate(max_preds):
+                    max_preds_cache[idx * batch_size + i] = batch_vector
+                for i, batch_vector in enumerate(output):
+                    logits_cache[idx * batch_size + i] = batch_vector
+                for i, value in enumerate(label):
+                    labels_cache[idx * batch_size + i] = value
+
+        '''Metrics calculation over the whole set'''
+        max_preds_cache = max_preds_cache.cpu()
+        labels_cache = labels_cache.cpu()
+
+        # average=None gives individual scores for each class
+        # here we only care about the average of positive class and negative class
+        final_accuracy = metrics.accuracy_score(labels_cache, max_preds_cache)
+        # final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average='macro')
+        # final_precision = metrics.precision_score(labels_cache, max_preds_cache, average='macro')
+        # final_recall = metrics.recall_score(labels_cache, max_preds_cache, average='macro')
+
+        final_f1_score = metrics.f1_score(labels_cache, max_preds_cache, average=None)
+        final_precision = metrics.precision_score(labels_cache, max_preds_cache, average=None)
+        final_recall = metrics.recall_score(labels_cache, max_preds_cache, average=None)
+        final_f1_score = (final_f1_score[1] + final_f1_score[2]) / 2
+        final_precision = (final_precision[1] + final_precision[2]) / 2
+        final_recall = (final_recall[1] + final_recall[2]) / 2
+        confusion_matrix = metrics.confusion_matrix(labels_cache, max_preds_cache, labels=[0,1,2])
+
+        end_time = time.time()
+        test_mins, test_secs = self.epoch_time(start_time, end_time)
+
+        # Print the final evaluation metrics
+        print('\n----------------------------------------------------------------------')
+        print(f'Testing | Testing Time: {test_mins}m {test_secs}s')
+        print(f'\tAcc: {final_accuracy * 100:.2f}% | F1 score: {final_f1_score:.3f} | '
+              f'Recall: {final_recall:.3f} | Precision: {final_precision:.3f}')
+        print('----------------------------------------------------------------------\n')
+        print(confusion_matrix)
         # self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
         #                       title='Confusion matrix, without normalization')
         return final_accuracy, final_f1_score
+
 
     def plot_confusion_matrix(self, cm, target_names,
                               title='Confusion matrix', cmap=None, normalize=False):

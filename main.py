@@ -237,7 +237,7 @@ def main_train_postreply():
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 256
     MAX_VOCAB_SIZE = 750000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
-    lr = 1e-4
+    lr = 9e-5
     optimiser_params = {'lr': lr, 'weight_decay': 1e-4}
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 300
@@ -308,7 +308,7 @@ def main_test_postreply():
     '''Main function for testing of the second part of the project
     Sentiment analysis of the Post-Replies.
     '''
-    EXPERIMENT_NAME = 'new_october'
+    EXPERIMENT_NAME = 'new_october_CNN'
     BATCH_SIZE = 256
 
     params = open_experiment(EXPERIMENT_NAME)
@@ -339,9 +339,49 @@ def main_test_postreply():
 
     predictor.setup_model(model=MODEL, vocab_size=vocab_size, embeddings=pretrained_embeddings,
                           embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX,
-                          conv_out_ch=conv_out_ch, filter_sizes=[3, 4, 5], MODEL_MODE=MODEL_MODE)
+                          conv_out_ch=conv_out_ch, filter_sizes=[3, 4, 5])
     predictor.predict(test_iterator, batch_size=BATCH_SIZE)
 
+
+
+def main_ensemble_test_postreply():
+    '''Main function for testing ensemble model.
+    '''
+    EXPERIMENT_NAME_RNN = 'new_october'
+    EXPERIMENT_NAME_CNN = 'new_october_CNN'
+    BATCH_SIZE = 256
+
+    params_RNN = open_experiment(EXPERIMENT_NAME_RNN)
+    params_CNN = open_experiment(EXPERIMENT_NAME_CNN)
+    cfg_path_RNN = params_RNN['cfg_path']
+    cfg_path_CNN = params_CNN['cfg_path']
+    vocab_size = params_RNN['Network']['vocab_size']
+    PAD_IDX = params_RNN['Network']['PAD_IDX']
+    UNK_IDX = params_RNN['Network']['UNK_IDX']
+    classes = params_RNN['Network']['classes']
+    MAX_VOCAB_SIZE = params_RNN['Network']['MAX_VOCAB_SIZE']
+    SPLIT_RATIO = params_RNN['Network']['SPLIT_RATIO']
+    EMBEDDING_DIM = params_RNN['Network']['EMBEDDING_DIM']
+    HIDDEN_DIM = params_RNN['Network']['HIDDEN_DIM']
+    conv_out_ch = params_CNN['Network']['conv_out_ch']
+    MODEL_MODE = 'ensemble'
+    pretrained_embeddings = torch.zeros((vocab_size, EMBEDDING_DIM))
+
+    # Prepare data
+    data_handler_test_RNN = data_provider_PostReply(cfg_path=cfg_path_RNN, batch_size=BATCH_SIZE, split_ratio=SPLIT_RATIO,
+                                         max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TEST, model_mode='RNN')
+    data_handler_test_CNN = data_provider_PostReply(cfg_path=cfg_path_CNN, batch_size=BATCH_SIZE, split_ratio=SPLIT_RATIO,
+                                         max_vocab_size=MAX_VOCAB_SIZE, mode=Mode.TEST, model_mode="CNN")
+    test_iterator_RNN = data_handler_test_RNN.data_loader()
+    test_iterator_CNN = data_handler_test_CNN.data_loader()
+    # Initialize predictor
+    predictor = Prediction(cfg_path=params_RNN['cfg_path'], model_mode=MODEL_MODE, classes=classes,
+                           cfg_path_RNN=cfg_path_RNN, cfg_path_CNN=cfg_path_CNN)
+
+    predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
+                          embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX,
+                          conv_out_ch=conv_out_ch, filter_sizes=[3, 4, 5], model_c =CNN1d, model_r=biLSTM)
+    predictor.predict_ensemble(test_iterator_RNN, test_iterator_CNN, batch_size=BATCH_SIZE)
 
 
 def test_every_epoch():
@@ -382,13 +422,15 @@ def test_every_epoch():
 
         predictor.setup_model(model=MODEL, vocab_size=vocab_size, embeddings=pretrained_embeddings,
                               embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX,
-                              epoch=EPOCH, conv_out_ch=conv_out_ch, filter_sizes=[3,4,5], MODEL_MODE=MODEL_MODE)
+                              epoch=EPOCH, conv_out_ch=conv_out_ch, filter_sizes=[3,4,5])
         acc, F1 = predictor.predict(test_iterator, batch_size=BATCH_SIZE)
 
         test_acc = test_acc.append(pd.DataFrame([[EPOCH, acc]], columns=['epoch', 'accuracy']))
         test_F1 = test_F1.append(pd.DataFrame([[EPOCH, F1]], columns=['epoch', 'F1']))
         test_F1.to_csv(os.path.join(params['output_data_path'], 'test_F1.csv'), index=False)
         test_acc.to_csv(os.path.join(params['output_data_path'], 'test_acc.csv'), index=False)
+
+
 
 
 
@@ -401,11 +443,12 @@ def prediction_time(start_time, end_time):
 
 
 if __name__ == '__main__':
-    delete_experiment("new_october_CNN")
+    # delete_experiment("new_october_CNN")
     # main_train()
     # main_test()
     # main_manual_predict(prediction_mode='Manualpart2')
     # main_reply_predict('philipp')
-    main_train_postreply()
+    # main_train_postreply()
     # main_test_postreply()
     # test_every_epoch()
+    main_ensemble_test_postreply()

@@ -45,4 +45,4 @@ paper/coling2020/coling2020.log
 /configs/__pycache__/
 /pretrained_models/
 data/best_model/
-
+/data/datasets/

@@ -18,6 +18,7 @@ epsilon = 1e-15
 
 class data_provider_V2():
     '''
+    Data handler class for the Standard Twitter sentiment classifier
     Packed padded sequences
     Tokenizer: spacy
     '''

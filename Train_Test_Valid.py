@@ -431,14 +431,18 @@ class Prediction:
 
 
     def setup_model(self, model, vocab_size, embeddings, embedding_dim,
-                    hidden_dim, pad_idx, unk_idx, model_file_name=None, epoch=77):
+                    hidden_dim, pad_idx, unk_idx, model_file_name=None, epoch=43,
+                    conv_out_ch=200, filter_sizes=[3,4,5], MODEL_MODE="RNN"):
         if model_file_name == None:
             model_file_name = self.params['trained_model_name']
-        self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
-                             hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
+        if MODEL_MODE == "RNN":
+            self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
+                                 hidden_dim=hidden_dim, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
+        elif MODEL_MODE == "CNN":
+            self.model_p = model(vocab_size=vocab_size, embeddings=embeddings, embedding_dim=embedding_dim,
+                                 conv_out_ch=conv_out_ch, filter_sizes=filter_sizes, pad_idx=pad_idx, unk_idx=unk_idx).to(self.device)
         # Loads model from model_file_name and default network_output_path
         # self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
-
         self.model_p.load_state_dict(torch.load(self.params['network_output_path'] + "/epoch" + str(epoch) + "_" + model_file_name))
 
 
@@ -507,8 +511,8 @@ class Prediction:
               f'Recall: {final_recall:.3f} | Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')
         print(confusion_matrix)
-        self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
-                              title='Confusion matrix, without normalization')
+        # self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
+        #                       title='Confusion matrix, without normalization')
         return final_accuracy, final_f1_score
 
     def plot_confusion_matrix(self, cm, target_names,

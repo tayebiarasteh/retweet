@@ -33,7 +33,7 @@ def summarizer(data_path, input_file_name, output_file_name):
 
     it = iter(range(0, len(data_new)))
 
-    for tweet in it:
+    for tweet in tqdm(it):
 
         #tweet: index
         label_pos = 0   # total number of positive labels for each tweet
@@ -335,6 +335,7 @@ def post_reply_downloader(list_of_word, max_num_tweets, mode='download'):
 if __name__=='__main__':
     # summarizer("./datasets/postreply", "philipp_withlabel.csv", "philipp_final.csv")
     # summarizer("./datasets/postreply", "data_post_reply_withlabel.csv", "final_data_post_reply.csv")
+    # summarizer("./datasets/postreply/Gold set", "correlated_balanced_tweetandreply_labeled.csv", "correlated_balanced_tweetandreply_final.csv")
     # philipp_getoldtweet_concat()
     counting_pie_chart()
     # manual_label_concat()

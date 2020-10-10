@@ -7,6 +7,7 @@ CNN model for the text data.
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import pdb
 
 
 class CNN1d(nn.Module):
@@ -41,6 +42,11 @@ class CNN1d(nn.Module):
 
         embedded = embedded.permute(0, 2, 1)
         # embedded = [batch size, emb dim, sent len]
+
+        # pad if the length of the sentence is less than the kernel size
+        if embedded.shape[2] < 5:
+            dif = 5 - embedded.shape[2]
+            embedded = F.pad(embedded, (0, dif), "constant", 0)
 
         conved = [F.relu(conv(embedded)) for conv in self.convs]
         # conved_n = [batch size, n_filters, sent len - filter_sizes[n] + 1]

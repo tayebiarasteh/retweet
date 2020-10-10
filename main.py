@@ -229,24 +229,24 @@ def main_train_postreply():
     Sentiment analysis of the Post-Replies.
     '''
     # if we are resuming training on a model
-    RESUME = True
+    RESUME = False
 
     # Hyper-parameters
-    NUM_EPOCH = 150
+    NUM_EPOCH = 500
     LOSS_FUNCTION = CrossEntropyLoss
     OPTIMIZER = optim.Adam
     BATCH_SIZE = 256
     MAX_VOCAB_SIZE = 750000 #max_vocab_size: takes the 100,000 most frequent words as the vocab
-    lr = 9e-5
+    lr = 1e-4
     optimiser_params = {'lr': lr, 'weight_decay': 1e-4}
     EMBEDDING_DIM = 200
     HIDDEN_DIM = 300
     OUTPUT_DIM = 3
-    MODEL_MODE = "RNN" # "RNN" or "CNN"
+    MODEL_MODE = "CNN" # "RNN" or "CNN"
     conv_out_ch = 200  # for the CNN model:
     filter_sizes = [3, 4, 5]  # for the CNN model:
     SPLIT_RATIO = 0.9 # ratio of the train set, 1.0 means 100% training, 0% valid data
-    EXPERIMENT_NAME = "3POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE)
+    EXPERIMENT_NAME = "new_october_CNN"
 
     if RESUME == True:
         params = open_experiment(EXPERIMENT_NAME)
@@ -294,6 +294,7 @@ def main_train_postreply():
         params['Network']['MAX_VOCAB_SIZE'] = MAX_VOCAB_SIZE
         params['Network']['HIDDEN_DIM'] = HIDDEN_DIM
         params['Network']['EMBEDDING_DIM'] = EMBEDDING_DIM
+        params['Network']['conv_out_ch'] = conv_out_ch
         params['Network']['MODEL_MODE'] = MODEL_MODE
         params['total_train_tweets'] = total_train_tweets
         params['total_valid_tweets'] = total_valid_tweets
@@ -307,7 +308,7 @@ def main_test_postreply():
     '''Main function for testing of the second part of the project
     Sentiment analysis of the Post-Replies.
     '''
-    EXPERIMENT_NAME = '3POSTREPLY_Adam_lr9e-05_max_vocab_size750000'
+    EXPERIMENT_NAME = 'new_october'
     BATCH_SIZE = 256
 
     params = open_experiment(EXPERIMENT_NAME)
@@ -320,6 +321,7 @@ def main_test_postreply():
     SPLIT_RATIO = params['Network']['SPLIT_RATIO']
     EMBEDDING_DIM = params['Network']['EMBEDDING_DIM']
     HIDDEN_DIM = params['Network']['HIDDEN_DIM']
+    conv_out_ch = params['Network']['conv_out_ch']
     MODEL_MODE = params['Network']['MODEL_MODE']
     pretrained_embeddings = torch.zeros((vocab_size, EMBEDDING_DIM))
 
@@ -329,14 +331,21 @@ def main_test_postreply():
     test_iterator = data_handler_test.data_loader()
     # Initialize predictor
     predictor = Prediction(cfg_path, model_mode=MODEL_MODE, classes=classes)
-    predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
-                          embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX)
+
+    if MODEL_MODE == "RNN":
+        MODEL = biLSTM
+    elif MODEL_MODE == "CNN":
+        MODEL = CNN1d
+
+    predictor.setup_model(model=MODEL, vocab_size=vocab_size, embeddings=pretrained_embeddings,
+                          embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX,
+                          conv_out_ch=conv_out_ch, filter_sizes=[3, 4, 5], MODEL_MODE=MODEL_MODE)
     predictor.predict(test_iterator, batch_size=BATCH_SIZE)
 
 
 
 def test_every_epoch():
-    EXPERIMENT_NAME = '3POSTREPLY_Adam_lr9e-05_max_vocab_size750000'
+    EXPERIMENT_NAME = 'new_october_CNN'
     BATCH_SIZE = 256
 
     params = open_experiment(EXPERIMENT_NAME)
@@ -349,6 +358,7 @@ def test_every_epoch():
     SPLIT_RATIO = params['Network']['SPLIT_RATIO']
     EMBEDDING_DIM = params['Network']['EMBEDDING_DIM']
     HIDDEN_DIM = params['Network']['HIDDEN_DIM']
+    conv_out_ch = params['Network']['conv_out_ch']
     MODEL_MODE = params['Network']['MODEL_MODE']
     pretrained_embeddings = torch.zeros((vocab_size, EMBEDDING_DIM))
 
@@ -364,8 +374,15 @@ def test_every_epoch():
     for epoch in range(150):
         EPOCH = epoch + 1
         print('epoch:', EPOCH)
-        predictor.setup_model(model=biLSTM, vocab_size=vocab_size, embeddings=pretrained_embeddings,
-                              embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX, epoch=EPOCH)
+
+        if MODEL_MODE == "RNN":
+            MODEL = biLSTM
+        elif MODEL_MODE == "CNN":
+            MODEL = CNN1d
+
+        predictor.setup_model(model=MODEL, vocab_size=vocab_size, embeddings=pretrained_embeddings,
+                              embedding_dim=EMBEDDING_DIM, hidden_dim=HIDDEN_DIM, pad_idx=PAD_IDX, unk_idx=UNK_IDX,
+                              epoch=EPOCH, conv_out_ch=conv_out_ch, filter_sizes=[3,4,5], MODEL_MODE=MODEL_MODE)
         acc, F1 = predictor.predict(test_iterator, batch_size=BATCH_SIZE)
 
         test_acc = test_acc.append(pd.DataFrame([[EPOCH, acc]], columns=['epoch', 'accuracy']))
@@ -381,21 +398,14 @@ def prediction_time(start_time, end_time):
     elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
     return elapsed_mins, elapsed_secs
 
-def experiment_deleter():
-    '''To delete an experiment and reuse the same experiment name'''
-    parameters = dict(lr = [9e-4], max_vocab_size = [50000])
-    param_values = [v for v in parameters.values()]
-    for lr, MAX_VOCAB_SIZE in product(*param_values):
-        delete_experiment("POSTREPLY_Adam_lr" + str(lr) + "_max_vocab_size" + str(MAX_VOCAB_SIZE))
-
 
 
 if __name__ == '__main__':
-    # experiment_deleter()
+    delete_experiment("new_october_CNN")
     # main_train()
     # main_test()
     # main_manual_predict(prediction_mode='Manualpart2')
     # main_reply_predict('philipp')
-    # main_train_postreply()
-    main_test_postreply()
+    main_train_postreply()
+    # main_test_postreply()
     # test_every_epoch()

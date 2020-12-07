@@ -3,13 +3,12 @@
 ### By [Soroosh Tayebi Arasteh](https://github.com/starasteh), et al.
 
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
-[![](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/starasteh/retweet/pulls)
 
 Overview
 ------
 
 * This is the official repository of the paper **How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies**.
-* The paper comes with a public dataset, [RETWEET](https://kaggle.com/soroosharasteh/retweet/), which is accessible under this link:
+* The paper comes with a **public dataset**, [RETWEET](https://kaggle.com/soroosharasteh/retweet/), which is accessible under this link:
 https://kaggle.com/soroosharasteh/retweet/
 
 
@@ -61,3 +60,20 @@ Code structure
 2. The rest of the files:
 * *./models/* directory contains all the model architectures and losses.
 * *./Train_Test_Valid.py* contains the training, validation, and the inference processes.
+
+### In case you use this repository, please cite the original paper:
+
+S. Tayebi Arasteh, M. Monajem, V. Christlein, P. Heinrich, A. Nicolaou, H.N. Boldaji, M. Lotfinia,  S. Evert. "*How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies*". Proceedings of the 15th IEEE International Conference on Semantic Computing, Laguna Hills, CA, USA, January 2021.
+
+### BibTex
+	@inproceedings{RETWEET,
+	  title = "How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies",
+	  author = "Tayebi Arasteh, Soroosh and Monajem, Mehrpad and Christlein, Vincent and
+	  Heinrich, Philipp and Nicolaou, Anguelos and Naderi Boldaji, Hamidreza and Lotfinia, Mahshad and Evert, Stefan",
+	  booktitle = "Proceedings of the 15th IEEE International Conference on Semantic Computing (IEEE ICSC2021)",
+      address = "Laguna Hills, CA, USA",
+	  url = "https://www.github.com/starasteh/retweet/",
+	  month = "Jan",       
+      year = "2021"
+      }
+

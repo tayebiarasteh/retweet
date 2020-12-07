@@ -1,14 +1,19 @@
-# How Will Your Tweet Be Received? Predicting theSentiment Polarity of Tweet Replies
+# How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies
 
 ### By [Soroosh Tayebi Arasteh](https://github.com/starasteh), et al.
 
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
-[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 [![](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/starasteh/retweet/pulls)
 
+Overview
+------
 
-This is the final project of the `Seminar Deep Learning` course (WS1920) jointly offered by the [Pattern Recognition Lab (LME)](https://lme.tf.fau.de/) of the *Computer Science Department*, and 
-the [Chair of Computational Corpus Linguistics](https://www.linguistik.phil.fau.de/) of the *Department of German Language and Literature* at University of Erlangen-Nuremberg (FAU).
+* This is the official repository of the paper **How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies**.
+* The paper comes with a public dataset, [RETWEET](https://kaggle.com/soroosharasteh/retweet/), which is accessible under this link:
+https://kaggle.com/soroosharasteh/retweet/
+
+
+
 
 
 Introduction

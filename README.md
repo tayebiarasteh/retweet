@@ -1,6 +1,5 @@
 # How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies
 
-### By [S. Tayebi Arasteh](https://github.com/starasteh) et al.
 
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
@@ -11,6 +10,8 @@ Overview
 * The paper comes with a **public dataset**, [RETWEET](https://kaggle.com/soroosharasteh/retweet/): https://kaggle.com/soroosharasteh/retweet/
 
 * The presentation video: https://www.youtube.com/channel/UCr8grdeS636T8Bk4c_rufCg
+
+* The presentation slides: https://github.com/starasteh/retweet/blob/master/Presentation_main.pdf
 
 
 

@@ -2,6 +2,8 @@
 CNN model for the text data.
 
 @author: Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
+https://github.com/starasteh/
+https://tayebiarasteh.com/
 """
 
 import torch

@@ -2,6 +2,8 @@
 Training and Prediction classes
 
 @author: Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
+https://github.com/starasteh/
+https://tayebiarasteh.com/
 """
 
 #System Modules
@@ -456,10 +458,10 @@ class Prediction:
 
         # Loads model from model_file_name and default network_output_path
         if self.model_mode == "ensemble":
-            # self.model_cnn.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+            # self.model_cnn.load_state_dict(torch.load(self.params_CNN['network_output_path'] + "/" + model_file_name_c))
             self.model_cnn.load_state_dict(
                 torch.load(self.params_CNN['network_output_path'] + "/epoch" + str(19) + "_" + model_file_name_c))
-            # self.model_rnn.load_state_dict(torch.load(self.params['network_output_path'] + "/" + model_file_name))
+            # self.model_rnn.load_state_dict(torch.load(self.params_RNN['network_output_path'] + "/" + model_file_name_r))
             self.model_rnn.load_state_dict(
                 torch.load(self.params_RNN['network_output_path'] + "/epoch" + str(43) + "_" + model_file_name_r))
         else:
@@ -532,8 +534,8 @@ class Prediction:
               f'Recall: {final_recall:.3f} | Precision: {final_precision:.3f}')
         print('----------------------------------------------------------------------\n')
         print(confusion_matrix)
-        self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
-                              title='Confusion matrix, without normalization')
+        # self.plot_confusion_matrix(confusion_matrix, target_names=self.classes,
+        #                       title='Confusion matrix, without normalization')
         return final_accuracy, final_f1_score
 
 

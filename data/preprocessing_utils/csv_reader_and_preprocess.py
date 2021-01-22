@@ -9,7 +9,7 @@ import pandas as pd
 import glob
 
 
-path = '/home/mehrpad/Desktop/dl_seminar/seminar_code/Optimized-Modified-GetOldTweets3-OMGOT-master/GetOldTweets3-0.0.10'
+path = './data/preprocessing_utils/GetOldTweets3-0.0.10'
 path_new = path + '/post_reply'
 print(path_new)
 list_files = glob.glob('./*.csv', recursive=True)

@@ -2,6 +2,8 @@
 dropout + Bidirectional LSTM with 2 layers + dropout + fully connected.
 
 @author: Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
+https://github.com/starasteh/
+https://tayebiarasteh.com/
 """
 
 import torch

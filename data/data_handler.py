@@ -1,5 +1,9 @@
 """
+Data loader for all parts
+
 @author: Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
+https://github.com/starasteh/
+https://tayebiarasteh.com/
 """
 
 import numpy as np

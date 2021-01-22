@@ -13,6 +13,7 @@ from configs.serde import *
 import pdb
 import time
 from main import *
+from tqdm import tqdm
 
 epsilon = 1e-15
 
@@ -96,9 +97,9 @@ def reply_convertor():
          named CHANGE. You should replace this CHANGE with your final label and then save.
          Note: please remove the _org file after you replaced the CHANGE.
     '''
-    path = '/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/' \
+    path = './data/datasets/' \
            'postreply/Gold set/Group_4_4431/Unlabeled_g4/Group4_4431_unlabeled/'
-    output_path = '/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/' \
+    output_path = './data/datasets/' \
                   'postreply/Gold set/Group_4_4431/Unlabeled_g4/Group4_4431_out_unlabeled/'
     file_list = [f for f in os.listdir(path) if f.endswith('.csv')]
 
@@ -113,7 +114,7 @@ def manual_label_concat():
     '''
     concatenates the individual files from reply_convertor()
     '''
-    path = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path = "./data/datasets/" \
            "postreply/Gold set/Group_3_3931/Labeled_g3/Hamid_Group3_3931"
     file_list = [f for f in os.listdir(path) if f.endswith('.txt')]
 
@@ -131,9 +132,9 @@ def tweet_correlator():
     '''
     Checks whether two manual annotators have the same opinion on each tweet and saves only when they aggree.
     '''
-    path_hamid = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/" \
+    path_hamid = "./data/" \
                  "datasets/postreply/Gold set/Group_3_3931/Labeled_g3/Hamid_Group3_3931/final_test_post_reply.csv"
-    path_mahshad = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/" \
+    path_mahshad = "./data/" \
                    "datasets/postreply/Gold set/Group_3_3931/Labeled_g3/Mahshad_Group3_3931/final_test_post_reply.csv"
     data2 = pd.read_csv(path_hamid)
     data = pd.read_csv(path_mahshad)
@@ -147,16 +148,16 @@ def tweet_correlator():
                                       columns=['label', 'id', 'tweet'])
                     final_data = final_data.append(df)
                     final_data= final_data.sample(frac=1)
-    final_data.to_csv("/home/soroosh/Documents/Repositories/twitter_sentiment/"
+    final_data.to_csv("./"
                       "data/datasets/postreply/Gold set/Group_3_3931/Labeled_g3/"
                       "Correlated_Group3_3931/final_test_post_reply.csv", index=False)
 
     # the uncorrelated ones
-    path_g1 = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/" \
+    path_g1 = "./data/" \
                    "datasets/postreply/Gold set/Group_3_3931/Unlabeled_g3/Group3_3931_unlabeled"
-    path_g1_corr = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/" \
+    path_g1_corr = "./data/" \
                    "datasets/postreply/Gold set/Group_3_3931/Labeled_g3/Correlated_Group3_3931/final_test_post_reply.csv"
-    path_g1_uncorr = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/" \
+    path_g1_uncorr = "./data/" \
                    "datasets/postreply/Gold set/Group_3_3931/Labeled_g3/Uncorrelated"
 
     data = pd.read_csv(path_g1_corr)
@@ -174,17 +175,17 @@ def correlated_tweet_balancing():
     '''
     balancing the classes of the correlated test data
     '''
-    path2 = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path2 = "./data/datasets/" \
             "postreply/Gold set/Group_2_3177/Labeled_g2/Correlated_Group2_3177/final_test_post_reply.csv"
-    path1 = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path1 = "./data/datasets/" \
               "postreply/Gold set/Group_1_968/Labeled_g1/Correlated_Group1_968/final_test_post_reply.csv"
-    path3 = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path3 = "./data/datasets/" \
               "postreply/Gold set/Group_3_3931/Labeled_g3/Correlated_Group3_3931/final_test_post_reply.csv"
-    path_final1 = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path_final1 = "./data/datasets/" \
               "postreply/Gold set/Group_1_968/Labeled_g1/Correlated_Group1_968/final_test_post_reply_balanced.csv"
-    path_final2 = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path_final2 = "./data/datasets/" \
                  "postreply/Gold set/Group_2_3177/Labeled_g2/Correlated_Group2_3177/final_test_post_reply_balanced.csv"
-    path_final3 = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path_final3 = "./data/datasets/" \
               "postreply/Gold set/Group_3_3931/Labeled_g3/Correlated_Group3_3931/final_test_post_reply_balanced.csv"
     data = pd.read_csv(path1)
 
@@ -219,15 +220,15 @@ def gold_data_concat():
     '''
     concatenating the final gold dataset from each group to make the final test data
     '''
-    path_g2 = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path_g2 = "./data/datasets/" \
                  "postreply/Gold set/Group_2_3177/Labeled_g2/Correlated_Group2_3177/final_test_post_reply_balanced.csv"
-    path_g1 = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path_g1 = "./data/datasets/" \
               "postreply/Gold set/Group_1_968/Labeled_g1/Correlated_Group1_968/final_test_post_reply_balanced.csv"
-    path_g3 = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path_g3 = "./data/datasets/" \
               "postreply/Gold set/Group_3_3931/Labeled_g3/Correlated_Group3_3931/final_test_post_reply_balanced.csv"
-    path_g1_soroosh = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path_g1_soroosh = "./data/datasets/" \
               "postreply/Gold set/Group_1_968/Labeled_g1/Soroosh_Group1_968/final_test_post_reply.csv"
-    path_final = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    path_final = "./data/datasets/" \
               "postreply/final_test_post_reply.csv"
 
     data = pd.read_csv(path_g1)
@@ -240,11 +241,11 @@ def gold_data_concat():
 
 
 def philipp_getoldtweet_concat():
-    getold = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    getold = "./data/datasets/" \
              "postreply/final_data_post_reply.csv"
-    philipp = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    philipp = "./data/datasets/" \
               "postreply/philipp_final.csv"
-    output = "/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/" \
+    output = "./data/datasets/" \
              "postreply/training_data_post_reply.csv"
 
     data = pd.read_csv(getold)
@@ -258,9 +259,9 @@ def counting_pie_chart():
     '''
     For the visualization of the distribution of the classes in the train and test sets
     '''
-    training = '/home/soroosh/Documents/Repositories/twitter_sentiment/' \
+    training = './' \
                'data/datasets/postreply/training_data_post_reply.csv'
-    test = '/home/soroosh/Documents/Repositories/twitter_sentiment/' \
+    test = './' \
            'data/datasets/postreply/final_test_post_reply.csv'
 
     data = pd.read_csv(training)
@@ -288,11 +289,11 @@ def test_from_train_creator():
     '''
     Reduces 1000 tweets from the training data and transforms them to the test form.
     '''
-    output_path = '/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/' \
+    output_path = './data/datasets/' \
                   'postreply/data_post_reply_withlabel.csv'
-    output_path2 = '/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/' \
+    output_path2 = './data/datasets/' \
                    'postreply/Gold set/Group_4_4431/Unlabeled_g4/Group4_4431_unlabeled/'
-    output_path3 = '/home/soroosh/Documents/Repositories/twitter_sentiment/data/datasets/' \
+    output_path3 = './data/datasets/' \
                    'data_post_reply_withlabel.csv'
 
     data = pd.read_csv(output_path)

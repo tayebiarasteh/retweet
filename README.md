@@ -60,6 +60,11 @@ Code structure
 * *./models/* directory contains all the model architectures and losses.
 * *./Train_Test_Valid.py* contains the training, validation, and the inference processes.
 
+Our pre-trained models for reply prediction
+---
+* [BiLSTM](https://drive.google.com/drive/folders/15wuIMjCyVddfUcm5PjukAxzoMeXLYxwX?usp=sharing)  
+* [CNN](https://drive.google.com/drive/folders/14d4WBZj0wadiY8bvVGcfTT37gT3fDLGN?usp=sharing)
+
 ### In case you use this repository, please cite the original paper:
 
 S. Tayebi Arasteh, M. Monajem, V. Christlein, P. Heinrich, A. Nicolaou, H.N. Boldaji, M. Lotfinia,  S. Evert. "*How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies*". Proceedings of the 15th IEEE International Conference on Semantic Computing, Laguna Hills, CA, USA, January 2021.

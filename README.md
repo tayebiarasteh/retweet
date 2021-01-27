@@ -9,7 +9,7 @@ Overview
 * This is the official repository of the paper **How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies**.
 * The paper comes with a **public dataset**, [RETWEET](https://kaggle.com/soroosharasteh/retweet/): https://kaggle.com/soroosharasteh/retweet/
 
-* The presentation video: https://www.youtube.com/channel/UCr8grdeS636T8Bk4c_rufCg
+* The presentation video: https://youtu.be/YXu_BuJsoKw
 
 * The presentation slides: https://github.com/starasteh/retweet/blob/master/Presentation_main.pdf
 
@@ -68,17 +68,19 @@ Our pre-trained models for reply prediction
 
 ### In case you use this repository, please cite the original paper:
 
-S. Tayebi Arasteh, M. Monajem, V. Christlein, P. Heinrich, A. Nicolaou, H.N. Boldaji, M. Lotfinia,  S. Evert. "*How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies*". Proceedings of the 15th IEEE International Conference on Semantic Computing, Laguna Hills, CA, USA, January 2021.
+S. Tayebi Arasteh, M. Monajem, V. Christlein, P. Heinrich, A. Nicolaou, H.N. Boldaji, M. Lotfinia,  S. Evert. "*How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies*". Proceedings of the 2021 IEEE 15th International Conference on Semantic Computing (ICSC), Irvine (virtual), CA, USA, January 2021.
 
 ### BibTex
 	@inproceedings{RETWEET,
 	  title = "How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies",
 	  author = "Tayebi Arasteh, Soroosh and Monajem, Mehrpad and Christlein, Vincent and
 	  Heinrich, Philipp and Nicolaou, Anguelos and Naderi Boldaji, Hamidreza and Lotfinia, Mahshad and Evert, Stefan",
-	  booktitle = "Proceedings of the 15th IEEE International Conference on Semantic Computing (IEEE ICSC2021)",
-      address = "Laguna Hills, CA, USA",
+	  booktitle = "Proceedings of the 2021 IEEE 15th International Conference on Semantic Computing (ICSC)",
+      address = "Irvine (virtual), CA, USA",
+      pages = "356-359",
+      doi = "10.1109/ICSC50631.2021.00068",
 	  url = "https://www.github.com/starasteh/retweet/",
-	  month = "Jan",       
+	  month = "01",       
       year = "2021"
       }
 

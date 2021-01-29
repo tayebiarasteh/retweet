@@ -12,6 +12,8 @@ Overview
 
 * The paper comes with a **public dataset**, [RETWEET](https://kaggle.com/soroosharasteh/retweet/): https://kaggle.com/soroosharasteh/retweet/
 
+* Dataset DOI: 10.34740/kaggle/ds/736988
+
 * The presentation video: https://youtu.be/YXu_BuJsoKw
 
 * The presentation slides: https://github.com/starasteh/retweet/blob/master/Presentation_main.pdf

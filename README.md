@@ -7,6 +7,9 @@ Overview
 ------
 
 * This is the official repository of the paper **How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies**.
+
+* Paper DOI: 10.1109/ICSC50631.2021.00068
+
 * The paper comes with a **public dataset**, [RETWEET](https://kaggle.com/soroosharasteh/retweet/): https://kaggle.com/soroosharasteh/retweet/
 
 * The presentation video: https://youtu.be/YXu_BuJsoKw

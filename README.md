@@ -6,7 +6,9 @@
 Overview
 ------
 
-* This is the official repository of the paper **How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies**.
+* This is the official repository of the paper [**How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies**](https://ieeexplore.ieee.org/document/9364527).
+
+* Paper: https://ieeexplore.ieee.org/document/9364527
 
 * Paper DOI: 10.1109/ICSC50631.2021.00068
 

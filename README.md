@@ -75,7 +75,7 @@ Our pre-trained models for reply prediction
 
 ### In case you use this repository, please cite the original paper:
 
-S. Tayebi Arasteh, M. Monajem, V. Christlein, P. Heinrich, A. Nicolaou, H.N. Boldaji, M. Lotfinia,  S. Evert. "*How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies*". Proceedings of the 2021 IEEE 15th International Conference on Semantic Computing (ICSC), Irvine (virtual), CA, USA, January 2021.
+S. Tayebi Arasteh, M. Monajem, V. Christlein, P. Heinrich, A. Nicolaou, H.N. Boldaji, M. Lotfinia,  S. Evert. "*How Will Your Tweet Be Received? Predicting the Sentiment Polarity of Tweet Replies*". Proceedings of the 2021 IEEE 15th International Conference on Semantic Computing (ICSC), Laguna Hills, CA, USA, January 2021.
 
 ### BibTex
 	@inproceedings{RETWEET,
@@ -83,10 +83,10 @@ S. Tayebi Arasteh, M. Monajem, V. Christlein, P. Heinrich, A. Nicolaou, H.N. Bol
 	  author = "Tayebi Arasteh, Soroosh and Monajem, Mehrpad and Christlein, Vincent and
 	  Heinrich, Philipp and Nicolaou, Anguelos and Naderi Boldaji, Hamidreza and Lotfinia, Mahshad and Evert, Stefan",
 	  booktitle = "Proceedings of the 2021 IEEE 15th International Conference on Semantic Computing (ICSC)",
-      address = "Irvine (virtual), CA, USA",
-      pages = "356-359",
+      address = "Laguna Hills, CA, USA",
+      pages = "370-373",
       doi = "10.1109/ICSC50631.2021.00068",
-	  url = "https://www.github.com/starasteh/retweet/",
+	  url = "https://ieeexplore.ieee.org/document/9364527/",
 	  month = "01",       
       year = "2021"
       }

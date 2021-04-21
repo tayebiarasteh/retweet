@@ -84,7 +84,7 @@ S. Tayebi Arasteh, M. Monajem, V. Christlein, P. Heinrich, A. Nicolaou, H.N. Bol
 	  Heinrich, Philipp and Nicolaou, Anguelos and Naderi Boldaji, Hamidreza and Lotfinia, Mahshad and Evert, Stefan",
 	  booktitle = "Proceedings of the 2021 IEEE 15th International Conference on Semantic Computing (ICSC)",
       address = "Laguna Hills, CA, USA",
-      pages = "370-373",
+      pages = "356-359",
       doi = "10.1109/ICSC50631.2021.00068",
 	  url = "https://ieeexplore.ieee.org/document/9364527/",
 	  month = "01",       

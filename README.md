@@ -18,7 +18,7 @@ Overview
 
 * The presentation video: https://youtu.be/YXu_BuJsoKw
 
-* The presentation slides: https://github.com/starasteh/retweet/blob/master/Presentation_main.pdf
+* The presentation slides: https://github.com/tayebiarasteh/retweet/blob/master/Presentation_main.pdf
 
 
 

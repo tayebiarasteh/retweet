@@ -2,7 +2,7 @@
 Training and Prediction classes
 
 @author: Soroosh Tayebi Arasteh <soroosh.arasteh@fau.de>
-https://github.com/starasteh/
+https://github.com/tayebiarasteh/
 https://tayebiarasteh.com/
 """
 
